@@ -1,0 +1,32 @@
+.main-page .profil-card{
+    background-color: #f0f0f0;
+    border-left: 3px solid blue;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.main-page .profil-card h2{
+    color: rgb(21, 21, 44);
+    margin-bottom: .5rem;
+}
+
+.main-page .profil-card .desc{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: .5rem;
+}
+
+.main-page .profil-card button{
+    border: none;
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: bolder;
+}
+
+.main-page .profil-card button:hover{
+    cursor: pointer;
+    color: #0a152f;
+}
+
+

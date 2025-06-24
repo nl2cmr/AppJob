@@ -1,0 +1,419 @@
+/* Base Styles */
+.main-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    min-height: 100vh;
+}
+
+.body-compte {
+    display: flex;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Menu Styles */
+.menu {
+    width: 250px;
+    background: #2c3e50;
+    border-radius: 10px;
+    padding: 20px;
+    margin-right: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    margin-bottom: 10px;
+}
+
+.menu button {
+    width: 100%;
+    padding: 12px;
+    background: #34495e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.menu button:hover {
+    background: #3d566e;
+    transform: translateX(5px);
+}
+
+/* Content Styles */
+.content-compte {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.switch-part {
+    display: none;
+}
+
+#infos-compte {
+    display: block;
+}
+
+.switch-part h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 24px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+/* Form Styles */
+.perso, .present {
+    margin-bottom: 25px;
+}
+
+.fullname {
+    display: flex;
+    gap: 15px;
+}
+
+.fullname > div {
+    flex: 1;
+}
+
+/* Overlay Form Styles */
+.hide {
+    display: none !important;
+}
+
+#expform, #compform, #formaform, 
+#quaform, #refform, #intform, 
+#langform, #projform, #dipform, 
+#certform {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#expform > div, #compform > div, 
+#formaform > div, #quaform > div, 
+#refform > div, #intform > div, 
+#langform > div, #projform > div, 
+#dipform > div, #certform > div {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+#closeExpForm, #closeCompForm, 
+#closeFormaForm, #closeQuaForm, 
+#closeRefForm, #closeIntForm, 
+#closeLangForm, #closeProjForm, 
+#closeDipForm, #closeCertifForm {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+#closeExpForm:hover, #closeCompForm:hover, 
+#closeFormaForm:hover, #closeQuaForm:hover, 
+#closeRefForm:hover, #closeIntForm:hover, 
+#closeLangForm:hover, #closeProjForm:hover, 
+#closeDipForm:hover, #closeCertifForm:hover {
+    background: #c0392b;
+    transform: rotate(90deg);
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+}
+
+fieldset legend {
+    padding: 0 10px;
+    color: #3498db;
+    font-weight: bold;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Button Styles */
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button:not(:disabled):hover {
+    opacity: 0.9;
+}
+
+.btn-save {
+    background: #2ecc71;
+    color: white;
+    margin-right: 5px;
+}
+
+.btn-cancel {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-edit {
+    background: #3498db;
+    color: white;
+    margin-right: 5px;
+}
+
+.btn-delete {
+    background: #e74c3c;
+    color: white;
+}
+
+/* Input and Textarea Styles */
+.content-compte input, .content-compte textarea, .content-compte select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.content-compte input:focus, .content-compte textarea:focus, .content-compte select:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Success Message */
+.success-message {
+    background: #2ecc71;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+    display: inline-block;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Loading States */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .body-compte {
+        flex-direction: column;
+    }
+    
+    .menu {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    
+    .fullname {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    #expform > div, #compform > div, 
+    #formaform > div, #quaform > div, 
+    #refform > div, #intform > div, 
+    #langform > div, #projform > div, 
+    #dipform > div, #certform > div {
+        width: 95%;
+        padding: 20px 15px;
+    }
+}
+
+/* Special Table Styles */
+.description-cell {
+    max-width: 300px;
+}
+
+.description-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Action Buttons in Tables */
+.actions {
+    white-space: nowrap;
+}
+
+.actions button {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+/* Certification Form Specific */
+#certform {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-header h3 {
+    color: #2c3e50;
+    margin: 0;
+}
+
+.char-count {
+    color: #7f8c8d;
+    font-size: 12px;
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.submit-btn {
+    background: #3498db;
+    color: white;
+    padding: 12px 20px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #7f8c8d;
+}
+
+.close-btn:hover {
+    color: #e74c3c;
+}
+
+/* Error States */
+.error-state {
+    background: #fdecea;
+    padding: 20px;
+    border-radius: 5px;
+    color: #d32f2f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.error-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.retry-button {
+    background: #d32f2f;
+    color: white;
+    margin-top: 10px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #7f8c8d;
+    font-style: italic;
+}

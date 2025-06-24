@@ -1,0 +1,36 @@
+.main-page #candidature-body{
+    display: flex;
+    height: 90%;
+}
+
+.main-page #candidature-body .filter-section{
+    background-color: #ffffff;
+    height: 100%;
+    border-right: 1px solid #ccc;   
+}
+
+.main-page #candidature-body .candidature-content{
+    background-color: #ffffff;  
+    height: 100%;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+.main-page #candidature-body .candidature-content h1{
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.main-page #candidature-body .candidature-card h2{
+    color: rgb(21, 21, 44);
+    margin-bottom: .5rem;
+}
+
+.main-page #candidature-body .candidature-card{
+    background-color: #f0f0f0;
+    border-left: 3px solid blue;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    width: 100%;
+}

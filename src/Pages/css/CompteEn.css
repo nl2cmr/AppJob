@@ -1,0 +1,104 @@
+#offres{
+    display: none;
+}
+
+.main-page .body-ent{
+    display: flex;
+    height: 90%;
+    gap: 2rem;
+}
+
+.main-page .body-ent .menu{
+    border-right: 1px solid #ccc;
+    width: 25%;
+    height: 100%;
+}
+
+.main-page .body-ent .menu button{
+    background-color: transparent;
+    border: none;
+    color: #000000;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 0.8rem;
+    margin-bottom: 2rem;
+}
+
+.main-page .body-ent .menu #btn-ent-infos{
+    margin-top: 2rem;
+}
+
+.main-page .body-ent .content-ent{
+    margin-top: 3rem;
+    margin-left: 3rem;
+}
+
+.main-page .body-ent .content-ent #infos-ent h1{
+    margin-bottom: 2rem;
+}
+
+.main-page .body-ent .content-ent #infos-ent .perso .fullname{
+    display: flex;
+    gap: 1rem;
+}
+
+.main-page .body-ent .content-ent #infos-ent .input-group, .textarea{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+#ajoutoffres, #gestoffres{
+    display: none;
+}
+
+.main-page .body-ent .content-ent .hide{
+    display: none;
+}
+
+
+
+#ajoutoffres #offform,
+#gestoffres #compform,
+#gestoffres #dipform,
+#langform,
+#quaform,
+#misform,
+#avanform,
+#docform{
+    position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.774);
+	z-index: 9999;
+}
+
+#ajoutoffres #offform form,
+#gestoffres #compform form,
+#gestoffres #dipform form,
+#langform form,
+#quaform form,
+#misform form,
+#avanform form,
+#docform form{
+    width: max-content;
+	margin: 50px auto 0px auto;
+    background-color: white;
+    padding: 1rem;
+}
+
+#ajoutoffres #offform #closeOffForm,
+#gestoffres #compform #closeCompForm,
+#gestoffres #dipform #closeDipForm,
+#langform #closeLangForm,
+#quaform #closeQuaForm,
+#misform #closeMisForm,
+#avanform #closeAvanForm,
+#docform #closeDocForm{
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+}
