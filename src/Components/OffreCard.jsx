@@ -2,18 +2,59 @@ import { useState } from 'react';
 
 export const OffreCard = ({ infosoffre }) => {
     const [selectedOffre, setSelectedOffre] = useState(null);
+    const [isApplying, setIsApplying] = useState(false);
+    const [applicationStatus, setApplicationStatus] = useState(null);
 
     const handleViewOffre = (offre) => {
         setSelectedOffre(offre);
+        setApplicationStatus(null); 
     };
 
     const closeOffreDetail = () => {
         setSelectedOffre(null);
     };
 
+    const handleApply = async () => {
+        if (!selectedOffre) return;
+        
+        setIsApplying(true);
+        
+        try {
+            const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+            if (!user?.iduser) {
+                throw new Error('Vous devez être connecté pour postuler');
+            }
+
+            const response = await fetch('http://localhost/backend/candidature_crud/add_candidature.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    offre_id: selectedOffre.idoffre,
+                    candidat_id: user.iduser
+                })
+            });
+
+            const result = await response.json();
+            
+            if (result.success) {
+                setApplicationStatus('success');
+            } else {
+                throw new Error(result.message || "Erreur lors de la candidature");
+            }
+        } catch (error) {
+            console.error("Erreur lors de la candidature:", error);
+            setApplicationStatus('error');
+        } finally {
+            setIsApplying(false);
+        }
+    };
+
+    const handleSaveOffer = async () => {
+        alert("Fonctionnalité d'enregistrement à implémenter");
+    };
+
     return (
         <div className="offres-container">
-            {/* Liste des offres */}
             {infosoffre.length === 0 ? (
                 <div className="no-results">Aucune offre trouvée</div>
             ) : (
@@ -27,7 +68,7 @@ export const OffreCard = ({ infosoffre }) => {
                             <p className="description">{offre.description.substring(0, 150)}...</p>
                             <div className="offre-card-meta">
                                 <span className="contract-type">{offre.type_contrat}</span>
-                                {offre.salaire && <span className="salary">{offre.salaire} €</span>}
+                                {offre.salaire && <span className="salary">{offre.salaire} FCFA</span>}
                             </div>
                         </div>
                         <button 
@@ -39,8 +80,6 @@ export const OffreCard = ({ infosoffre }) => {
                     </div>
                 ))
             )}
-
-            {/* Overlay de détail d'offre */}
             {selectedOffre && (
                 <div className="offre-detail-overlay">
                     <div className="offre-detail-container">
@@ -67,17 +106,28 @@ export const OffreCard = ({ infosoffre }) => {
                             </div>
                             <div className="meta-item">
                                 <i className="fas fa-money-bill-wave"></i>
-                                <span>{selectedOffre.salaire ? `${selectedOffre.salaire} €` : 'Salaire non précisé'}</span>
+                                <span>{selectedOffre.salaire ? `${selectedOffre.salaire} FCFA` : 'Salaire non précisé'}</span>
                             </div>
                         </div>
                         
                         <div className="offre-detail-content">
+                            {applicationStatus === 'success' && (
+                                <div className="alert alert-success">
+                                    Votre candidature a bien été envoyée !
+                                </div>
+                            )}
+                            {applicationStatus === 'error' && (
+                                <div className="alert alert-error">
+                                    Une erreur est survenue lors de votre candidature
+                                </div>
+                            )}
+                            
                             <section className="description-section">
                                 <h3>Description du poste</h3>
                                 <p>{selectedOffre.description}</p>
                             </section>
                             
-                            {/* Section Diplômes Requis */}
+                            {/* Sections restantes inchangées */}
                             {selectedOffre.diplomes && selectedOffre.diplomes.length > 0 && (
                                 <section className="diplomes-section">
                                     <h3>Diplômes requis</h3>
@@ -92,7 +142,6 @@ export const OffreCard = ({ infosoffre }) => {
                                 </section>
                             )}
                             
-                            {/* Section Qualités Recherchées */}
                             {selectedOffre.qualites && selectedOffre.qualites.length > 0 && (
                                 <section className="qualites-section">
                                     <h3>Qualités recherchées</h3>
@@ -108,7 +157,6 @@ export const OffreCard = ({ infosoffre }) => {
                                 </section>
                             )}
                             
-                            {/* Section Langues Requises */}
                             {selectedOffre.langues && selectedOffre.langues.length > 0 && (
                                 <section className="langues-section">
                                     <h3>Langues requises</h3>
@@ -123,7 +171,6 @@ export const OffreCard = ({ infosoffre }) => {
                                 </section>
                             )}
                             
-                            {/* Section Missions */}
                             {selectedOffre.missions && selectedOffre.missions.length > 0 && (
                                 <section className="missions-section">
                                     <h3>Missions principales</h3>
@@ -150,7 +197,6 @@ export const OffreCard = ({ infosoffre }) => {
                                 </section>
                             )}
                             
-                            {/* Section Avantages */}
                             {selectedOffre.avantages && selectedOffre.avantages.length > 0 && (
                                 <section className="avantages-section">
                                     <h3>Avantages</h3>
@@ -165,7 +211,6 @@ export const OffreCard = ({ infosoffre }) => {
                                 </section>
                             )}
                             
-                            {/* Section Documents Requis */}
                             {selectedOffre.document_requis && selectedOffre.document_requis.length > 0 && (
                                 <section className="documents-section">
                                     <h3>Documents à fournir</h3>
@@ -180,7 +225,6 @@ export const OffreCard = ({ infosoffre }) => {
                                 </section>
                             )}
                             
-                            {/* Section Compétences Requises */}
                             {selectedOffre.competences && selectedOffre.competences.length > 0 && (
                                 <section className="competences-section">
                                     <h3>Compétences recherchées</h3>
@@ -209,10 +253,25 @@ export const OffreCard = ({ infosoffre }) => {
                         </div>
                         
                         <div className="offre-detail-actions">
-                            <button className="apply-button">
-                                <i className="fas fa-paper-plane"></i> Postuler
+                            <button 
+                                className="apply-button"
+                                onClick={handleApply}
+                                disabled={isApplying || applicationStatus === 'success'}
+                            >
+                                {isApplying ? (
+                                    <>
+                                        <i className="fas fa-spinner fa-spin"></i> Envoi...
+                                    </>
+                                ) : (
+                                    <>
+                                        <i className="fas fa-paper-plane"></i> Postuler
+                                    </>
+                                )}
                             </button>
-                            <button className="save-button">
+                            <button 
+                                className="save-button"
+                                onClick={handleSaveOffer}
+                            >
                                 <i className="far fa-bookmark"></i> Enregistrer
                             </button>
                         </div>

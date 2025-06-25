@@ -143,7 +143,7 @@ export const CompteEn = () => {
     
     
     return (
-        <div className="main-page">
+        <div className="compte-page">
             <NavBarEn />
             <div className="body-ent">
                 <div className="menu">
@@ -418,8 +418,8 @@ function OffresTable(){
 
 
     return (
-        <div id="offtable">
-            <table border="1">
+        <div id="offtable" className="offre-table-container">
+            <table>
                 <thead>
                     <tr>
                         <th>Titre</th>
@@ -454,8 +454,7 @@ function OffresTable(){
                                         />
                                     </td>
                                     <td>
-                                        <input
-                                            type="text"
+                                        <textarea
                                             name="description"
                                             value={editForm.description || ''}
                                             onChange={handleEditChange}
@@ -464,7 +463,7 @@ function OffresTable(){
                                     <td>
                                         <input
                                             type="date"
-                                            name="date_publication"  // Changé de datePublication
+                                            name="date_publication"  
                                             value={editForm.date_publication || ''}
                                             onChange={handleEditChange}
                                         />
@@ -472,7 +471,7 @@ function OffresTable(){
                                     <td>
                                         <input
                                             type="date"
-                                            name="date_expiration"  // Changé de dateExpiration
+                                            name="date_expiration" 
                                             value={editForm.date_expiration || ''}
                                             onChange={handleEditChange}
                                         />
@@ -487,7 +486,7 @@ function OffresTable(){
                                     </td>
                                     <td>
                                         <select
-                                            name="type_contrat"  // Changé de typeContrat
+                                            name="type_contrat" 
                                             value={editForm.type_contrat || ''}
                                             onChange={handleEditChange}
                                         >
@@ -512,8 +511,8 @@ function OffresTable(){
                                     <td>{off.salaire}</td>
                                     <td>{off.type_contrat}</td>
                                     <td>
-                                        <button onClick={() => handleEdit(off.idoffre)}>Edit</button>
-                                        <button onClick={() => handleDelete(off.idoffre)}>Delete</button>
+                                        <button onClick={() => handleEdit(off.idoffre)}>Modifier</button>
+                                        <button onClick={() => handleDelete(off.idoffre)}>Supprimer</button>
                                     </td>
                                 </>
                             )}

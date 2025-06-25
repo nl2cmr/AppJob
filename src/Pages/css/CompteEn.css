@@ -1,104 +1,592 @@
-#offres{
-    display: none;
+/* Base Styles */
+.compte-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    min-height: 100vh;
 }
 
-.main-page .body-ent{
+
+.compte-page .navbar ul {
     display: flex;
-    height: 90%;
-    gap: 2rem;
+    gap: 30px;
 }
 
-.main-page .body-ent .menu{
-    border-right: 1px solid #ccc;
-    width: 25%;
-    height: 100%;
+.compte-page .navbar ul li {
+    list-style-type: none;
+    font-size: 1.3rem;
+    font-weight: 500;
 }
 
-.main-page .body-ent .menu button{
+Link {
+    text-decoration: none; 
+    color: white;
+}
+
+.compte-page .navbar ul li button {
     background-color: transparent;
     border: none;
-    color: #000000;
+    color: #d9d9bf;
     font-size: 1rem;
     font-weight: 400;
     cursor: pointer;
     padding: 0.8rem;
-    margin-bottom: 2rem;
 }
 
-.main-page .body-ent .menu #btn-ent-infos{
-    margin-top: 2rem;
+.compte-page .navbar ul li button:hover {
+    background-color: #1a1a18;
+    border: none;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 0.8rem;
 }
 
-.main-page .body-ent .content-ent{
-    margin-top: 3rem;
-    margin-left: 3rem;
-}
-
-.main-page .body-ent .content-ent #infos-ent h1{
-    margin-bottom: 2rem;
-}
-
-.main-page .body-ent .content-ent #infos-ent .perso .fullname{
+.body-ent {
     display: flex;
-    gap: 1rem;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.main-page .body-ent .content-ent #infos-ent .input-group, .textarea{
+/* Menu Styles */
+.menu {
+    width: 250px;
+    background: #2c3e50;
+    border-radius: 10px;
+    padding: 20px;
+    margin-right: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    margin-bottom: 10px;
+}
+
+.menu button {
+    width: 100%;
+    padding: 12px;
+    background: #34495e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.menu button:hover {
+    background: #3d566e;
+    transform: translateX(5px);
+}
+
+/* Content Styles */
+.content-ent {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.switch-part {
+    display: none;
+}
+
+#infos-ent {
+    display: block;
+}
+
+.switch-part h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 24px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+/* Form Styles */
+.perso, .present {
+    margin-bottom: 25px;
+}
+
+.fullname {
+    display: flex;
+    gap: 15px;
+}
+
+.fullname > div {
+    flex: 1;
+}
+
+/* Overlay Form Styles */
+.hide {
+    display: none !important;
+}
+
+#offform, #compform, #dipform, 
+#langform, #quaform, #misform, 
+#avanform, #docform {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#offform > div, #compform > div, 
+#dipform > div, #langform > div, 
+#quaform > div, #misform > div, 
+#avanform > div, #docform > div {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+#closeOffForm, #closeCompForm, 
+#closeDipForm, #closeLangForm, 
+#closeQuaForm, #closeMisForm, 
+#closeAvanForm, #closeDocForm {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+#closeOffForm:hover, #closeCompForm:hover, 
+#closeDipForm:hover, #closeLangForm:hover, 
+#closeQuaForm:hover, #closeMisForm:hover, 
+#closeAvanForm:hover, #closeDocForm:hover {
+    background: #c0392b;
+    transform: rotate(90deg);
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+}
+
+fieldset legend {
+    padding: 0 10px;
+    color: #3498db;
+    font-weight: bold;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Button Styles */
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button:not(:disabled):hover {
+    opacity: 0.9;
+}
+
+.btn-save {
+    background: #2ecc71;
+    color: white;
+    margin-right: 5px;
+}
+
+.btn-cancel {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-edit {
+    background: #3498db;
+    color: white;
+    margin-right: 5px;
+}
+
+.btn-delete {
+    background: #e74c3c;
+    color: white;
+}
+
+/* Input and Textarea Styles */
+.content-ent input, .content-ent textarea, .content-ent select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.content-ent input:focus, .content-ent textarea:focus, .content-ent select:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Success Message */
+.success-message {
+    background: #2ecc71;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+    display: inline-block;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Loading States */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .body-ent {
+        flex-direction: column;
+    }
+    
+    .menu {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    
+    .fullname {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    #offform > div, #compform > div, 
+    #dipform > div, #langform > div, 
+    #quaform > div, #misform > div, 
+    #avanform > div, #docform > div {
+        width: 95%;
+        padding: 20px 15px;
+    }
+}
+
+/* Special Table Styles */
+.description-cell {
+    max-width: 300px;
+}
+
+.description-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Action Buttons in Tables */
+.actions {
+    white-space: nowrap;
+}
+
+.actions button {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+/* Form Specific Styles */
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-header h3 {
+    color: #2c3e50;
+    margin: 0;
+}
+
+.char-count {
+    color: #7f8c8d;
+    font-size: 12px;
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.submit-btn {
+    background: #3498db;
+    color: white;
+    padding: 12px 20px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #7f8c8d;
+}
+
+.close-btn:hover {
+    color: #e74c3c;
+}
+
+/* Error States */
+.error-state {
+    background: #fdecea;
+    padding: 20px;
+    border-radius: 5px;
+    color: #d32f2f;
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
+    align-items: center;
+    text-align: center;
 }
 
-#ajoutoffres, #gestoffres{
-    display: none;
+.error-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
-.main-page .body-ent .content-ent .hide{
-    display: none;
+.retry-button {
+    background: #d32f2f;
+    color: white;
+    margin-top: 10px;
 }
 
-
-
-#ajoutoffres #offform,
-#gestoffres #compform,
-#gestoffres #dipform,
-#langform,
-#quaform,
-#misform,
-#avanform,
-#docform{
-    position: fixed;
-	top: 0px;
-	left: 0px;
-	width: 100vw;
-	height: 100vh;
-	background-color: rgba(0, 0, 0, 0.774);
-	z-index: 9999;
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #7f8c8d;
+    font-style: italic;
 }
 
-#ajoutoffres #offform form,
-#gestoffres #compform form,
-#gestoffres #dipform form,
-#langform form,
-#quaform form,
-#misform form,
-#avanform form,
-#docform form{
-    width: max-content;
-	margin: 50px auto 0px auto;
-    background-color: white;
-    padding: 1rem;
+/* Pagination Styles */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 5px;
 }
 
-#ajoutoffres #offform #closeOffForm,
-#gestoffres #compform #closeCompForm,
-#gestoffres #dipform #closeDipForm,
-#langform #closeLangForm,
-#quaform #closeQuaForm,
-#misform #closeMisForm,
-#avanform #closeAvanForm,
-#docform #closeDocForm{
+.pagination-button {
+    padding: 8px 12px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    position: absolute;
-    right: 0;
+}
+
+.pagination-button:hover:not(:disabled) {
+    background: #2980b9;
+}
+
+.pagination-button:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.pagination-button.active {
+    background: #2c3e50;
+}
+
+/* Date Fields Container */
+.date-fields {
+    display: flex;
+    gap: 15px;
+}
+
+.date-fields .form-group {
+    flex: 1;
+}
+
+/* Document Select Styles */
+.document-select-container {
+    position: relative;
+}
+
+.document-hint {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-top: 5px;
+}
+
+/* Spinner Animation */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 8px;
+}
+
+/* Table Container Styles */
+.offre-table-container,
+.competence-table-container,
+.diplome-table-container,
+.langue-table-container,
+.qualite-table-container,
+.mission-table-container,
+.avantage-table-container,
+.docrequis-table-container {
+    margin: 20px 0;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Action Buttons in Tables */
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.action-buttons button {
+    padding: 6px 10px;
+    font-size: 12px;
+}
+
+.save-button {
+    background: #2ecc71;
+    color: white;
+}
+
+.cancel-button {
+    background: #95a5a6;
+    color: white;
+}
+
+.edit-button {
+    background: #3498db;
+    color: white;
+}
+
+.delete-button {
+    background: #e74c3c;
+    color: white;
+}
+
+/* Edit Input Styles */
+.edit-input, .edit-textarea, .edit-select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.edit-textarea {
+    min-height: 80px;
+    resize: vertical;
 }
