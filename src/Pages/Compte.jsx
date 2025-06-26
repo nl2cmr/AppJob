@@ -290,6 +290,8 @@ export const Compte = () => {
 
                     </div>
                 </div>
+
+                
             </div>
         </div>
     );

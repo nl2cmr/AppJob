@@ -417,3 +417,131 @@ textarea {
     color: #7f8c8d;
     font-style: italic;
 }
+/* Style général du conteneur - version compacte */
+.cv-upload-container {
+    z-index: 100;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 1rem;
+    border: 2px dashed #d1d5db;
+    border-radius: 10px;
+    background-color: rgba(249, 249, 249, 0.247);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    width: 200px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: scale(1);
+    transform-origin: bottom right;
+}
+
+/* Animation discrète au hover */
+.cv-upload-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Style compact pour le drag-over */
+.cv-upload-container.drag-over {
+    border-color: #4a6cf7;
+    background-color: rgba(240, 244, 255, 0.95);
+    transform: scale(1.03);
+}
+
+/* Input file masqué */
+#cvfile {
+    display: none;
+}
+
+/* Label compact */
+.cv-upload-label {
+    display: inline-block;
+    padding: 10px 18px;
+    background-color: #4a6cf7;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cv-upload-label:hover {
+    background-color: #3a5bd9;
+}
+
+/* Bouton submit compact */
+.cv-upload-button {
+    padding: 10px 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.cv-upload-button:hover {
+    background-color: #3e8e41;
+}
+
+.cv-upload-button:disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Affichage du fichier - version compacte */
+.cv-file-info {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #555;
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Icône plus petite */
+.cv-upload-icon {
+    font-size: 1.5rem;
+    color: #4a6cf7;
+    margin-bottom: 0.5rem;
+}
+
+/* Instructions compactes */
+.cv-upload-instructions {
+    text-align: center;
+    color: #666;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+/* Animation d'apparition */
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.cv-upload-container {
+    animation: slideInUp 0.3s ease-out forwards;
+}

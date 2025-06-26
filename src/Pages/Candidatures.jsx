@@ -126,7 +126,7 @@ export const CandidaturesEn = () => {
                                 <CandidatureCard 
                                     key={candidature.idcandidature} 
                                     candidature={candidature} 
-                                    onStatusChange={handleStatusChange} // Ajoutez cette ligne
+                                    onStatusChange={handleStatusChange}
                                 />
                             ))}
                         </div>

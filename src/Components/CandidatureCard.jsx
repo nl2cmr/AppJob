@@ -71,6 +71,36 @@ export const CandidatureCard = ({ candidature, onStatusChange }) => {
         }
     };
 
+    const handleDelete = async () => {
+        setIsUpdating(true);
+        try {
+            const response = await fetch(`http://localhost/backend/candidature_crud/delete_candidature.php`, {
+                method: 'DELETE', // ou 'POST' selon votre configuration
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    idcandidature: candidature.idcandidature
+                })
+            });
+            
+            const result = await response.json();
+            
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || `Erreur HTTP: ${response.status}`);
+            }
+            
+            // Appeler la fonction parente pour mettre à jour l'état
+            onStatusChange(candidature.idcandidature, 'supprimée');
+            
+        } catch (error) {
+            console.error("Erreur lors de la suppression:", error);
+            alert(`Erreur lors de la suppression: ${error.message}`);
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
     return (
         <div className={`candidature-card ${getStatusClass()}`}>
             <div className="candidature-header">
@@ -107,8 +137,12 @@ export const CandidatureCard = ({ candidature, onStatusChange }) => {
                     Consulter le CV
                 </button>
                 {candidature.statut === 'refusée' && (
-                    <button className="delete-button">
-                        Supprimer
+                    <button 
+                        className="delete-button"
+                        onClick={handleDelete}
+                        disabled={isUpdating}
+                    >
+                        {isUpdating ? 'Suppression...' : 'Supprimer'}
                     </button>
                 )}
             </div>
@@ -285,9 +319,6 @@ export const CandidatureCard = ({ candidature, onStatusChange }) => {
                                                         {projet.date_fin && ` - ${formatDate(projet.date_fin)}`}
                                                     </span>
                                                 </div>
-                                                {projet.description && (
-                                                    <p className="projet-description">{projet.description}</p>
-                                                )}
                                                 {projet.lien && (
                                                     <a href={projet.lien} target="_blank" rel="noopener noreferrer" className="projet-lien">
                                                         Lien vers le projet

@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { OffreCard } from '../Components/OffreCard.jsx';
 import { NavBar } from '../Components/NavBarMain';
 import { useNavigate } from 'react-router-dom';
+import { CVGenerator } from '../Components/CVGenerator.jsx';
+
 
 export const MainPage = () => {
     const [offres, setOffres] = useState([]);
@@ -130,6 +132,7 @@ export const MainPage = () => {
                     </div>
                 )}
             </div>
+            <CVGenerator />
         </div>
     );
 }
