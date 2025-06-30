@@ -24,11 +24,11 @@ export const LandingPage = () => {
 const NavBarLanding = () => {
   return (
     <header className="navbar">
-      <div className="logo">Logo</div>
+      <div className="logo">JobConnect</div>
       <nav className="nav-buttons">
-        <a href="/download" className="nav-button">Télécharger l'application</a>
-        <Link to="/login" className="nav-button">Se connecter</Link>
-        <Link to="/signup" className="nav-button">S'inscrire</Link>
+        <a href="/download" className="nav-button">Télécharger l'application mobile</a>
+        <Link to="/login" className="nav-button btncon">Se connecter</Link>
+        <Link to="/signup" className="nav-button btninsc">S'inscrire</Link>
       </nav>
     </header>
   );

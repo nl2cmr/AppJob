@@ -3,20 +3,6 @@ import { Input } from '../Components/Input';
 import './css/Signup.css'
 import { useState } from 'react';
 
-const CheckBox = ({ checked, onChange }) => {
-    return (
-        <div className='checkbox'>
-            <input 
-                type="checkbox" 
-                name="souvenir" 
-                id="souv" 
-                checked={checked}
-                onChange={onChange}
-            />
-            <label htmlFor="souv">Se souvenir</label>
-        </div>
-    );
-}
 
 const CandidateForm = ({ email, setEmail, password, setPassword, confirmPassword, setConfirmPassword }) => {
     return (
@@ -158,8 +144,7 @@ export const SignupForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
-    const [role, setRole] = useState('candidate'); // 'candidate' or 'recruiter'
+    const [role, setRole] = useState('candidate'); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -169,7 +154,6 @@ export const SignupForm = () => {
             email,
             password,
             confirmpassword: confirmPassword,
-            rememberMe,
             ...(role === 'candidate' ? {
                 prenom: e.target.prenom.value,
                 nom: e.target.nom.value,
@@ -191,7 +175,7 @@ export const SignupForm = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData) // Correction ici: utiliser formData au lieu de data
+                body: JSON.stringify(formData) 
             });
             
             if (!response.ok) {
@@ -205,7 +189,7 @@ export const SignupForm = () => {
                 alert(result.message);
                 navigate('/login');
             } else {
-                // Afficher les erreurs de champ si elles existent
+                
                 if (result.fieldErrors) {
                     let errorMessages = [];
                     for (const field in result.fieldErrors) {
@@ -279,8 +263,6 @@ export const SignupForm = () => {
                             setConfirmPassword={setConfirmPassword}
                         />
                     )}
-
-                    <CheckBox checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
 
                     <div className="form-footer">
                         <p>En cliquant sur <span>Accepter et s'inscrire, vous acceptez les <a href="#">conditions d'utilisations</a></span></p>

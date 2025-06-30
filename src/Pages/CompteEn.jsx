@@ -92,11 +92,41 @@ export const CompteEn = () => {
         document.getElementById("infos-ent").style.display = "block";
     }
 
-    const showgestoffre = () =>{
+    const showcomp = () =>{
         hideAll();
-        document.getElementById("gestoffres").style.display = "block";
+        document.getElementById("comps").style.display = "block";
+    }
+
+    const showdip = () =>{
+        hideAll();
+        document.getElementById("dips").style.display = "block";
+    }
+
+    const showlang = () =>{
+        hideAll();
+        document.getElementById("langs").style.display = "block";
+    }
+
+    const showqua= () =>{
+        hideAll();
+        document.getElementById("quas").style.display = "block";
+    }
+
+    const showmis = () =>{
+        hideAll();
+        document.getElementById("miss").style.display = "block";
+    }
+
+    const showavan = () =>{
+        hideAll();
+        document.getElementById("avans").style.display = "block";
     }
     
+    const showdoc = () =>{
+        hideAll();
+        document.getElementById("docs").style.display = "block";
+    }
+
     const showajoutoffre = () =>{
         hideAll();
         document.getElementById("ajoutoffres").style.display = "block";
@@ -149,8 +179,14 @@ export const CompteEn = () => {
                 <div className="menu">
                     <ul>
                         <li><button onClick={showinfos} id='btn-ent-infos' type="button">Informations de l'entreprise</button></li>
-                        <li><button onClick={showajoutoffre} id='btn-ent-exp' type="button">Ajouter une offre</button></li>
-                        <li><button onClick={showgestoffre} id='btn-ent-exp' type="button">Gestion des offres</button></li>
+                        <li><button onClick={showajoutoffre} id='btn-ent-exp' type="button">Gestion des offres</button></li>
+                        <li><button onClick={showcomp} id='btn-ent-exp' type="button">Gestion des compétences</button></li>
+                        <li><button onClick={showdip} id='btn-ent-exp' type="button">Gestion des diplômes</button></li>
+                        <li><button onClick={showlang} id='btn-ent-exp' type="button">Gestion des langues</button></li>
+                        <li><button onClick={showqua} id='btn-ent-exp' type="button">Gestion des qualités</button></li>
+                        <li><button onClick={showmis} id='btn-ent-exp' type="button">Gestion des missions</button></li>
+                        <li><button onClick={showavan} id='btn-ent-exp' type="button">Gestion des avantages</button></li>
+                        <li><button onClick={showdoc} id='btn-ent-exp' type="button">Gestion des documents requis</button></li>
                     </ul>
                 </div>
 
@@ -178,64 +214,66 @@ export const CompteEn = () => {
                     </div>
 
                     <div id="ajoutoffres" className='switch-part'>
-                        <h1>Ajouter une offre d'emploi</h1>
+                        <h2>Gestion des offres</h2>
                         <OffresTable />
                         <OffresForm />
-                        <button id='addoff' onClick={showOffForm}>Ajouter une offre d'emploi</button>
+                        <button id='addoff' onClick={showOffForm}>Ajouter une offre</button>
                     </div>
 
-                    <div id="gestoffres" className='switch-part'>
-                        <h1>Gérer vos offres d'emplois</h1>
-                        <div>
-                            <h2>Ajouter dec compétences à votre offre</h2>
-                            <CompetencesTableOff />
-                            <CompetencesFormOff />
-                            <button id='addcomp' onClick={showCompForm}>Ajouter une competence</button>
-                            <br />
-                        </div>
-                        <div>
-                            <h2>Ajouter dec diplomes à votre offre</h2>
-                            <DiplomesTableOff />
-                            <DiplomesFormOff />
-                            <button id='adddip' onClick={showDipForm}>Ajouter un diplome</button>
-                            <br />
-                        </div>
-                        <div>
-                            <h2>Ajouter des langues offre</h2>
-                            <LanguesTableOff />
-                            <LanguesFormOff />
-                            <button id='addlang' onClick={showLangForm}>Ajouter une langue</button>
-                            <br />
-                        </div>
-                        <div>
-                            <h2>Ajouter des qualites offre</h2>
-                            <QualitesTableOff />
-                            <QualitesFormOff />
-                            <button id='addqua' onClick={showQuaForm}>Ajouter une qualite</button>
-                            <br />
-                        </div>
-                        <div>
-                            <h2>Ajouter des missions</h2>
-                            <MissionsTableOff />
-                            <MissionsFormOff />
-                            <button id='addmis' onClick={showMisForm}>Ajouter une mission</button>
-                            <br />
-                        </div>
-                        <div>
-                            <h2>Ajouter des avantages</h2>
-                            <AvantagesTableOff />
-                            <AvantagesFormOff />
-                            <button id='addavan' onClick={showAvanForm}>Ajouter un avantage</button>
-                            <br />
-                        </div>
-                        <div>
-                        <h2>Ajouter des documents requis</h2>
-                            <DocRequisFormOff />
-                            <DocRequisTableOff />
-                            <button id='adddoc' onClick={showDocForm}>Ajouter un document</button>
-                            <br />
-                        </div>
+                    <div id="comps" className='switch-part'>
+                        <h2>Gestion des compétences</h2>
+                        <CompetencesTableOff />
+                        <CompetencesFormOff />
+                        <button id='addcomp' onClick={showCompForm}>Ajouter une competence</button>
+                        <br />
+                    </div>
 
+                    <div id="dips" className='switch-part'>
+                        <h2>Gestion des diplômes</h2>
+                        <DiplomesTableOff />
+                        <DiplomesFormOff />
+                        <button id='adddip' onClick={showDipForm}>Ajouter un diplome</button>
+                        <br />
+                    </div>
+
+                    <div id="langs" className='switch-part'>
+                        <h2>Gestion des langues</h2>
+                        <LanguesTableOff />
+                        <LanguesFormOff />
+                        <button id='addlang' onClick={showLangForm}>Ajouter une langue</button>
+                        <br />
+                    </div>
+
+                    <div id="quas" className='switch-part'>
+                        <h2>Gestion des qualites</h2>
+                        <QualitesTableOff />
+                        <QualitesFormOff />
+                        <button id='addqua' onClick={showQuaForm}>Ajouter une qualite</button>
+                        <br />
+                    </div>
+
+                    <div id="miss" className='switch-part'>
+                        <h2>Gestion des missions</h2>
+                        <MissionsTableOff />
+                        <MissionsFormOff />
+                        <button id='addmis' onClick={showMisForm}>Ajouter une mission</button>
+                        <br />
+                    </div>
+
+                    <div id="avans" className='switch-part'>
+                        <h2>Gestion des avantages</h2>
+                        <AvantagesTableOff />
+                        <AvantagesFormOff />
+                        <button id='addavan' onClick={showAvanForm}>Ajouter un avantage</button>
+                        <br />
+                    </div>
+
+                    <div id="docs" className='switch-part'>
+                        <h2>Gestion des documents requis</h2>
+                        <DocRequisFormOff />
+                        <DocRequisTableOff />
+                        <button id='adddoc' onClick={showDocForm}>Ajouter un document</button>
+                        <br />
                     </div>
 
                 </div>
@@ -287,7 +325,7 @@ function OffresForm() {
 
     return (
         <div id="offform" className='hide'>
-            <button id='closeOffForm' onClick={closeOffForms}>close</button>
+            <button id='closeOffForm' onClick={closeOffForms}>&times;</button>
             <form onSubmit={handleSubmit} method="POST">
                 <fieldset>Ajouter une offre d'emploi</fieldset>
                 <Input name="titreoff" label="Donnez un titre à votre offre d'emploi" />
@@ -594,7 +632,7 @@ function CompetencesFormOff() {
 
     return (
         <div id="compform" className='hide'>
-            <button id='closeCompForm' onClick={closeCompForms}>Fermer</button>
+            <button id='closeCompForm' onClick={closeCompForms}>&times;</button>
             <form onSubmit={handleSubmit} method='POST'>
                 <fieldset>
                     <legend>Ajouter une compétence</legend>
@@ -908,7 +946,7 @@ function DiplomesFormOff() {
 
     return (
         <div id="dipform" className='hide'>
-            <button id='closeDipForm' onClick={closeDipForms}>Fermer</button>
+            <button id='closeDipForm' onClick={closeDipForms}>&times;</button>
             <form onSubmit={handleSubmit} method='POST'>
                 <fieldset>
                     <legend>Ajouter un diplôme</legend>
@@ -1253,7 +1291,7 @@ function LanguesFormOff() {
 
     return (
         <div id="langform" className='hide'>
-            <button id='closeLangForm' onClick={closeLangForms}>Fermer</button>
+            <button id='closeLangForm' onClick={closeLangForms}>&times;</button>
             <form onSubmit={handleSubmit} method='POST'>
                 <fieldset>
                     <legend>Ajouter une langue</legend>
@@ -1503,7 +1541,6 @@ function QualitesFormOff() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Récupération des offres au chargement
     useEffect(() => {
         const fetchOffres = async () => {
             try {
@@ -1571,7 +1608,7 @@ function QualitesFormOff() {
             <div className="form-header">
                 <h3>Ajouter une qualité professionnelle</h3>
                 <button id='closeQuaForm' onClick={closeQuaForms} className="close-btn">
-                    close
+                    &times;
                 </button>
             </div>
             
@@ -1918,7 +1955,6 @@ function MissionsFormOff() {
     const [error, setError] = useState(null);
     const [dateError, setDateError] = useState('');
 
-    // Récupération des offres
     useEffect(() => {
         const fetchOffres = async () => {
             try {
@@ -1989,7 +2025,6 @@ function MissionsFormOff() {
             if (result.success) {
                 closeMisForms();
                 alert('Mission enregistrée avec succès !');
-                // Rafraîchir les données parentes si nécessaire
             } else {
                 alert(result.message || "Erreur lors de l'enregistrement");
             }
@@ -2110,18 +2145,15 @@ function MissionsTableOff() {
     });
     const [dateError, setDateError] = useState('');
 
-    // Récupérer les missions et les offres
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
                 
-                // Charger les offres
                 const offresResponse = await fetch(`http://localhost/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 if (!offresResponse.ok) throw new Error('Erreur lors du chargement des offres');
                 setOffres(await offresResponse.json());
 
-                // Charger les missions
                 const missionsResponse = await fetch('http://localhost/backend/mission_crud/get_missions.php');
                 if (!missionsResponse.ok) throw new Error('Erreur lors du chargement des missions');
                 setMissions(await missionsResponse.json());
@@ -2412,7 +2444,7 @@ function AvantagesFormOff() {
                     className="close-btn"
                     disabled={isSubmitting}
                 >
-                    close
+                    &times;
                 </button>
             </div>
             

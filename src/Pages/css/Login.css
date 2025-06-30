@@ -24,6 +24,10 @@
     align-items: center;
 }
 
+.loginpage .logo h1{
+    color: #111827;
+}
+
 .loginpage .loginform{
     width: 100%;
     padding-top: 5em;

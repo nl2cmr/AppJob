@@ -75,7 +75,7 @@ export const CandidatureCard = ({ candidature, onStatusChange }) => {
         setIsUpdating(true);
         try {
             const response = await fetch(`http://localhost/backend/candidature_crud/delete_candidature.php`, {
-                method: 'DELETE', // ou 'POST' selon votre configuration
+                method: 'DELETE', 
                 headers: {
                     'Content-Type': 'application/json',
                 },

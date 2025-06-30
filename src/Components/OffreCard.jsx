@@ -4,10 +4,12 @@ export const OffreCard = ({ infosoffre }) => {
     const [selectedOffre, setSelectedOffre] = useState(null);
     const [isApplying, setIsApplying] = useState(false);
     const [applicationStatus, setApplicationStatus] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleViewOffre = (offre) => {
         setSelectedOffre(offre);
-        setApplicationStatus(null); 
+        setApplicationStatus(null);
+        setErrorMessage('');
     };
 
     const closeOffreDetail = () => {
@@ -18,6 +20,7 @@ export const OffreCard = ({ infosoffre }) => {
         if (!selectedOffre) return;
         
         setIsApplying(true);
+        setErrorMessage('');
         
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
@@ -39,11 +42,18 @@ export const OffreCard = ({ infosoffre }) => {
             if (result.success) {
                 setApplicationStatus('success');
             } else {
-                throw new Error(result.message || "Erreur lors de la candidature");
+                // Vérifier si c'est une erreur de candidature déjà existante
+                if (result.error_type === 'duplicate_application') {
+                    setErrorMessage(result.message);
+                    setApplicationStatus('already_applied');
+                } else {
+                    throw new Error(result.message || "Erreur lors de la candidature");
+                }
             }
         } catch (error) {
             console.error("Erreur lors de la candidature:", error);
             setApplicationStatus('error');
+            setErrorMessage(error.message);
         } finally {
             setIsApplying(false);
         }
@@ -116,9 +126,14 @@ export const OffreCard = ({ infosoffre }) => {
                                     Votre candidature a bien été envoyée !
                                 </div>
                             )}
+                            {applicationStatus === 'already_applied' && (
+                                <div className="alert alert-info">
+                                    {errorMessage || 'Vous avez déjà postulé à cette offre'}
+                                </div>
+                            )}
                             {applicationStatus === 'error' && (
                                 <div className="alert alert-error">
-                                    Une erreur est survenue lors de votre candidature
+                                    {errorMessage || 'Une erreur est survenue lors de votre candidature'}
                                 </div>
                             )}
                             
@@ -256,11 +271,15 @@ export const OffreCard = ({ infosoffre }) => {
                             <button 
                                 className="apply-button"
                                 onClick={handleApply}
-                                disabled={isApplying || applicationStatus === 'success'}
+                                disabled={isApplying || applicationStatus === 'success' || applicationStatus === 'already_applied'}
                             >
                                 {isApplying ? (
                                     <>
                                         <i className="fas fa-spinner fa-spin"></i> Envoi...
+                                    </>
+                                ) : applicationStatus === 'already_applied' ? (
+                                    <>
+                                        <i className="fas fa-check"></i> Déjà postulé
                                     </>
                                 ) : (
                                     <>

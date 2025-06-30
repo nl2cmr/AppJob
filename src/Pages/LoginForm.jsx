@@ -26,18 +26,17 @@ export const LoginForm = () => {
       });
 
       const data = await response.json();
-      console.log("Réponse serveur :", data); // Pour vérifier la réponse
+      console.log("Réponse serveur :", data); 
 
       if (data.success && data.user) {
         const userString = JSON.stringify(data.user);
 
-        // Stockage selon le choix de l'utilisateur
         
         sessionStorage.setItem('user', userString);
         localStorage.setItem('user', userString);
 
         setIsLoading(true);
-        // Redirection après une courte attente
+
         setTimeout(() => {
           navigate(data.user.role === 'recruteur' ? '/mainen' : '/main');
         }, 1000);
@@ -61,7 +60,7 @@ export const LoginForm = () => {
       ) : (
         <div className="loginpage">
           <div className='logo'>
-            <h1>Logo</h1>
+            <h1>JobConnect</h1>
           </div>
 
           <div className="loginform">
