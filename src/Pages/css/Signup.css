@@ -1,140 +1,257 @@
-.signuppage{
-    background-color: #f2f1f0;
+:root {
+
+    --primary-dark: #0a152f;
+    --primary-light: #1e3a8a;
+    --accent-primary: #4f46e5;
+    --accent-secondary: #6366f1;
+    --text-light: #f8fafc;
+    --text-dark: #1e293b;
+    --background-light: #f8fafc;
+    --background-dark: #e2e8f0;
+    --error-color: #ef4444;
+    --success-color: #10b981;
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-.signuppage .logo{
-    width: 100%;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 2rem;
-}
 
-.signuppage .signupform{
-    height: 100%;
+.signuppage {
+    min-height: 100vh;
+    background-color: var(--background-light);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.signuppage .signupform h2{
+
+.signuppage .logo {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-sm);
+}
+
+.signuppage .logo h1 {
+    color: var(--text-light);
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.signuppage .signupform {
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signuppage .signupform h2 {
     font-size: 2rem;
-    color: #1f1d1e;
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
 }
 
-.signuppage .signupform form{
-    padding: 1rem 2rem;
-    background-color: #FFFFFF;
-    border: none;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 500px;
+.signuppage .signupform form {
+    width: 100%;
+    padding: 2rem;
+    background-color: var(--text-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.signuppage .radio-part {
     margin-bottom: 2rem;
+    text-align: center;
 }
 
-.signuppage .signupform form .radio-part p{
+.signuppage .radio-part p {
+    color: var(--text-dark);
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: 1.5rem;
-    text-align: center;
+    opacity: 0.9;
 }
 
-.signuppage .signupform form .radio-part .radio{
+.signuppage .radio {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 2rem;
     margin-bottom: 1rem;
 }
 
-.signuppage .signupform form .radio-part .radio .radio-comp{
+.signuppage .radio-comp {
     display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.signuppage .radio-comp input[type="radio"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: var(--accent-primary);
+}
+
+.signuppage .radio-comp label {
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.signuppage .candidat-form,
+.signuppage .recruteur-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 576px) {
+.signuppage .candidat-form {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.signuppage .candidat-form .input-group:nth-child(1),
+.signuppage .candidat-form .input-group:nth-child(2),
+.signuppage .candidat-form .input-group:nth-child(7),
+.signuppage .candidat-form .input-group:nth-child(8) {
+    grid-column: span 1;
+}
+
+.signuppage .candidat-form .input-group:nth-child(5),
+.signuppage .candidat-form .input-group:nth-child(6) {
+    grid-column: span 2;
+}
+}
+
+.signuppage .input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.signuppage .input-group label {
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.signuppage .input-group input {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--background-dark);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: all var(--transition-speed) ease;
+}
+
+.signuppage .input-group input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.signuppage .form-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.signuppage .form-footer p {
+    color: var(--text-dark);
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.signuppage .form-footer a {
+    color: var(--accent-primary);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.signuppage .form-footer a:hover {
+    text-decoration: underline;
+}
+
+.signuppage .signupformbottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
 }
 
-.signuppage .signupform form .input-group{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-}
-
-.signuppage .signupform form .input-group label{
-    color: #525050;
-    padding-bottom: 5px;
-}
-
-.signuppage .signupform form .input-group input{
-    border: 1px solid #878787;
-    padding: .4rem;
-    border-radius: 5px;
-}
-
-.signuppage .signupform form .checkbox{
-    display: flex;
-    gap: .8rem;
+.signuppage button[type="submit"] {
     width: 100%;
-    padding-bottom: 1rem;
-}
-
-.signuppage .signupform form .checkbox input{
-    width: 17px;
-}
-
-.signuppage .signupform form .checkbox label{
-    color: #525050;
-    font-size: 1.2rem;   
-}
-
-.signuppage .signupform form button{
-
-    margin-bottom: 1rem;
-    background-color: #111827;
-    border: 1px solid transparent;
-    border-radius: .75rem;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    cursor: pointer;
-    flex: 0 0 auto;
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    font-size: 1.125rem;
+    padding: 0.875rem;
+    background-color: var(--accent-primary);
+    color: var(--text-light);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
     font-weight: 600;
-    line-height: 1.5rem;
-    padding: .6rem 1.2rem;
-    text-align: center;
-    text-decoration: none #6B7280 solid;
-    text-decoration-thickness: auto;
-    transition-duration: .2s;
-    transition-property: background-color,border-color,color,fill,stroke;
-    transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: auto;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
 }
 
-.signuppage .signupform form button:hover {
-    background-color: #374151;
+.signuppage button[type="submit"]:hover {
+    background-color: var(--accent-secondary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
-.signuppage .signupform form button:focus {
-    box-shadow: none;
-    outline: 2px solid transparent;
-    outline-offset: 2px;
+.signuppage .signupformbottom p {
+    color: var(--text-dark);
+    font-size: 0.9rem;
 }
 
-@media (min-width: 768px) {
-    .signuppage .signupform form button {
-        padding: .75rem 1.5rem;
-    }
+.signuppage .signupformbottom a {
+    color: var(--accent-primary);
+    font-weight: 500;
+    text-decoration: none;
 }
 
-.signuppage .signupform form .signupformbottom{
-    display: flex;
+.signuppage .signupformbottom a:hover {
+    oration: underline;
+}
+
+@media (max-width: 768px) {
+.signuppage .signupform form {
+    padding: 1.5rem;
+}
+
+.signuppage .radio {
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    gap: 1rem;
+    align-items: flex-start;
 }
 
-.signuppage .signupform form .form-footer p{
-    text-align: center;
-    margin-bottom: 1rem;
+.signuppage .radio-comp {
+    width: 100%;
+}
+}
+
+@media (max-width: 576px) {
+.signuppage .signupform {
+    padding: 1.5rem 0.5rem;
+}
+
+.signuppage .signupform form {
+    padding: 1.25rem;
+}
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }

@@ -209,7 +209,7 @@ export const SignupForm = () => {
     return (
         <div className="signuppage">
             <div className="logo">
-                <h1>Logo</h1>
+                <h1>JobConnect</h1>
             </div>
 
             <div className="signupform">

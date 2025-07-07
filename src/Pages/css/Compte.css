@@ -111,11 +111,11 @@
     align-items: center;
 }
 
-#expform > div, #compform > div, 
-#formaform > div, #quaform > div, 
-#refform > div, #intform > div, 
-#langform > div, #projform > div, 
-#dipform > div, #certform > div {
+#expform > form, #compform > form, 
+#formaform > form, #quaform > form, 
+#refform > form, #intform > form, 
+#langform > form, #projform > form, 
+#dipform > form, #certform > form {
     background: white;
     padding: 30px;
     border-radius: 10px;
@@ -125,6 +125,15 @@
     overflow-y: auto;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     position: relative;
+}
+
+#expform > form button, #compform > form button, 
+#formaform > form button, #quaform > form button, 
+#refform > form button, #intform > form button, 
+#langform > form button, #projform > form button, 
+#dipform > form button, #certform > form button {
+    background-color: #2ecc71;
+    color: white;
 }
 
 #closeExpForm, #closeCompForm, 

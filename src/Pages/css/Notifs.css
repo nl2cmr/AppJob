@@ -85,21 +85,11 @@
     align-items: center;
 }
 
-.notification-date::before {
-    content: "🕒";
-    margin-right: 0.3rem;
-}
-
 .notification-sender {
     font-size: 0.85rem;
     color: #3498db;
     display: flex;
     align-items: center;
-}
-
-.notification-sender::before {
-    content: "👤";
-    margin-right: 0.3rem;
 }
 
 .notification-actions {

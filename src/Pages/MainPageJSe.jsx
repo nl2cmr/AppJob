@@ -4,6 +4,7 @@ import { OffreCard } from '../Components/OffreCard.jsx';
 import { NavBar } from '../Components/NavBarMain';
 import { useNavigate } from 'react-router-dom';
 import { CVGenerator } from '../Components/CVGenerator.jsx';
+import { FaSearch } from 'react-icons/fa';
 
 
 export const MainPage = () => {
@@ -108,6 +109,7 @@ export const MainPage = () => {
                 </div>
             </div>
             <div className="body-part">
+                <TriMenu />
                 {loading ? (
                     <div className="loading-message">
                         <div className="spinner"></div>
@@ -139,18 +141,62 @@ export const MainPage = () => {
 
 function SearchPart({ searchTerm, setSearchTerm }) {
     return (
-        <div className="search-part">
-            <div className="search-container">
-                <input 
-                    type="text" 
-                    placeholder="Rechercher par titre, lieu ou description..." 
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <button className="search-button">
-                    <i className="fas fa-search"></i>
-                </button>
+        <div className="search-part1">
+            <input 
+                type="text" 
+                placeholder="Rechercher par titre, lieu ou description..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button className="search-button">
+                <FaSearch style={{color:'white'}}/>
+            </button>
+        </div>
+    );
+}
+
+function TriMenu() {
+    return (
+        <div className="tri-part">
+            <div className="filter-group">
+                <h3 className="filter-title">Domaines professionnels</h3>
+                <div className="filter-options">
+                    <div className="filter-option">
+                        <input type="checkbox" id="informatique" />
+                        <label htmlFor="informatique">Informatique</label>
+                    </div>
+                    <div className="filter-option">
+                        <input type="checkbox" id="enseignement" />
+                        <label htmlFor="enseignement">Enseignement</label>
+                    </div>
+                    <div className="filter-option">
+                        <input type="checkbox" id="sante" />
+                        <label htmlFor="sante">Santé</label>
+                    </div>
+                    <div className="filter-option">
+                        <input type="checkbox" id="finance" />
+                        <label htmlFor="finance">Finance</label>
+                    </div>
+                    <div className="filter-option">
+                        <input type="checkbox" id="marketing" />
+                        <label htmlFor="marketing">Marketing</label>
+                    </div>
+                    <div className="filter-option">
+                        <input type="checkbox" id="ingenierie" />
+                        <label htmlFor="ingenierie">Ingénierie</label>
+                    </div>
+                    <div className="filter-option">
+                        <input type="checkbox" id="design" />
+                        <label htmlFor="design">Design</label>
+                    </div>
+                    <div className="filter-option">
+                        <input type="checkbox" id="juridique" />
+                        <label htmlFor="juridique">Juridique</label>
+                    </div>
+                </div>
             </div>
+            
+            
         </div>
     );
 }

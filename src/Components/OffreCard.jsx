@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import { GiPositionMarker } from 'react-icons/gi';
+import { PiMoneyFill } from 'react-icons/pi';
+import { LiaFileContractSolid } from 'react-icons/lia';
+import { BsBuildingsFill } from 'react-icons/bs';
 
 export const OffreCard = ({ infosoffre }) => {
     const [selectedOffre, setSelectedOffre] = useState(null);
@@ -42,7 +46,6 @@ export const OffreCard = ({ infosoffre }) => {
             if (result.success) {
                 setApplicationStatus('success');
             } else {
-                // Vérifier si c'est une erreur de candidature déjà existante
                 if (result.error_type === 'duplicate_application') {
                     setErrorMessage(result.message);
                     setApplicationStatus('already_applied');
@@ -70,26 +73,42 @@ export const OffreCard = ({ infosoffre }) => {
             ) : (
                 infosoffre.map((offre) => (
                     <div key={offre.idoffre} className="offre-card">
-                        <div className="offre-card-header">
-                            <h3>{offre.titre}</h3>
-                            <span className="reference">{offre.reference}</span>
+                        <div className="entreprise-logo-container">
+                            {offre.logo_entreprise ? (
+                                <img 
+                                    src={`http://localhost/backend/uploads/${offre.logo_entreprise}`} 
+                                    alt={`Logo ${offre.recruteur_nom}`}
+                                    className="entreprise-logo"
+                                />
+                            ) : (
+                                <div className="entreprise-logo-placeholder">
+                                    <BsBuildingsFill />
+                                </div>
+                            )}
                         </div>
-                        <div className="offre-card-body">
-                            <p className="description">{offre.description.substring(0, 150)}...</p>
-                            <div className="offre-card-meta">
-                                <span className="contract-type">{offre.type_contrat}</span>
-                                {offre.salaire && <span className="salary">{offre.salaire} FCFA</span>}
+                        <div className="offre-card-content">
+                            <div className="offre-card-header">
+                                <h3>{offre.titre}</h3>
+                                <span className="reference">{offre.reference}</span>
                             </div>
+                            <div className="offre-card-body">
+                                <p className="description">{offre.description.substring(0, 150)}...</p>
+                                <div className="offre-card-meta">
+                                    <span className="contract-type">{offre.type_contrat}</span>
+                                    {offre.salaire && <span className="salary">{offre.salaire} FCFA</span>}
+                                </div>
+                            </div>
+                            <button 
+                                className="view-button"
+                                onClick={() => handleViewOffre(offre)}
+                            >
+                                Voir l'offre
+                            </button>
                         </div>
-                        <button 
-                            className="view-button"
-                            onClick={() => handleViewOffre(offre)}
-                        >
-                            Voir l'offre
-                        </button>
                     </div>
                 ))
             )}
+
             {selectedOffre && (
                 <div className="offre-detail-overlay">
                     <div className="offre-detail-container">
@@ -97,25 +116,38 @@ export const OffreCard = ({ infosoffre }) => {
                             &times;
                         </button>
                         
-                        <div className="offre-detail-header">
-                            <h2>{selectedOffre.titre}</h2>
-                            <span className="reference">Référence: {selectedOffre.reference}</span>
-                            <div className="recruiter-info">
-                                <span>Publiée par: {selectedOffre.recruteur_nom || "Entreprise"}</span>
+                        <div className="entreprise-header">
+                            {selectedOffre.logo_entreprise ? (
+                                <img 
+                                    src={`http://localhost/backend/uploads/${selectedOffre.logo_entreprise}`} 
+                                    alt={`Logo ${selectedOffre.recruteur_nom}`}
+                                    className="entreprise-logo-detail"
+                                />
+                            ) : (
+                                <div className="entreprise-logo-placeholder-detail">
+                                    <BsBuildingsFill />
+                                </div>
+                            )}
+                            <div className="offre-detail-header">
+                                <h2>{selectedOffre.titre}</h2>
+                                <span className="reference">Référence: {selectedOffre.reference}</span>
+                                <div className="recruiter-info">
+                                    <span>Publiée par: {selectedOffre.recruteur_nom || "Entreprise"}</span>
+                                </div>
                             </div>
                         </div>
                         
                         <div className="offre-detail-meta">
                             <div className="meta-item">
-                                <i className="fas fa-map-marker-alt"></i>
+                                <GiPositionMarker />
                                 <span>{selectedOffre.adresse || 'Lieu non spécifié'}</span>
                             </div>
                             <div className="meta-item">
-                                <i className="fas fa-file-contract"></i>
+                                <LiaFileContractSolid />
                                 <span>{selectedOffre.type_contrat}</span>
                             </div>
                             <div className="meta-item">
-                                <i className="fas fa-money-bill-wave"></i>
+                                <PiMoneyFill />
                                 <span>{selectedOffre.salaire ? `${selectedOffre.salaire} FCFA` : 'Salaire non précisé'}</span>
                             </div>
                         </div>
@@ -286,12 +318,6 @@ export const OffreCard = ({ infosoffre }) => {
                                         <i className="fas fa-paper-plane"></i> Postuler
                                     </>
                                 )}
-                            </button>
-                            <button 
-                                className="save-button"
-                                onClick={handleSaveOffer}
-                            >
-                                <i className="far fa-bookmark"></i> Enregistrer
                             </button>
                         </div>
                     </div>

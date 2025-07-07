@@ -3,6 +3,8 @@ import { NavBar } from '../Components/NavBarMain';
 import { Input } from '../Components/Input.jsx';
 import { Textarea } from '../Components/Textarea.jsx';
 import './css/Compte.css';
+import { MdClose } from 'react-icons/md';
+
 
 export const Compte = () => {
     const [nom, setNom] = useState("");
@@ -49,7 +51,6 @@ export const Compte = () => {
             
             if (result.success) {
                 setUpdateSuccess(true);
-                // Mettre à jour le stockage local avec le bon nom de champ
                 const updatedUser = {
                     ...storedUser,
                     nom,
@@ -78,8 +79,6 @@ export const Compte = () => {
             setIsUpdating(false);
         }
     };
-
-
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user") || sessionStorage.getItem("user");
@@ -121,9 +120,34 @@ export const Compte = () => {
         document.getElementById("qualites").style.display = "block";
     };
 
-    const showaut = () => {
+    const showlang = () => {
         hideAll();
-        document.getElementById("autres").style.display = "block";
+        document.getElementById("langues").style.display = "block";
+    };
+
+    const showref = () => {
+        hideAll();
+        document.getElementById("references").style.display = "block";
+    };
+
+    const showcert = () => {
+        hideAll();
+        document.getElementById("certifications").style.display = "block";
+    };
+
+    const showdip = () => {
+        hideAll();
+        document.getElementById("diplomes").style.display = "block";
+    };
+
+    const showint = () => {
+        hideAll();
+        document.getElementById("interets").style.display = "block";
+    };
+
+    const showpro = () => {
+        hideAll();
+        document.getElementById("projets").style.display = "block";
     };
 
     const hideAll = () => {
@@ -181,10 +205,15 @@ export const Compte = () => {
                     <ul>
                         <li><button onClick={showinfos}>Informations</button></li>
                         <li><button onClick={showexp}>Expériences Professionnelles</button></li>
+                        <li><button onClick={showref}>Reférences</button></li>
                         <li><button onClick={showcomp}>Compétences</button></li>
+                        <li><button onClick={showcert}>Certifications</button></li>
                         <li><button onClick={showform}>Formations</button></li>
+                        <li><button onClick={showdip}>Diplômes</button></li>
                         <li><button onClick={showqual}>Qualités Professionnelles</button></li>
-                        <li><button onClick={showaut}>Autres</button></li>
+                        <li><button onClick={showlang}>Langues</button></li>
+                        <li><button onClick={showint}>Interets</button></li>
+                        <li><button onClick={showpro}>Projets</button></li>
                     </ul>
                 </div>
 
@@ -213,81 +242,74 @@ export const Compte = () => {
 
                     <div id="experiences" className='switch-part'>
                         <h1>Vos Expériences Professionnelles</h1>
-                        <p>Ajoutez vos expériences professionnelles ici.</p>
+
                         <ExperiencesForm />
                         <ExperiencesTable />
-                        <button id='addexp' onClick={showExpForm}>Ajouter expériences pro</button>
-                        
+                        <button id='addexp' onClick={showExpForm}>Ajouter expériences pro</button>                        
+                    </div>
+
+                    <div id="references" className="switch-part">
+                        <h1>Vos reférences</h1>
+
                         <ReferencesForm />
                         <ReferencesTable />
                         <button id='addref' onClick={showRefForm}>Ajouter une reference</button>
                     </div>
 
                     <div id="competences" className='switch-part'>
-                        <div>
-                            <h1>Vos Compétences</h1>
-                            <p>Ajoutez vos compétences.</p>
-                            <CompetencesForm />
-                            <CompetencesTable />
-                            <button id='addcomp' onClick={showCompForm}>Ajouter compétences</button>
-                        </div>
+                        <h1>Vos Compétences</h1>
+                        <CompetencesForm />
+                        <CompetencesTable />
+                        <button id='addcomp' onClick={showCompForm}>Ajouter compétences</button>
+                    </div>
 
-                        <div>
-                            <h1>Vos certifications</h1>
-                            <CertificationsTable />
-                            <CertificationForm />
-                            <button id='addcert' onClick={showCertForm}>Ajouter certifications</button>
-                        </div>
+                    <div id="certifications" className="switch-part">
+                        <h1>Vos Certifications</h1>
+                        <CertificationsForm />
+                        <CertificationsTable />
+                        <button id='addcert' onClick={showCertForm}>Ajouter certifications</button>
                     </div>
 
                     <div id="formations" className='switch-part'>
-                        <div>
-                            <h1>Vos Formations</h1>
-                            <p>Ajoutez vos formations.</p>
-                            <FormationsForm />
-                            <FormationsTable />
-                            <button id='addforma' onClick={showFormaForm}>Ajouter formations</button>
-                        </div>
+                        <h1>Vos Formations</h1>
+                        <FormationsForm />
+                        <FormationsTable />
+                        <button id='addforma' onClick={showFormaForm}>Ajouter formations</button>
+                    </div>
 
-                        <div>
-                            <h1>Vos diplomes</h1>
-                            <DiplomesTable />
-                            <DiplomesForm />
-                            <button id='adddip' onClick={showDipForm}>Ajouter diplomes</button>
-                        </div>
-                        
+                    <div id="diplomes" className='switch-part'>
+                        <h1>Vos diplomes</h1>
+                        <DiplomesTable />
+                        <DiplomesForm />
+                        <button id='adddip' onClick={showDipForm}>Ajouter diplomes</button>
                     </div>
 
                     <div id="qualites" className='switch-part'>
                         <h1>Vos Qualités</h1>
-                        <p>Ajoutez vos qualités.</p>
                         <QualitesForm />
                         <QualitesTable />
                         <button id='addqua' onClick={showQuaForm}>Ajouter qualites</button>
                     </div>
 
-                    <div id="autres" className="switch-part">
-                        <h1>Interets</h1>
-                        <div>
-                            <InteretsForm />
-                            <InteretsTable />
-                            <button id="addint" onClick={showIntForm}>Ajouter vos interets</button>
-                        </div>
-
+                    <div id="langues" className="switch-part">
                         <h1>Langues</h1>
-                        <div>
-                            <LanguesForm />
-                            <LanguesTable />
-                            <button id="addlang" onClick={showLangForm}>Ajouter vos langues</button>
-                        </div>
+                        <LanguesForm />
+                        <LanguesTable />
+                        <button id="addlang" onClick={showLangForm}>Ajouter vos langues</button>
+                    </div>
 
+                    <div id="interets" className="switch-part">
+                        <h1>Interets</h1>
+                        <InteretsForm />
+                        <InteretsTable />
+                        <button id="addint" onClick={showIntForm}>Ajouter vos interets</button>
+                    </div>
+
+                    <div id="projets" className="switch-part">   
                         <h1>Projets</h1>
-                        <div>
-                            <ProjetsForm />
-                            <ProjetsTable />
-                            <button id="addproj" onClick={showProjForm}>Ajouter vos projets</button>
-                        </div>
-
+                        <ProjetsForm />
+                        <ProjetsTable />
+                        <button id="addproj" onClick={showProjForm}>Ajouter vos projets</button>
                     </div>
                 </div>
 
@@ -338,15 +360,17 @@ function ExperiencesForm(){
 
     return(
         <div id="expform" className='hide'>
-            <button id='closeExpForm' onClick={closeExpForms}>close</button>
+            <button id='closeExpForm' onClick={closeExpForms}><MdClose /></button>
             <form onSubmit={handleSubmit} method='POST'>
-                <fieldset>Ajouter une expérience professionnelles</fieldset>
-                <Input name="posteexp" label="Le poste que vous avez occupé"/>
-                <Input name="entexp" label="L'entreprise dans laquelle vous avez travaillé"/>
-                <Input type="date" name="datedebexp" label="La date à laquelle vous avez commencer"/>
-                <Input type="date" name="datefinexp" label="La date à laquelle vous avez terminée"/>
-                <Textarea name="descexp" label="Decrivez votre experience"/>
-                <button >Valider</button>
+                <fieldset>
+                    <legend>Ajouter une expérience professionnelles</legend>
+                    <Input name="posteexp" label="Le poste que vous avez occupé"/>
+                    <Input name="entexp" label="L'entreprise dans laquelle vous avez travaillé"/>
+                    <Input type="date" name="datedebexp" label="La date à laquelle vous avez commencer"/>
+                    <Input type="date" name="datefinexp" label="La date à laquelle vous avez terminée"/>
+                    <Textarea name="descexp" label="Decrivez votre experience"/>
+                    <button >Valider</button>
+                </fieldset>
             </form>
         </div>
     )
@@ -375,7 +399,7 @@ function ExperiencesTable() {
         fetchExperiences();
     }, []);
 
-    // Supprimer une expérience
+    
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette expérience ?")) {
             try {
@@ -387,7 +411,7 @@ function ExperiencesTable() {
                 
                 const result = await response.json();
                 if (result.success) {
-                    fetchExperiences(); // Rafraîchir la liste
+                    fetchExperiences(); 
                 }
             } catch (error) {
                 console.error("Erreur:", error);
@@ -395,7 +419,7 @@ function ExperiencesTable() {
         }
     };
 
-    // Commencer l'édition
+    
     const startEdit = (exp) => {
         setEditingId(exp.idexperience);
         setEditForm({
@@ -407,12 +431,12 @@ function ExperiencesTable() {
         });
     };
 
-    // Annuler l'édition
+    
     const cancelEdit = () => {
         setEditingId(null);
     };
 
-    // Soumettre les modifications
+    
     const handleEditSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -457,7 +481,11 @@ function ExperiencesTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {experiences.map(exp => (
+                    {experiences.length === 0 ? (
+                        <tr>
+                            <td colSpan="3">Aucune expérience enregistrée</td>
+                        </tr>
+                    ) : (experiences.map(exp => (
                         <tr key={exp.idexperience}>
                             {editingId === exp.idexperience ? (
                                 <>
@@ -519,7 +547,7 @@ function ExperiencesTable() {
                                 </>
                             )}
                         </tr>
-                    ))}
+                    )))}
                 </tbody>
             </table>
         </div>
@@ -563,17 +591,19 @@ function CompetencesForm(){
 
     return(
         <div id="compform" className='hide'>
-            <button id='closeCompForm' onClick={closeCompForms}>close</button>
+            <button id='closeCompForm' onClick={closeCompForms}><MdClose /></button>
             <form onSubmit={handleSubmit} method='POST'>
-                <fieldset>Ajouter une compétence</fieldset>
-                <Input name="intcomp" label="Quel est votre compétence"/>
-                <select name="listniveaucomp" id="niveaucomp">
-                    <option value="">--Sélectionner un niveau--</option>
-                    <option value="debutant">Débutant</option>
-                    <option value="intermediaire">Intermédiaire</option>
-                    <option value="expert">Expert</option>
-                </select>
-                <button>Valider</button>
+                <fieldset>
+                    <legend>Ajouter une compétence</legend>
+                    <Input name="intcomp" label="Quel est votre compétence"/>
+                    <select name="listniveaucomp" id="niveaucomp">
+                        <option value="">--Sélectionner un niveau--</option>
+                        <option value="debutant">Débutant</option>
+                        <option value="intermediaire">Intermédiaire</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                    <button>Valider</button>
+                </fieldset>
             </form>
         </div>
     )
@@ -818,20 +848,25 @@ function FormationsForm(){
 
     return(
         <div id="formaform" className='hide'>
-            <button id='closeFormaForm' onClick={closeFormaForms}>close</button>
+            <button id='closeFormaForm' onClick={closeFormaForms}><MdClose /></button>
             <form onSubmit={handleSubmit} method='POST'>
-                <fieldset>Ajouter une formation</fieldset>
-                <Input name="intforma" label="Quelle etait votre formation"/>
-                <Input name="datedebforma" type="date" label="La date de début de votre formation"/>
-                <Input name="datefinforma" type="date" label="La date de fin de votre formation"/>
-                <Textarea name="descforma" label="Décrivez votre formation"/>
-                <Input name="instforma" label="Dans quel institut avez vous suivi cette formation"/>
-                <select name="listniveauforma" id="niveauforma">
-                    <option value="debutant">Débutant</option>
-                    <option value="intermediaire">Intermédiaire</option>
-                    <option value="expert">Expert</option>
-                </select>
-                <button>Valider</button>
+                <fieldset>
+                    <legend>Ajouter une formation</legend>
+                    <Input name="intforma" label="Quelle etait votre formation"/>
+                    <Input name="datedebforma" type="date" label="La date de début de votre formation"/>
+                    <Input name="datefinforma" type="date" label="La date de fin de votre formation"/>
+                    <Textarea name="descforma" label="Décrivez votre formation"/>
+                    <Input name="instforma" label="Dans quel institut avez vous suivi cette formation"/>
+                    <div>
+                        <label htmlFor="niveauforma">Niveau de la formation</label>
+                        <select name="listniveauforma" id="niveauforma">
+                            <option value="debutant">Débutant</option>
+                            <option value="intermediaire">Intermédiaire</option>
+                            <option value="expert">Expert</option>
+                        </select>
+                    </div>
+                    <button>Valider</button>
+                </fieldset>
             </form>
         </div>
     )
@@ -1127,12 +1162,14 @@ function QualitesForm(){
 
     return(
         <div id="quaform" className='hide'>
-            <button id='closeQuaForm' onClick={closeQuaForms}>close</button>
+            <button id='closeQuaForm' onClick={closeQuaForms}><MdClose /></button>
             <form onSubmit={handleSubmit} method='POST'>
-                <fieldset>Ajouter une qualites professionnelle</fieldset>
-                <Input name="intqua" label="Votre qualite"/>
-                <Textarea name="descqua" label="Decrivez votre qualite"/>
-                <button>Valider</button>
+                <fieldset>
+                    <legend>Ajouter une qualites professionnelle</legend>
+                    <Input name="intqua" label="Votre qualite"/>
+                    <Textarea name="descqua" label="Decrivez votre qualite"/>
+                    <button>Valider</button>
+                </fieldset>
             </form>
         </div>
     )
@@ -1285,10 +1322,10 @@ function QualitesTable() {
                                             </td>
                                             <td className="actions-cell">
                                                 <button onClick={handleEditSubmit} className="btn-save">
-                                                    ✓
+                                                    Valider
                                                 </button>
                                                 <button onClick={cancelEdit} className="btn-cancel">
-                                                    ✗
+                                                    Annuler
                                                 </button>
                                             </td>
                                         </>
@@ -1612,12 +1649,14 @@ function InteretsForm(){
 
     return(
         <div id="intform" className='hide'>
-            <button id='closeIntForm' onClick={closeIntForms}>close</button>
+            <button id='closeIntForm' onClick={closeIntForms}><MdClose /></button>
             <form onSubmit={handleSubmit} method='POST'>
-                <fieldset>Ajouter un interet</fieldset>
-                <Input name="intinteret" label="Nommez votre interet"/>
-                <Textarea name="descinteret" label="Decrivez votre interet"/>
-                <button>Valider</button>
+                <fieldset>
+                    <legend>Ajouter un interet</legend>
+                    <Input name="intinteret" label="Nommez votre interet"/>
+                    <Textarea name="descinteret" label="Decrivez votre interet"/>
+                    <button>Valider</button>
+                </fieldset>
             </form>
         </div>
     )
@@ -1847,16 +1886,21 @@ function LanguesForm(){
 
     return(
         <div id="langform" className='hide'>
-            <button id='closeLangForm' onClick={closeLangForms}>close</button>
+            <button id='closeLangForm' onClick={closeLangForms}><MdClose /></button>
             <form onSubmit={handleSubmit} method='POST'>
-                <fieldset>Ajouter une langue</fieldset>
-                <Input name="intlang" label="La langue"/>
-                <select name="listniveaulang" id="niveaulang">
-                    <option value="debutant">Débutant</option>
-                    <option value="intermediaire">Intermédiaire</option>
-                    <option value="expert">Expert</option>
-                </select>
-                <button>Valider</button>
+                <fieldset>
+                    <legend>Ajouter une langue</legend>
+                    <Input name="intlang" label="La langue"/>
+                    <div>
+                        <label htmlFor="niveaulang">Votre niveau en cette langue</label>
+                        <select name="listniveaulang" id="niveaulang">
+                            <option value="debutant">Débutant</option>
+                            <option value="intermediaire">Intermédiaire</option>
+                            <option value="expert">Expert</option>
+                        </select>
+                    </div>
+                    <button>Valider</button>
+                </fieldset>
             </form>
         </div>
     )
@@ -2102,15 +2146,17 @@ function ProjetsForm(){
 
     return(
         <div id="projform" className='hide'>
-            <button id='closeProjForm' onClick={closeProjForms}>close</button>
+            <button id='closeProjForm' onClick={closeProjForms}><MdClose /></button>
             <form onSubmit={handleSubmit} method='POST'>
-                <fieldset>Ajouter une langue</fieldset>
-                <Input name="titreproj" label="Le titre de votre projet"/>
-                <Textarea name="descproj" label="Une description"/>
-                <Input name="datedebproj" type="date" label="La date de début du projet"/>
-                <Input name="datefinproj" type="date" label="La date de fin du projet"/>
-                <Input name="lienproj" label="Le lien vers le projet"/>
-                <button>Valider</button>
+                <fieldset>
+                    <legend>Ajouter une langue</legend>
+                    <Input name="titreproj" label="Le titre de votre projet"/>
+                    <Textarea name="descproj" label="Une description"/>
+                    <Input name="datedebproj" type="date" label="La date de début du projet"/>
+                    <Input name="datefinproj" type="date" label="La date de fin du projet"/>
+                    <Input name="lienproj" label="Le lien vers le projet"/>
+                    <button>Valider</button>
+                </fieldset>
             </form>
         </div>
     )
@@ -2404,12 +2450,14 @@ function DiplomesForm(){
 
     return(
         <div id="dipform" className='hide'>
-            <button id='closeDipForm' onClick={closeDipForms}>close</button>
+            <button id='closeDipForm' onClick={closeDipForms}><MdClose /></button>
             <form onSubmit={handleSubmit} method='POST'>
-                <fieldset>Ajouter un diplome</fieldset>
-                <Input name="titredip" label="Le titre de votre diplome"/>
-                <Input name="dateobtention" type="date" label="La date de début du projet"/>
-                <button>Valider</button>
+                <fieldset>
+                    <legend>Ajouter un diplome</legend>
+                    <Input name="titredip" label="Le titre de votre diplome"/>
+                    <Input name="dateobtention" type="date" label="La date de début du projet"/>
+                    <button>Valider</button>
+                </fieldset>
             </form>
         </div>
     )
@@ -2612,9 +2660,7 @@ function DiplomesTable() {
 }
 
 
-function CertificationForm() {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+function CertificationsForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const closeCertifForms = () => {
@@ -2664,7 +2710,7 @@ function CertificationForm() {
                     className="close-btn"
                     disabled={isSubmitting}
                 >
-                    &times;
+                    <MdClose />
                 </button>
             </div>
             
@@ -2675,10 +2721,9 @@ function CertificationForm() {
                         label="Intitulé de la certification" 
                         required
                         placeholder="Ex: Certification AWS, Google Analytics..."
-                        maxLength={100}
                         disabled={isSubmitting}
                     />
-                    <small className="char-count">Maximum 100 caractères</small>
+
                 </div>
                 
                 <div className="form-group">
@@ -2691,18 +2736,8 @@ function CertificationForm() {
                 </div>
                 
                 <div className="form-actions">
-                    <button 
-                        type="submit" 
-                        className="submit-btn"
-                        disabled={isSubmitting}
-                    >
-                        {isSubmitting ? (
-                            <>
-                                <span className="spinner"></span> Enregistrement...
-                            </>
-                        ) : (
-                            'Enregistrer cette certification'
-                        )}
+                    <button>
+                        Valider
                     </button>
                 </div>
             </form>
@@ -2721,7 +2756,6 @@ function CertificationsTable() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Récupérer les certifications
     useEffect(() => {
         const fetchCertifications = async () => {
             try {
@@ -2745,7 +2779,6 @@ function CertificationsTable() {
         fetchCertifications();
     }, []);
 
-    // Supprimer une certification
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette certification ?")) {
             try {
@@ -2771,7 +2804,6 @@ function CertificationsTable() {
         }
     };
 
-    // Activer le mode édition
     const handleEdit = (certification) => {
         setEditingId(certification.idcertification);
         setEditForm({
@@ -2780,7 +2812,6 @@ function CertificationsTable() {
         });
     };
 
-    // Sauvegarder les modifications
     const handleSave = async (id) => {
         setIsSubmitting(true);
         try {
@@ -2815,12 +2846,10 @@ function CertificationsTable() {
         }
     };
 
-    // Annuler l'édition
     const handleCancel = () => {
         setEditingId(null);
     };
 
-    // Gérer les changements du formulaire d'édition
     const handleEditChange = (e) => {
         setEditForm({
             ...editForm,
@@ -2828,7 +2857,6 @@ function CertificationsTable() {
         });
     };
 
-    // Formater la date pour l'affichage
     const formatDate = (dateString) => {
         if (!dateString) return 'Non spécifiée';
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -2853,10 +2881,6 @@ function CertificationsTable() {
                         Réessayer
                     </button>
                 </div>
-            ) : certifications.length === 0 ? (
-                <div className="empty-state">
-                    <p>Aucune certification enregistrée</p>
-                </div>
             ) : (
                 <table className="certification-table">
                     <thead>
@@ -2867,7 +2891,12 @@ function CertificationsTable() {
                         </tr>
                     </thead>
                     <tbody>
-                        {certifications.map(certification => (
+                        {certifications.length === 0 ? (
+                            <tr>
+                                <td colSpan="3">Aucune certification enregistrée</td>
+                            </tr>
+                        ) : (
+                        certifications.map(certification => (
                             <tr key={certification.idcertification}>
                                 {editingId === certification.idcertification ? (
                                     <>
@@ -2931,7 +2960,7 @@ function CertificationsTable() {
                                     </>
                                 )}
                             </tr>
-                        ))}
+                        )))}
                     </tbody>
                 </table>
             )}

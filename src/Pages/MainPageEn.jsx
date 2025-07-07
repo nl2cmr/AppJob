@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react';
 import './css/MainPageEn.css';
 import { NavBarEn } from '../Components/NavBarEn.jsx';
 import {  ProfilCard } from '../Components/ProfilCard.jsx';
+import { FaEnvelope } from 'react-icons/fa';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { MdOutlineAlternateEmail } from 'react-icons/md';
+import { BsFillTelephoneFill } from 'react-icons/bs';
+import { FaSearch } from 'react-icons/fa';
+
+
 
 export const MainPageEn = () => {
     const [profils, setProfils] = useState([]);
@@ -83,7 +90,7 @@ function SearchPart({ searchTerm, setSearchTerm }) {
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
             <button className="search-button">
-                <i className="fas fa-search"></i> 
+                <FaSearch /> 
             </button>
         </div>
     );
@@ -91,8 +98,47 @@ function SearchPart({ searchTerm, setSearchTerm }) {
 
 
 
-// ProfilDetail.jsx
 const ProfilDetail = ({ profil, onClose }) => {
+    const [notification, setNotification] = useState(null);
+
+    const handleContactClick = async () => {
+        try {
+            const userData = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+            if (!userData || !userData.iduser) {
+                throw new Error("Vous devez être connecté pour contacter un candidat");
+            }
+
+            const response = await fetch('http://localhost/backend/notification_crud/create_notification.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    sender_id: userData.iduser,
+                    receiver_id: profil.iduser,
+                    message: `${userData.nom} est intéressé par votre profil`
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Erreur lors de l'envoi de la notification");
+            }
+
+            setNotification({
+                type: 'success',
+                message: 'Notification envoyée avec succès'
+            });
+
+            setTimeout(() => setNotification(null), 3000);
+
+        } catch (error) {
+            setNotification({
+                type: 'error',
+                message: error.message
+            });
+        }
+    };
+
     const handleOverlayClick = (e) => {
         if (e.target === e.currentTarget) {
             onClose();
@@ -101,17 +147,24 @@ const ProfilDetail = ({ profil, onClose }) => {
 
     return (
         <div className="profil-detail-overlay" onClick={handleOverlayClick}>
+
+            {notification && (
+                <div className={`notification ${notification.type}`}>
+                    {notification.message}
+                </div>
+            )}
+
             <div className="profil-detail-container">
                 <button className="close-button" onClick={onClose}>
-                    <i className="fas fa-times"></i>
+                    <AiOutlineCloseCircle />
                 </button>
                 
                 <div className="profil-detail-header">
                     <h2>{profil.prenom} {profil.nom}</h2>
                     <span className="poste">{profil.poste}</span>
                     <div className="contact-info">
-                        <span><i className="fas fa-envelope"></i> {profil.email}</span>
-                        <span><i className="fas fa-phone"></i> {profil.telephone || 'Non renseigné'}</span>
+                        <span><MdOutlineAlternateEmail /> {profil.email}</span>
+                        <span><BsFillTelephoneFill /> {profil.telephone || 'Non renseigné'}</span>
                     </div>
                 </div>
                 
@@ -285,14 +338,8 @@ const ProfilDetail = ({ profil, onClose }) => {
                 </div>
                 
                 <div className="profil-detail-actions">
-                    <button className="contact-button">
-                        <i className="fas fa-envelope"></i> Contacter
-                    </button>
-                    <button className="close-bottom-button" onClick={onClose}>
-                        <i className="fas fa-times"></i> Fermer
-                    </button>
-                    <button className="save-button">
-                        <i className="far fa-bookmark"></i> Sauvegarder
+                    <button className="contact-button" onClick={handleContactClick}>
+                        <FaEnvelope /> Contacter
                     </button>
                 </div>
             </div>

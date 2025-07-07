@@ -298,9 +298,9 @@ function OffresForm() {
             reference: e.target.refoff.value,
             description: e.target.descoff.value,
             date_publication: new Date().toISOString().split('T')[0],
-            date_expiration: e.target.dateexpoff.value, // Access .value
-            salaire: e.target.salaire.value, // Access .value
-            type_contrat: e.target.listtypecontrat.value // Access .value
+            date_expiration: e.target.dateexpoff.value, 
+            salaire: e.target.salaire.value, 
+            type_contrat: e.target.listtypecontrat.value 
         };
 
         try {
@@ -313,7 +313,6 @@ function OffresForm() {
             const result = await response.json();
             if (result.success) {
                 alert('Offre ajoutée avec succès');
-                // Optionally refresh data or reset form
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -327,19 +326,24 @@ function OffresForm() {
         <div id="offform" className='hide'>
             <button id='closeOffForm' onClick={closeOffForms}>&times;</button>
             <form onSubmit={handleSubmit} method="POST">
-                <fieldset>Ajouter une offre d'emploi</fieldset>
-                <Input name="titreoff" label="Donnez un titre à votre offre d'emploi" />
-                <Input name="refoff" label="Entrez la référence de votre offre d'emploi" />
-                <Textarea name="descoff" label="Décrivez l'offre d'emploi" />
-                <Input type="date" name="dateexpoff" label="Date d'expiration" />
-                <Input type="number" name="salaire" label="Salaire de base" />
-                <select name="listtypecontrat" id="typecontrat">
-                    <option value="cdi">CDI</option>
-                    <option value="cdd">CDD</option>
-                    <option value="stage">Stage</option>
-                    <option value="freelance">Freelance</option>
-                </select>
-                <button>Valider</button>
+                <fieldset>
+                    <legend>Ajouter une offre d'emploi</legend>
+                    <Input name="titreoff" label="Donnez un titre à votre offre d'emploi" />
+                    <Input name="refoff" label="Entrez la référence de votre offre d'emploi" />
+                    <Textarea name="descoff" label="Décrivez l'offre d'emploi" />
+                    <Input type="date" name="dateexpoff" label="Date d'expiration" />
+                    <Input type="number" name="salaire" label="Salaire de base" />
+                    <div>
+                        <label htmlFor="typecontrat">Types de contrat</label>
+                        <select name="listtypecontrat" id="typecontrat">
+                            <option value="cdi">CDI</option>
+                            <option value="cdd">CDD</option>
+                            <option value="stage">Stage</option>
+                            <option value="freelance">Freelance</option>
+                        </select>
+                    </div>
+                    <button className='submit-btn'>Enregistrer cette offre</button>
+                </fieldset>
             </form>
         </div>
     );
@@ -375,24 +379,45 @@ function OffresTable(){
     }, []);
 
     const handleDelete = async (id) => {
-        if (window.confirm("Êtes-vous sûr de vouloir supprimer cette offre ?")) {
+        if (window.confirm("Êtes-vous sûr de vouloir supprimer cette offre ? Toutes les données associées seront également supprimées.")) {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+                if (!user?.iduser) {
+                    throw new Error('Vous devez être connecté');
+                }
+    
                 const response = await fetch('http://localhost/backend/offre_crud/delete_offre.php', {
                     method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
                     body: JSON.stringify({ 
                         idoffre: id,
-                        user_id: user.iduser  // Ajoutez ceci
+                        user_id: user.iduser 
                     })
                 });
-                if (response.ok) {
-                    setOffres(offres.filter(off => off.idoffre !== id));
-                } else {
-                    console.error("Erreur lors de la suppression de l'offre.");
+    
+                // Vérification du Content-Type
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text();
+                    throw new Error(`Invalid response: ${text.substring(0, 100)}`);
                 }
+    
+                const result = await response.json();
+                
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || 'Failed to delete offer');
+                }
+    
+                // Mise à jour de l'état
+                setOffres(prev => prev.filter(off => off.idoffre !== id));
+                alert('Offre supprimée avec succès');
+    
             } catch (error) {
-                console.error("Erreur:", error);
+                console.error('Delete error:', error);
+                alert(`Échec de la suppression: ${error.message}`);
             }
         }
     };
@@ -419,7 +444,7 @@ function OffresTable(){
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     idoffre: id, 
-                    user_id: user.iduser,  // Ajoutez ceci
+                    user_id: user.iduser,
                     ...editForm 
                 })
             });
@@ -471,7 +496,12 @@ function OffresTable(){
                     </tr>
                 </thead>
                 <tbody>
-                    {offres.map(off => (
+                    {offres.length === 0 ? (
+                        <tr>
+                            <td colSpan="3">Aucune offre enregistrée</td>
+                        </tr>
+                    ) : (
+                    offres.map(off => (
                         <tr key={off.idoffre}>
                             {editingId === off.idoffre ? (
                                 <>
@@ -535,8 +565,8 @@ function OffresTable(){
                                         </select>
                                     </td>
                                     <td>
-                                        <button onClick={() => handleSave(off.idoffre)}>Save</button>
-                                        <button onClick={handleCancel}>Cancel</button>
+                                        <button onClick={() => handleSave(off.idoffre)}>Valider</button>
+                                        <button onClick={handleCancel}>Annuler</button>
                                     </td>
                                 </>
                             ) : (
@@ -555,7 +585,7 @@ function OffresTable(){
                                 </>
                             )}
                         </tr>
-                    ))}
+                    )))}
                 </tbody>
             </table>
         </div>
@@ -620,7 +650,6 @@ function CompetencesFormOff() {
             if (result.success) {
                 closeCompForms();
                 alert('Compétence ajoutée avec succès !');
-                // Ici vous pourriez ajouter un callback pour rafraîchir le parent
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -688,7 +717,7 @@ function CompetencesFormOff() {
                     </div>
                     
                     <button type="submit" className="submit-btn">
-                        Enregistrer
+                        Enregistrer cette compétence
                     </button>
                 </fieldset>
             </form>
@@ -703,11 +732,10 @@ function CompetencesTableOff() {
     const [error, setError] = useState(null);
     const [editingId, setEditingId] = useState(null);
     const [editForm, setEditForm] = useState({
-        intutile: '', // Correction du nom pour correspondre à la BDD
+        intutile: '',
         niveau: ''
     });
 
-    // Récupérer les compétences
     useEffect(() => {
         const fetchCompetences = async () => {
             try {
@@ -731,7 +759,7 @@ function CompetencesTableOff() {
         fetchCompetences();
     }, []);
 
-    // Supprimer une compétence
+    
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette compétence ?")) {
             try {
@@ -757,11 +785,11 @@ function CompetencesTableOff() {
         }
     };
 
-    // Activer le mode édition
+    
     const handleEdit = (competence) => {
         setEditingId(competence.idcompetence);
         setEditForm({
-            intutile: competence.intutile, // Correction pour correspondre à la BDD
+            intutile: competence.intutile, 
             niveau: competence.niveau
         });
     };
@@ -770,7 +798,7 @@ function CompetencesTableOff() {
         setEditingId(null);
       };
 
-    // Sauvegarder les modifications
+    
     const handleSave = async (id) => {
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
@@ -798,7 +826,7 @@ function CompetencesTableOff() {
         }
     };
 
-    // Options de niveau
+    
     const niveauxOptions = [
         { value: 'debutant', label: 'Débutant' },
         { value: 'intermediaire', label: 'Intermédiaire' },
@@ -811,8 +839,6 @@ function CompetencesTableOff() {
                 <div className="loading-state">Chargement...</div>
             ) : error ? (
                 <div className="error-state">Erreur: {error}</div>
-            ) : competences.length === 0 ? (
-                <div className="empty-state">Aucune compétence enregistrée</div>
             ) : (
                 <table className="competence-table">
                     <thead>
@@ -824,7 +850,12 @@ function CompetencesTableOff() {
                         </tr>
                     </thead>
                     <tbody>
-                        {competences.map(competence => (
+                        {competences.length === 0 ? (
+                            <tr>
+                                <td colSpan="3">Aucune compétence enregistrée</td>
+                            </tr>
+                        ) : (
+                        competences.map(competence => (
                             <tr key={competence.idcompetence}>
                                 {editingId === competence.idcompetence ? (
                                     <>
@@ -866,7 +897,7 @@ function CompetencesTableOff() {
                                     </>
                                 )}
                             </tr>
-                        ))}
+                        )))}
                     </tbody>
                 </table>
             )}
@@ -881,7 +912,6 @@ function DiplomesFormOff() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Récupération des offres
     useEffect(() => {
         const fetchOffres = async () => {
             try {
@@ -934,7 +964,7 @@ function DiplomesFormOff() {
             if (result.success) {
                 closeDipForms();
                 alert('Diplôme ajouté avec succès !');
-                // Ajouter ici un callback pour rafraîchir le parent si nécessaire
+                
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout du diplôme');
             }
@@ -997,7 +1027,7 @@ function DiplomesFormOff() {
                     </div>
                     
                     <button type="submit" className="submit-btn">
-                        Enregistrer
+                        Enregistrer ce diplôme
                     </button>
                 </fieldset>
             </form>
@@ -1016,7 +1046,7 @@ function DiplomesTableOff() {
         date_obtention: ''
     });
 
-    // Récupérer les diplômes
+    
     useEffect(() => {
         const fetchDiplomes = async () => {
             try {
@@ -1040,7 +1070,7 @@ function DiplomesTableOff() {
         fetchDiplomes();
     }, []);
 
-    // Supprimer un diplôme
+    
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer ce diplôme ?")) {
             try {
@@ -1050,7 +1080,7 @@ function DiplomesTableOff() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         iddiplome: id,
-                        iduser: user.iduser // Ajouter l'ID utilisateur
+                        iduser: user.iduser 
                     })
                 });
 
@@ -1066,7 +1096,7 @@ function DiplomesTableOff() {
         }
     };
 
-    // Activer le mode édition
+    
     const handleEdit = (diplome) => {
         setEditingId(diplome.iddiplome);
         setEditForm({
@@ -1075,7 +1105,7 @@ function DiplomesTableOff() {
         });
     };
 
-    // Sauvegarder les modifications
+    
     const handleSave = async (id) => {
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
@@ -1084,7 +1114,7 @@ function DiplomesTableOff() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     iddiplome: id,
-                    iduser: user.iduser, // Ajouter l'ID utilisateur
+                    iduser: user.iduser, 
                     ...editForm 
                 })
             });
@@ -1103,12 +1133,12 @@ function DiplomesTableOff() {
         }
     };
 
-    // Annuler l'édition
+    
     const handleCancel = () => {
         setEditingId(null);
     };
 
-    // Gérer les changements du formulaire d'édition
+    
     const handleEditChange = (e) => {
         setEditForm({
             ...editForm,
@@ -1116,7 +1146,7 @@ function DiplomesTableOff() {
         });
     };
 
-    // Formater la date pour l'affichage
+    
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(dateString).toLocaleDateString('fr-FR', options);
@@ -1135,10 +1165,6 @@ function DiplomesTableOff() {
                     <p>{error}</p>
                     <button onClick={() => window.location.reload()}>Réessayer</button>
                 </div>
-            ) : diplomes.length === 0 ? (
-                <div className="empty-message">
-                    <p>Aucun diplôme enregistré</p>
-                </div>
             ) : (
                 <table className="diplome-table">
                     <thead>
@@ -1150,7 +1176,12 @@ function DiplomesTableOff() {
                         </tr>
                     </thead>
                     <tbody>
-                        {diplomes.map(diplome => (
+                        {diplomes.length === 0 ? (
+                            <tr>
+                                <td colSpan="3">Aucun diplôme enregistré</td>
+                            </tr>
+                        ) : (
+                        diplomes.map(diplome => (
                             <tr key={diplome.iddiplome}>
                                 {editingId === diplome.iddiplome ? (
                                     <>
@@ -1180,7 +1211,7 @@ function DiplomesTableOff() {
                                                 onClick={() => handleSave(diplome.iddiplome)}
                                                 className="save-btn"
                                             >
-                                                Enregistrer
+                                                Valider
                                             </button>
                                             <button 
                                                 onClick={handleCancel}
@@ -1212,7 +1243,7 @@ function DiplomesTableOff() {
                                     </>
                                 )}
                             </tr>
-                        ))}
+                        )))}
                     </tbody>
                 </table>
             )}
@@ -1226,7 +1257,7 @@ function LanguesFormOff() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Récupération des offres
+    
     useEffect(() => {
         const fetchOffres = async () => {
             try {
@@ -1279,7 +1310,7 @@ function LanguesFormOff() {
             if (result.success) {
                 closeLangForms();
                 alert('Langue ajoutée avec succès !');
-                // Ajouter un callback pour rafraîchir le parent si nécessaire
+                
             } else {
                 alert(result.message || "Échec de l'ajout de la langue");
             }
@@ -1349,7 +1380,7 @@ function LanguesFormOff() {
                     </div>
                     
                     <button type="submit" className="submit-btn">
-                        Enregistrer
+                        Enregistrer cette langue
                     </button>
                 </fieldset>
             </form>
@@ -1364,33 +1395,42 @@ function LanguesTableOff() {
     const [editingId, setEditingId] = useState(null);
     const [editForm, setEditForm] = useState({
         intitule: '',
-        niveau: ''
+        niveau: 'debutant' 
     });
 
-    // Options de niveau cohérentes avec le formulaire
     const niveauxOptions = [
         { value: 'debutant', label: 'Débutant' },
         { value: 'intermediaire', label: 'Intermédiaire' },
-        { value: 'expert', label: 'Expert' }
+        { value: 'avance', label: 'Avancé' } 
     ];
 
-    // Récupérer les langues
     useEffect(() => {
         const fetchLangues = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+                if (!user?.iduser) {
+                    throw new Error('User not authenticated');
+                }
+
                 const response = await fetch(`http://localhost/backend/langue_crud/get_languesoff.php?iduser=${user.iduser}`);
                 
-                if (!response.ok) {
-                    throw new Error('Erreur lors du chargement des langues');
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text();
+                    throw new Error(`Invalid response: ${text.substring(0, 100)}`);
                 }
 
                 const data = await response.json();
-                setLangues(data);
-                setLoading(false);
+                
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || 'Failed to load languages');
+                }
+
+                setLangues(data.data);
             } catch (err) {
-                console.error("Erreur:", err);
+                console.error("Fetch error:", err);
                 setError(err.message);
+            } finally {
                 setLoading(false);
             }
         };
@@ -1398,7 +1438,7 @@ function LanguesTableOff() {
         fetchLangues();
     }, []);
 
-    // Supprimer une langue
+    
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette langue ?")) {
             try {
@@ -1424,7 +1464,7 @@ function LanguesTableOff() {
         }
     };
 
-    // Activer le mode édition
+    
     const handleEdit = (langue) => {
         setEditingId(langue.idlangue);
         setEditForm({
@@ -1437,7 +1477,7 @@ function LanguesTableOff() {
         setEditingId(null);
     };
 
-    // Sauvegarder les modifications
+    
     const handleSave = async (id) => {
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
@@ -1470,9 +1510,10 @@ function LanguesTableOff() {
             {loading ? (
                 <div className="loading-state">Chargement...</div>
             ) : error ? (
-                <div className="error-state">Erreur: {error}</div>
-            ) : langues.length === 0 ? (
-                <div className="empty-state">Aucune langue enregistrée</div>
+                <div className="error-state">
+                    Erreur: {error}
+                    <button onClick={() => window.location.reload()}>Réessayer</button>
+                </div>
             ) : (
                 <table className="langue-table">
                     <thead>
@@ -1484,7 +1525,12 @@ function LanguesTableOff() {
                         </tr>
                     </thead>
                     <tbody>
-                        {langues.map(langue => (
+                        {langues.length === 0 ? (
+                            <tr>
+                                <td colSpan="3">Aucune langue enregistrée</td>
+                            </tr>
+                        ) : (
+                        langues.map(langue => (
                             <tr key={langue.idlangue}>
                                 {editingId === langue.idlangue ? (
                                     <>
@@ -1525,15 +1571,13 @@ function LanguesTableOff() {
                                     </>
                                 )}
                             </tr>
-                        ))}
+                        )))}
                     </tbody>
                 </table>
             )}
         </div>
     );
 }
-
-
 
 
 function QualitesFormOff() {
@@ -1593,7 +1637,7 @@ function QualitesFormOff() {
             if (result.success) {
                 closeQuaForms();
                 alert('Qualité professionnelle enregistrée avec succès !');
-                // Ici vous pourriez ajouter une fonction de rafraîchissement
+                
             } else {
                 alert(result.message || "Erreur lors de l'enregistrement");
             }
@@ -1605,68 +1649,70 @@ function QualitesFormOff() {
 
     return (
         <div id="quaform" className='hide'>
-            <div className="form-header">
-                <h3>Ajouter une qualité professionnelle</h3>
-                <button id='closeQuaForm' onClick={closeQuaForms} className="close-btn">
-                    &times;
-                </button>
-            </div>
+
+            <button id='closeQuaForm' onClick={closeQuaForms} className="close-btn">
+                &times;
+            </button>
             
             <form onSubmit={handleSubmit} className="qualite-form">
-                <div className="form-group">
-                    <label htmlFor="refoff">Offre concernée :</label>
-                    {loading ? (
-                        <div className="loading-msg">Chargement en cours...</div>
-                    ) : error ? (
-                        <div className="error-msg">{error}</div>
-                    ) : offres.length === 0 ? (
-                        <div className="empty-msg">Aucune offre disponible</div>
-                    ) : (
-                        <select 
-                            name="refoff" 
-                            id="refoff" 
+                
+                <fieldset>
+                    <legend>Ajouter une qualité</legend>
+                    <div className="form-group">
+                        <label htmlFor="refoff">Offre concernée :</label>
+                        {loading ? (
+                            <div className="loading-msg">Chargement en cours...</div>
+                        ) : error ? (
+                            <div className="error-msg">{error}</div>
+                        ) : offres.length === 0 ? (
+                            <div className="empty-msg">Aucune offre disponible</div>
+                        ) : (
+                            <select 
+                                name="refoff" 
+                                id="refoff" 
+                                required
+                                className="form-control"
+                            >
+                                <option value="">-- Sélectionner une offre --</option>
+                                {offres.map(offre => (
+                                    <option 
+                                        key={offre.idoffre} 
+                                        value={offre.idoffre}
+                                    >
+                                        {offre.reference}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    </div>
+                    
+                    <div className="form-group">
+                        <Input 
+                            name="intqua" 
+                            label="Intitulé de la qualité" 
                             required
-                            className="form-control"
-                        >
-                            <option value="">-- Sélectionner une offre --</option>
-                            {offres.map(offre => (
-                                <option 
-                                    key={offre.idoffre} 
-                                    value={offre.idoffre}
-                                >
-                                    {offre.reference}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                </div>
-                
-                <div className="form-group">
-                    <Input 
-                        name="intqua" 
-                        label="Intitulé de la qualité" 
-                        required
-                        placeholder="Ex: Esprit d'équipe, Rigoureux..."
-                        className="input-field"
-                    />
-                </div>
-                
-                <div className="form-group">
-                    <Textarea 
-                        name="descqua" 
-                        label="Description détaillée" 
-                        required
-                        placeholder="Décrivez cette qualité et son importance..."
-                        rows={4}
-                        className="textarea-field"
-                    />
-                </div>
-                
-                <div className="form-actions">
+                            placeholder="Ex: Esprit d'équipe, Rigoureux..."
+                            className="input-field"
+                        />
+                    </div>
+                    
+                    <div className="form-group">
+                        <Textarea 
+                            name="descqua" 
+                            label="Description détaillée" 
+                            required
+                            placeholder="Décrivez cette qualité et son importance..."
+                            rows={4}
+                            className="textarea-field"
+                        />
+                    </div>
+                    
                     <button type="submit" className="submit-btn">
-                        Enregistrer
+                        Enregistrer cette qualité
                     </button>
-                </div>
+                </fieldset>
+                
+                
             </form>
         </div>
     );
@@ -1685,7 +1731,7 @@ function QualitesTableOff() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
-    // Récupérer les qualités
+    
     useEffect(() => {
         const fetchQualites = async () => {
             try {
@@ -1709,7 +1755,7 @@ function QualitesTableOff() {
         fetchQualites();
     }, []);
 
-    // Supprimer une qualité
+    
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette qualité professionnelle ?")) {
             try {
@@ -1719,7 +1765,7 @@ function QualitesTableOff() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
                         idqualite: id,
-                        iduser: user.iduser // Ajouter l'ID utilisateur
+                        iduser: user.iduser 
                     })
                 });
 
@@ -1735,7 +1781,7 @@ function QualitesTableOff() {
         }
     };
 
-    // Activer le mode édition
+    
     const handleEdit = (qualite) => {
         setEditingId(qualite.idqualite);
         setEditForm({
@@ -1744,7 +1790,7 @@ function QualitesTableOff() {
         });
     };
 
-    // Sauvegarder les modifications
+    
     const handleSave = async (id) => {
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
@@ -1753,7 +1799,7 @@ function QualitesTableOff() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     idqualite: id,
-                    iduser: user.iduser, // Ajouter l'ID utilisateur
+                    iduser: user.iduser, 
                     ...editForm 
                 })
             });
@@ -1772,12 +1818,12 @@ function QualitesTableOff() {
         }
     };
 
-    // Annuler l'édition
+    
     const handleCancel = () => {
         setEditingId(null);
     };
 
-    // Gérer les changements du formulaire d'édition
+    
     const handleEditChange = (e) => {
         setEditForm({
             ...editForm,
@@ -1785,7 +1831,7 @@ function QualitesTableOff() {
         });
     };
 
-    // Pagination
+    
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = qualites.slice(indexOfFirstItem, indexOfLastItem);
@@ -1795,14 +1841,6 @@ function QualitesTableOff() {
 
     return (
         <div id="quatable" className="qualite-table-container">
-            <div className="table-header">
-                <h2>Qualités Professionnelles</h2>
-                <div className="table-actions">
-                    <span className="item-count">
-                        {qualites.length} qualité(s) enregistrée(s)
-                    </span>
-                </div>
-            </div>
 
             {loading ? (
                 <div className="loading-state">
@@ -1820,10 +1858,6 @@ function QualitesTableOff() {
                         Réessayer
                     </button>
                 </div>
-            ) : qualites.length === 0 ? (
-                <div className="empty-state">
-                    <p>Aucune qualité professionnelle enregistrée</p>
-                </div>
             ) : (
                 <>
                     <div className="table-responsive">
@@ -1837,7 +1871,12 @@ function QualitesTableOff() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {currentItems.map(qualite => (
+                                {qualites.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="3">Aucune qualité enregistrée</td>
+                                    </tr>
+                                ) : (
+                                currentItems.map(qualite => (
                                     <tr key={qualite.idqualite}>
                                         {editingId === qualite.idqualite ? (
                                             <>
@@ -1907,7 +1946,7 @@ function QualitesTableOff() {
                                             </>
                                         )}
                                     </tr>
-                                ))}
+                                )))}
                             </tbody>
                         </table>
                     </div>
@@ -2036,95 +2075,95 @@ function MissionsFormOff() {
 
     return (
         <div id="misform" className='hide mission-form-container'>
-            <div className="form-header">
-                <h3>Ajouter une mission</h3>
-                <button id='closeMisForm' onClick={closeMisForms} className="close-btn">
-                    &times;
-                </button>
-            </div>
-            
+
+            <button id='closeMisForm' onClick={closeMisForms} className="close-btn">
+                &times;
+            </button>
+
             <form onSubmit={handleSubmit} className="mission-form">
-                <div className="form-group">
-                    <label htmlFor="refoff">Offre associée :</label>
-                    {loading ? (
-                        <div className="loading-msg">Chargement des offres...</div>
-                    ) : error ? (
-                        <div className="error-msg">{error}</div>
-                    ) : offres.length === 0 ? (
-                        <div className="empty-msg">Aucune offre disponible</div>
-                    ) : (
-                        <select 
-                            name="refoff" 
-                            id="refoff" 
-                            required
-                            className="form-control"
-                        >
-                            <option value="">-- Sélectionner une offre --</option>
-                            {offres.map(offre => (
-                                <option 
-                                    key={offre.idoffre} 
-                                    value={offre.idoffre}
-                                >
-                                    {offre.reference}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                </div>
-                
-                <div className="form-group">
-                    <Input 
-                        name="titmis" 
-                        label="Titre de la mission" 
-                        required
-                        placeholder="Ex: Développement d'une nouvelle fonctionnalité"
-                        className="input-field"
-                    />
-                </div>
-                
-                <div className="form-group">
-                    <Textarea 
-                        name="descmis" 
-                        label="Description détaillée" 
-                        required
-                        placeholder="Décrivez les objectifs et tâches de cette mission..."
-                        rows={4}
-                        className="textarea-field"
-                    />
-                </div>
-                
-                <div className="date-fields">
+                <fieldset>
+                    <legend>Ajouter une mission</legend>
                     <div className="form-group">
-                        <Input 
-                            type="date" 
-                            name="datedebmis" 
-                            label="Date de début" 
-                            required
-                            className="date-field"
-                            onChange={(e) => validateDates(e.target.value, document.getElementById("datefinmis")?.value)}
-                        />
+                        <label htmlFor="refoff">Offre associée :</label>
+                        {loading ? (
+                            <div className="loading-msg">Chargement des offres...</div>
+                        ) : error ? (
+                            <div className="error-msg">{error}</div>
+                        ) : offres.length === 0 ? (
+                            <div className="empty-msg">Aucune offre disponible</div>
+                        ) : (
+                            <select 
+                                name="refoff" 
+                                id="refoff" 
+                                required
+                                className="form-control"
+                            >
+                                <option value="">-- Sélectionner une offre --</option>
+                                {offres.map(offre => (
+                                    <option 
+                                        key={offre.idoffre} 
+                                        value={offre.idoffre}
+                                    >
+                                        {offre.reference}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
                     </div>
                     
                     <div className="form-group">
                         <Input 
-                            type="date" 
-                            name="datefinmis" 
-                            id="datefinmis"
-                            label="Date de fin" 
+                            name="titmis" 
+                            label="Titre de la mission" 
                             required
-                            className="date-field"
-                            onChange={(e) => validateDates(document.getElementById("datedebmis")?.value, e.target.value)}
+                            placeholder="Ex: Développement d'une nouvelle fonctionnalité"
+                            className="input-field"
                         />
                     </div>
-                </div>
-                
-                {dateError && <div className="error-msg">{dateError}</div>}
-                
-                <div className="form-actions">
+                    
+                    <div className="form-group">
+                        <Textarea 
+                            name="descmis" 
+                            label="Description détaillée" 
+                            required
+                            placeholder="Décrivez les objectifs et tâches de cette mission..."
+                            rows={4}
+                            className="textarea-field"
+                        />
+                    </div>
+                    
+                    <div className="date-fields">
+                        <div className="form-group">
+                            <Input 
+                                type="date" 
+                                name="datedebmis" 
+                                label="Date de début" 
+                                required
+                                className="date-field"
+                                onChange={(e) => validateDates(e.target.value, document.getElementById("datefinmis")?.value)}
+                            />
+                        </div>
+                        
+                        <div className="form-group">
+                            <Input 
+                                type="date" 
+                                name="datefinmis" 
+                                id="datefinmis"
+                                label="Date de fin" 
+                                required
+                                className="date-field"
+                                onChange={(e) => validateDates(document.getElementById("datedebmis")?.value, e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    
+                    {dateError && <div className="error-msg">{dateError}</div>}
+                    
                     <button type="submit" className="submit-btn">
-                        Enregistrer la mission
+                        Enregistrer cette mission
                     </button>
-                </div>
+                </fieldset>
+                
             </form>
         </div>
     );
@@ -2149,15 +2188,21 @@ function MissionsTableOff() {
         const fetchData = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+                if (!user || !user.iduser) {
+                    throw new Error('Utilisateur non connecté');
+                }
                 
                 const offresResponse = await fetch(`http://localhost/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 if (!offresResponse.ok) throw new Error('Erreur lors du chargement des offres');
                 setOffres(await offresResponse.json());
-
-                const missionsResponse = await fetch('http://localhost/backend/mission_crud/get_missions.php');
+    
+                
+                const missionsResponse = await fetch(`http://localhost/backend/mission_crud/get_missions.php?iduser=${user.iduser}`);
                 if (!missionsResponse.ok) throw new Error('Erreur lors du chargement des missions');
-                setMissions(await missionsResponse.json());
-
+                
+                const missionsData = await missionsResponse.json();
+                setMissions(missionsData.data || []);
+    
                 setLoading(false);
             } catch (err) {
                 console.error("Erreur:", err);
@@ -2165,11 +2210,11 @@ function MissionsTableOff() {
                 setLoading(false);
             }
         };
-
+    
         fetchData();
     }, []);
 
-    // Supprimer une mission
+    
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette mission ?")) {
             try {
@@ -2191,7 +2236,7 @@ function MissionsTableOff() {
         }
     };
 
-    // Activer le mode édition
+    
     const handleEdit = (mission) => {
         setEditingId(mission.idmission);
         setEditForm({
@@ -2203,7 +2248,7 @@ function MissionsTableOff() {
         });
     };
 
-    // Valider les dates
+    
     const validateDates = (startDate, endDate) => {
         if (new Date(startDate) > new Date(endDate)) {
             setDateError('La date de fin doit être postérieure à la date de début');
@@ -2213,7 +2258,7 @@ function MissionsTableOff() {
         return true;
     };
 
-    // Sauvegarder les modifications
+    
     const handleSave = async (id) => {
         if (!validateDates(editForm.date_debut, editForm.date_fin)) {
             return;
@@ -2247,13 +2292,13 @@ function MissionsTableOff() {
         }
     };
 
-    // Annuler l'édition
+    
     const handleCancel = () => {
         setEditingId(null);
         setDateError('');
     };
 
-    // Gérer les changements du formulaire d'édition
+    
     const handleEditChange = (e) => {
         setEditForm({
             ...editForm,
@@ -2267,8 +2312,6 @@ function MissionsTableOff() {
                 <div className="loading-state">Chargement...</div>
             ) : error ? (
                 <div className="error-state">Erreur: {error}</div>
-            ) : missions.length === 0 ? (
-                <div className="empty-state">Aucune mission enregistrée</div>
             ) : (
                 <table className="mission-table">
                     <thead>
@@ -2281,7 +2324,12 @@ function MissionsTableOff() {
                         </tr>
                     </thead>
                     <tbody>
-                        {missions.map(mission => (
+                        {missions.length === 0 ? (
+                            <tr>
+                                <td colSpan="3">Aucune mission enregistrée</td>
+                            </tr>
+                        ) : (
+                        missions.map(mission => (
                             <tr key={mission.idmission}>
                                 {editingId === mission.idmission ? (
                                     <>
@@ -2354,7 +2402,7 @@ function MissionsTableOff() {
                                     </>
                                 )}
                             </tr>
-                        ))}
+                        )))}
                     </tbody>
                 </table>
             )}
@@ -2369,7 +2417,7 @@ function AvantagesFormOff() {
     const [error, setError] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Récupération des offres
+    
     useEffect(() => {
         const fetchOffres = async () => {
             try {
@@ -2422,7 +2470,7 @@ function AvantagesFormOff() {
             if (result.success) {
                 closeAvanForms();
                 alert('Avantage enregistré avec succès !');
-                // Callback pour rafraîchir les données parentes si nécessaire
+                
             } else {
                 alert(result.message || "Erreur lors de l'enregistrement");
             }
@@ -2436,69 +2484,67 @@ function AvantagesFormOff() {
 
     return (
         <div id="avanform" className='hide avantage-form-container'>
-            <div className="form-header">
-                <h3>Ajouter un avantage</h3>
-                <button 
-                    id='closeAvanForm' 
-                    onClick={closeAvanForms} 
-                    className="close-btn"
-                    disabled={isSubmitting}
-                >
-                    &times;
-                </button>
-            </div>
+
+            <button 
+                id='closeAvanForm' 
+                onClick={closeAvanForms} 
+                className="close-btn"
+                disabled={isSubmitting}
+            >
+                &times;
+            </button>
             
             <form onSubmit={handleSubmit} className="avantage-form">
-                <div className="form-group">
-                    <label htmlFor="refoff">Offre concernée :</label>
-                    {loading ? (
-                        <div className="loading-msg">
-                            <span className="spinner"></span> Chargement des offres...
-                        </div>
-                    ) : error ? (
-                        <div className="error-msg">
-                            <span className="error-icon">⚠️</span> {error}
-                        </div>
-                    ) : offres.length === 0 ? (
-                        <div className="empty-msg">
-                            Aucune offre disponible. Créez d'abord une offre.
-                        </div>
-                    ) : (
-                        <select 
-                            name="refoff" 
-                            id="refoff" 
+                <fieldset>
+                    <legend>Ajouter un avantage</legend>
+                    <div className="form-group">
+                        <label htmlFor="refoff">Offre concernée :</label>
+                        {loading ? (
+                            <div className="loading-msg">
+                                <span className="spinner"></span> Chargement des offres...
+                            </div>
+                        ) : error ? (
+                            <div className="error-msg">
+                                <span className="error-icon">⚠️</span> {error}
+                            </div>
+                        ) : offres.length === 0 ? (
+                            <div className="empty-msg">
+                                Aucune offre disponible. Créez d'abord une offre.
+                            </div>
+                        ) : (
+                            <select 
+                                name="refoff" 
+                                id="refoff" 
+                                required
+                                className="form-control"
+                                disabled={isSubmitting}
+                            >
+                                <option value="">-- Sélectionnez une offre --</option>
+                                {offres.map(offre => (
+                                    <option 
+                                        key={offre.idoffre} 
+                                        value={offre.idoffre}
+                                    >
+                                        {offre.reference}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    </div>
+                    
+                    <div className="form-group">
+                        <Textarea 
+                            name="descavan" 
+                            label="Description de l'avantage" 
                             required
-                            className="form-control"
+                            placeholder="Décrivez en détail l'avantage proposé (ex: Tickets restaurant, Mutuelle, Télétravail...)"
+                            rows={5}
+                            className="textarea-field"
                             disabled={isSubmitting}
-                        >
-                            <option value="">-- Sélectionnez une offre --</option>
-                            {offres.map(offre => (
-                                <option 
-                                    key={offre.idoffre} 
-                                    value={offre.idoffre}
-                                >
-                                    {offre.reference}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                </div>
+                        />
+                        
+                    </div>
                 
-                <div className="form-group">
-                    <Textarea 
-                        name="descavan" 
-                        label="Description de l'avantage" 
-                        required
-                        placeholder="Décrivez en détail l'avantage proposé (ex: Tickets restaurant, Mutuelle, Télétravail...)"
-                        rows={5}
-                        className="textarea-field"
-                        disabled={isSubmitting}
-                        maxLength={500}
-                    />
-                    <small className="char-count">Maximum 500 caractères</small>
-                </div>
-                
-                <div className="form-actions">
                     <button 
                         type="submit" 
                         className="submit-btn"
@@ -2512,7 +2558,8 @@ function AvantagesFormOff() {
                             'Enregistrer cet avantage'
                         )}
                     </button>
-                </div>
+                </fieldset>
+                
             </form>
         </div>
     );
@@ -2530,22 +2577,27 @@ function AvantagesTableOff() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Récupérer les avantages et les offres
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+                if (!user || !user.iduser) {
+                    throw new Error('Utilisateur non connecté');
+                }
                 
-                // Charger les offres
+                
                 const offresResponse = await fetch(`http://localhost/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 if (!offresResponse.ok) throw new Error('Erreur lors du chargement des offres');
                 setOffres(await offresResponse.json());
-
-                // Charger les avantages
-                const avantagesResponse = await fetch('http://localhost/backend/avantage_crud/get_avantages.php');
+    
+                
+                const avantagesResponse = await fetch(`http://localhost/backend/avantage_crud/get_avantages.php?iduser=${user.iduser}`);
                 if (!avantagesResponse.ok) throw new Error('Erreur lors du chargement des avantages');
-                setAvantages(await avantagesResponse.json());
-
+                
+                const avantagesData = await avantagesResponse.json();
+                setAvantages(avantagesData.data || []);
+    
                 setLoading(false);
             } catch (err) {
                 console.error("Erreur:", err);
@@ -2553,11 +2605,11 @@ function AvantagesTableOff() {
                 setLoading(false);
             }
         };
-
+    
         fetchData();
     }, []);
 
-    // Supprimer un avantage
+    
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cet avantage ?")) {
             try {
@@ -2579,7 +2631,7 @@ function AvantagesTableOff() {
         }
     };
 
-    // Activer le mode édition
+    
     const handleEdit = (avantage) => {
         setEditingId(avantage.idavantage);
         setEditForm({
@@ -2588,7 +2640,7 @@ function AvantagesTableOff() {
         });
     };
 
-    // Sauvegarder les modifications
+    
     const handleSave = async (id) => {
         setIsSubmitting(true);
         try {
@@ -2622,12 +2674,12 @@ function AvantagesTableOff() {
         }
     };
 
-    // Annuler l'édition
+    
     const handleCancel = () => {
         setEditingId(null);
     };
 
-    // Gérer les changements du formulaire d'édition
+    
     const handleEditChange = (e) => {
         setEditForm({
             ...editForm,
@@ -2653,10 +2705,6 @@ function AvantagesTableOff() {
                         Réessayer
                     </button>
                 </div>
-            ) : avantages.length === 0 ? (
-                <div className="empty-state">
-                    <p>Aucun avantage enregistré</p>
-                </div>
             ) : (
                 <table className="avantage-table">
                     <thead>
@@ -2668,7 +2716,12 @@ function AvantagesTableOff() {
                         </tr>
                     </thead>
                     <tbody>
-                        {avantages.map(avantage => (
+                        {avantages.length === 0 ? (
+                            <tr>
+                                <td colSpan="3">Aucun avantage enregistré</td>
+                            </tr>
+                        ) : (
+                        avantages.map(avantage => (
                             <tr key={avantage.idavantage}>
                                 {editingId === avantage.idavantage ? (
                                     <>
@@ -2747,7 +2800,7 @@ function AvantagesTableOff() {
                                     </>
                                 )}
                             </tr>
-                        ))}
+                        )))}
                     </tbody>
                 </table>
             )}
@@ -2768,11 +2821,10 @@ function DocRequisFormOff() {
         'Relevés de notes',
         'Pièce d\'identité',
         'Justificatif de domicile',
-        'Attestation de travail',
-        'Autre'
+        'Attestation de travail'
     ]);
 
-    // Récupération des offres
+    
     useEffect(() => {
         const fetchOffres = async () => {
             try {
@@ -2825,7 +2877,7 @@ function DocRequisFormOff() {
             if (result.success) {
                 closeDocForms();
                 alert('Document requis enregistré avec succès !');
-                // Rafraîchir les données parentes si nécessaire
+                
             } else {
                 alert(result.message || "Erreur lors de l'enregistrement");
             }
@@ -2839,92 +2891,91 @@ function DocRequisFormOff() {
 
     return (
         <div id="docform" className='hide docrequis-form-container'>
-            <div className="form-header">
-                <h3>Ajouter un document requis</h3>
-                <button 
-                    id='closeDocForm' 
-                    onClick={closeDocForms} 
-                    className="close-btn"
-                    disabled={isSubmitting}
-                >
-                    &times;
-                </button>
-            </div>
+            <button 
+                id='closeDocForm' 
+                onClick={closeDocForms} 
+                className="close-btn"
+                disabled={isSubmitting}
+            >
+                &times;
+            </button>
             
             <form onSubmit={handleSubmit} className="docrequis-form">
-                <div className="form-group">
-                    <label htmlFor="refoff">Offre concernée :</label>
-                    {loading ? (
-                        <div className="loading-msg">
-                            <span className="spinner"></span> Chargement des offres...
-                        </div>
-                    ) : error ? (
-                        <div className="error-msg">
-                            <span className="error-icon">⚠️</span> {error}
-                        </div>
-                    ) : offres.length === 0 ? (
-                        <div className="empty-msg">
-                            Aucune offre disponible. Créez d'abord une offre.
-                        </div>
-                    ) : (
-                        <select 
-                            name="refoff" 
-                            id="refoff" 
-                            required
-                            className="form-control"
-                            disabled={isSubmitting}
-                        >
-                            <option value="">-- Sélectionnez une offre --</option>
-                            {offres.map(offre => (
-                                <option 
-                                    key={offre.idoffre} 
-                                    value={offre.idoffre}
-                                >
-                                    {offre.reference} 
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                </div>
-                
-                <div className="form-group">
-                    <label htmlFor="intdoc">Type de document :</label>
-                    <div className="document-select-container">
-                        <select
-                            name="intdoc"
-                            id="intdoc"
-                            required
-                            className="form-control"
-                            disabled={isSubmitting}
-                        >
-                            <option value="">-- Sélectionnez un type --</option>
-                            {documentTypes.map((type, index) => (
-                                <option key={index} value={type}>
-                                    {type}
-                                </option>
-                            ))}
-                        </select>
-                        <div className="document-hint">
-                            Sélectionnez parmi les types courants ou choisissez "Autre"
+                <fieldset>
+                    <legend>Ajouter un document requis</legend>
+                    <div className="form-group">
+                        <label htmlFor="refoff">Offre concernée :</label>
+                        {loading ? (
+                            <div className="loading-msg">
+                                <span className="spinner"></span> Chargement des offres...
+                            </div>
+                        ) : error ? (
+                            <div className="error-msg">
+                                <span className="error-icon">⚠️</span> {error}
+                            </div>
+                        ) : offres.length === 0 ? (
+                            <div className="empty-msg">
+                                Aucune offre disponible. Créez d'abord une offre.
+                            </div>
+                        ) : (
+                            <select 
+                                name="refoff" 
+                                id="refoff" 
+                                required
+                                className="form-control"
+                                disabled={isSubmitting}
+                            >
+                                <option value="">-- Sélectionnez une offre --</option>
+                                {offres.map(offre => (
+                                    <option 
+                                        key={offre.idoffre} 
+                                        value={offre.idoffre}
+                                    >
+                                        {offre.reference} 
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    </div>
+                    
+                    <div className="form-group">
+                        <label htmlFor="intdoc">Type de document :</label>
+                        <div className="document-select-container">
+                            <select
+                                name="intdoc"
+                                id="intdoc"
+                                required
+                                className="form-control"
+                                disabled={isSubmitting}
+                            >
+                                <option value="">-- Sélectionnez un type --</option>
+                                {documentTypes.map((type, index) => (
+                                    <option key={index} value={type}>
+                                        {type}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                     </div>
-                </div>
+                    
+                    <div className="form-actions">
+                        <button 
+                            type="submit" 
+                            className="submit-btn"
+                            disabled={isSubmitting || loading || error || offres.length === 0}
+                        >
+                            {isSubmitting ? (
+                                <>
+                                    <span className="spinner"></span> Enregistrement...
+                                </>
+                            ) : (
+                                'Enregistrer ce document'
+                            )}
+                        </button>
+                    </div>
                 
-                <div className="form-actions">
-                    <button 
-                        type="submit" 
-                        className="submit-btn"
-                        disabled={isSubmitting || loading || error || offres.length === 0}
-                    >
-                        {isSubmitting ? (
-                            <>
-                                <span className="spinner"></span> Enregistrement...
-                            </>
-                        ) : (
-                            'Enregistrer ce document'
-                        )}
-                    </button>
-                </div>
+                </fieldset>
+                
             </form>
         </div>
     );
@@ -2952,22 +3003,27 @@ function DocRequisTableOff() {
         'Autre'
     ]);
 
-    // Récupérer les documents requis et les offres
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+                if (!user || !user.iduser) {
+                    throw new Error('Utilisateur non connecté');
+                }
                 
-                // Charger les offres
+                
                 const offresResponse = await fetch(`http://localhost/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 if (!offresResponse.ok) throw new Error('Erreur lors du chargement des offres');
                 setOffres(await offresResponse.json());
-
-                // Charger les documents requis
-                const docsResponse = await fetch('http://localhost/backend/documentrequis_crud/get_documents.php');
+    
+                
+                const docsResponse = await fetch(`http://localhost/backend/documentrequis_crud/get_documents.php?iduser=${user.iduser}`);
                 if (!docsResponse.ok) throw new Error('Erreur lors du chargement des documents requis');
-                setDocuments(await docsResponse.json());
-
+                
+                const docsData = await docsResponse.json();
+                setDocuments(docsData.data || []);
+    
                 setLoading(false);
             } catch (err) {
                 console.error("Erreur:", err);
@@ -2975,11 +3031,11 @@ function DocRequisTableOff() {
                 setLoading(false);
             }
         };
-
+    
         fetchData();
     }, []);
 
-    // Supprimer un document requis
+    
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer ce document requis ?")) {
             try {
@@ -3001,7 +3057,7 @@ function DocRequisTableOff() {
         }
     };
 
-    // Activer le mode édition
+    
     const handleEdit = (document) => {
         setEditingId(document.iddocumentreq);
         setEditForm({
@@ -3010,7 +3066,7 @@ function DocRequisTableOff() {
         });
     };
 
-    // Sauvegarder les modifications
+    
     const handleSave = async (id) => {
         setIsSubmitting(true);
         try {
@@ -3044,12 +3100,12 @@ function DocRequisTableOff() {
         }
     };
 
-    // Annuler l'édition
+    
     const handleCancel = () => {
         setEditingId(null);
     };
 
-    // Gérer les changements du formulaire d'édition
+    
     const handleEditChange = (e) => {
         setEditForm({
             ...editForm,
@@ -3075,10 +3131,6 @@ function DocRequisTableOff() {
                         Réessayer
                     </button>
                 </div>
-            ) : documents.length === 0 ? (
-                <div className="empty-state">
-                    <p>Aucun document requis enregistré</p>
-                </div>
             ) : (
                 <table className="docrequis-table">
                     <thead>
@@ -3089,7 +3141,12 @@ function DocRequisTableOff() {
                         </tr>
                     </thead>
                     <tbody>
-                        {documents.map(document => (
+                        {documents.length === 0 ? (
+                            <tr>
+                                <td colSpan="3">Aucun document enregistré</td>
+                            </tr>
+                        ) : (
+                        documents.map(document => (
                             <tr key={document.iddocumentreq}>
                                 {editingId === document.iddocumentreq ? (
                                     <>
@@ -3167,7 +3224,7 @@ function DocRequisTableOff() {
                                     </>
                                 )}
                             </tr>
-                        ))}
+                        )))}
                     </tbody>
                 </table>
             )}

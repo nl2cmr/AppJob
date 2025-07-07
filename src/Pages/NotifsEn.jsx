@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { NavBarEn } from '../Components/NavBarEn.jsx';
 import './css/Notifs.css';
+import { FaUserTag } from 'react-icons/fa';
+import { AiFillClockCircle } from 'react-icons/ai';
 
 export const NotifsEn = () => {
     const [notifications, setNotifications] = useState([]);
@@ -66,7 +68,6 @@ export const NotifsEn = () => {
             const data = await response.json();
             
             if (data.success) {
-                // Filtrer les notifications pour supprimer celle qui a été supprimée
                 setNotifications(notifications.filter(notif => notif.idnotification !== notificationId));
             }
         } catch (err) {
@@ -117,7 +118,7 @@ export const NotifsEn = () => {
                 <h2>Notifications</h2>
                 
                 {notifications.length === 0 ? (
-                    <p>No notifications to display</p>
+                    <p>Aucune notification</p>
                 ) : (
                     <div className="notifications-list">
                         {notifications.map(notification => (
@@ -129,10 +130,12 @@ export const NotifsEn = () => {
                                 <div className="notification-content">
                                     <p className="notification-message">{notification.message}</p>
                                     <p className="notification-date">
+                                        <AiFillClockCircle />
                                         {new Date(notification.date_notification).toLocaleString()}
                                     </p>
                                     {notification.expediteur_nom && (
                                         <p className="notification-sender">
+                                            <FaUserTag />
                                             From: {notification.expediteur_prenom} {notification.expediteur_nom}
                                         </p>
                                     )}

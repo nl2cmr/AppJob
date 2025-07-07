@@ -146,10 +146,10 @@ Link {
     align-items: center;
 }
 
-#offform > div, #compform > div, 
+#offform > form, #compform > div, 
 #dipform > div, #langform > div, 
-#quaform > div, #misform > div, 
-#avanform > div, #docform > div {
+#quaform > div, #misform > form, 
+#avanform > form, #docform > form {
     background: white;
     padding: 30px;
     border-radius: 10px;
@@ -397,7 +397,7 @@ textarea {
 }
 
 .submit-btn {
-    background: #3498db;
+    background: #2fcc70;
     color: white;
     padding: 12px 20px;
 }

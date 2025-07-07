@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Input } from '../Components/Input';
 import './css/Login.css';
+import img1 from '../assets/img1.jpg';
 
 export const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -59,49 +60,51 @@ export const LoginForm = () => {
         </div>
       ) : (
         <div className="loginpage">
-          <div className='logo'>
-            <h1>JobConnect</h1>
+            <div className="right-part">
+              <h1>JobConnect</h1>
+              <form onSubmit={handleSubmit}>
+                <fieldset>
+                <legend>Connexion</legend>
+                {error && <div className="error-msg">{error}</div>}
+                <Input
+                  name="email"
+                  placeholder="Entrez votre email"
+                  type="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  label="Email"
+                  required
+                />
+
+                <Input
+                  name="password"
+                  placeholder="Entrez votre mot de passe"
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  label="Mot de passe"
+                  required
+                />
+
+                <CheckBox
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                />
+
+                <div className="loginformbottom">
+                  <button type="submit" disabled={isLoading}>
+                    Se connecter
+                  </button>
+                  <p>Pas de compte ? <Link to="/signup">S'inscrire</Link></p>
+                </div>
+                </fieldset>
+              </form>
+
+            </div>
+            <div className="left-part">
+              <img src={img1} alt="bg" />
+            </div>
           </div>
-
-          <div className="loginform">
-            <h2>Connexion</h2>
-            {error && <div className="error-message">{error}</div>}
-
-            <form onSubmit={handleSubmit}>
-              <Input
-                name="email"
-                placeholder="Entrez votre email"
-                type="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                label="Email"
-                required
-              />
-
-              <Input
-                name="password"
-                placeholder="Entrez votre mot de passe"
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                label="Mot de passe"
-                required
-              />
-
-              <CheckBox
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-              />
-
-              <div className="loginformbottom">
-                <button type="submit" disabled={isLoading}>
-                  Se connecter
-                </button>
-                <p>Pas de compte ? <Link to="/signup">S'inscrire</Link></p>
-              </div>
-            </form>
-          </div>
-        </div>
       )}
     </>
   );
