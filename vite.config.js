@@ -9,4 +9,5 @@ export default defineConfig({
       '@ionic/react/css': '/node_modules/@ionic/react/css',
     },
   },
+  base: process.env.VITE_BASE_PATH || '/',
 })
