@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 import { BsCardList } from 'react-icons/bs';
 import { MdCircleNotifications, MdMenu, MdClose } from 'react-icons/md';
 import { PiReadCvLogoLight } from 'react-icons/pi';
+import { LuLogOut } from 'react-icons/lu';
 import { useState, useEffect } from 'react';
 import '../Pages/css/NavBar.css';
 
 export const NavBar = () => {
     const [isMobile, setIsMobile] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleResize = () => {
@@ -20,13 +22,24 @@ export const NavBar = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const NavLink = ({ to, icon: Icon, text }) => (
-        <Link to={to} style={{ textDecoration: 'none'}} onClick={() => isMobile && setMenuOpen(false)}>
+    const handleLogout = () => {
+        sessionStorage.removeItem('user');
+        localStorage.removeItem('user');
+        
+        navigate('/');
+        
+        if (isMobile) {
+            setMenuOpen(false);
+        }
+    };
+
+    const NavLink = ({ to, icon: Icon, text, onClick }) => (
+        <div onClick={onClick} style={{ textDecoration: 'none', cursor: 'pointer' }}>
             <li style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
                 <Icon />
                 <button>{text}</button>
             </li>
-        </Link>
+        </div>
     );
 
     return(
@@ -35,9 +48,25 @@ export const NavBar = () => {
             
             {!isMobile && (
                 <ul style={{ display: 'flex', listStyle: 'none', padding: 0 }}>
-                    <NavLink to="/main" icon={BsCardList} text="Offre" />
-                    <NavLink to="/main/compte" icon={PiReadCvLogoLight} text="Comptes et CV" />
-                    <NavLink to="/main/notifs&messages" icon={MdCircleNotifications} text="Messages et Notifications" />
+                    <Link to="/main" style={{ textDecoration: 'none' }}>
+                        <li style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
+                            <BsCardList />
+                            <button>Offre</button>
+                        </li>
+                    </Link>
+                    <Link to="/main/compte" style={{ textDecoration: 'none' }}>
+                        <li style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
+                            <PiReadCvLogoLight />
+                            <button>Comptes & CV</button>
+                        </li>
+                    </Link>
+                    <Link to="/main/notifs&messages" style={{ textDecoration: 'none' }}>
+                        <li style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
+                            <MdCircleNotifications />
+                            <button>Notifications</button>
+                        </li>
+                    </Link>
+                    <NavLink icon={LuLogOut} text="Déconnexion" onClick={handleLogout} />
                 </ul>
             )}
             
@@ -72,9 +101,25 @@ export const NavBar = () => {
                             zIndex: 100,
                             boxShadow: '-5px 0 15px rgba(0, 0, 0, 0.2)'
                         }} className='mobile-menu'>
-                            <NavLink to="/main" icon={BsCardList} text="Offre" />
-                            <NavLink to="/main/compte" icon={PiReadCvLogoLight} text="Comptes et CV" />
-                            <NavLink to="/main/notifs&messages" icon={MdCircleNotifications} text="Messages et Notifications" />
+                            <Link to="/main" style={{ textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>
+                                <li style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
+                                    <BsCardList />
+                                    <button>Offre</button>
+                                </li>
+                            </Link>
+                            <Link to="/main/compte" style={{ textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>
+                                <li style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
+                                    <PiReadCvLogoLight />
+                                    <button>Comptes et CV</button>
+                                </li>
+                            </Link>
+                            <Link to="/main/notifs&messages" style={{ textDecoration: 'none' }} onClick={() => setMenuOpen(false)}>
+                                <li style={{ display: 'flex', alignItems: 'center', color: 'white' }}>
+                                    <MdCircleNotifications />
+                                    <button>Notifications</button>
+                                </li>
+                            </Link>
+                            <NavLink icon={LuLogOut} text="Déconnexion" onClick={handleLogout} />
                         </ul>
                     )}
                 </>

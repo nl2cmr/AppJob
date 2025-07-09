@@ -55,12 +55,10 @@
     cursor: pointer;
   }
   
-  /* Styles spécifiques pour mobile */
   .mobile-nav {
     display: none;
   }
   
-  /* Styles pour le menu latéral */
   ion-menu {
     --width: 250px;
   }
@@ -91,9 +89,6 @@
     }
   }
 
-  /* Ajoutez ces règles à votre fichier NavBar.css */
-
-/* Styles pour le menu mobile */
 .mobile-menu-button {
     background: transparent;
     border: none;
