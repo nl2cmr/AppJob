@@ -5,6 +5,9 @@ import { RiMobileDownloadLine } from 'react-icons/ri';
 import { MdManageSearch } from 'react-icons/md';
 import { MdManageAccounts } from 'react-icons/md';
 import { FaFilter } from 'react-icons/fa6';
+import { useState, useEffect } from 'react';
+import { MdMenu, MdClose } from 'react-icons/md';
+
 
 export const LandingPage = () => {
   return (
@@ -32,18 +35,56 @@ export const LandingPage = () => {
   );
 };
 
+
 const NavBarLanding = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <header className="navbar">
       <div className="logo">JobConnect</div>
-      <nav className="nav-buttons">
-        <a href="/download" className="nav-button btndown">
-          <RiMobileDownloadLine className="icon" />
-          <span>Télécharger l'application mobile</span>
-        </a>
-        <Link to="/login" className="nav-button btncon">Se connecter</Link>
-        <Link to="/signup" className="nav-button btninsc">S'inscrire</Link>
-      </nav>
+      
+      {isMobile && (
+        <button 
+          className="mobile-menu-button"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
+        </button>
+      )}
+      
+      {!isMobile && (
+        <nav className="nav-buttons">
+          <a href="/download" className="nav-button btndown">
+            <RiMobileDownloadLine className="icon" />
+            <span>Télécharger l'application mobile</span>
+          </a>
+          <Link to="/login" className="nav-button btncon">Se connecter</Link>
+          <Link to="/signup" className="nav-button btninsc">S'inscrire</Link>
+        </nav>
+      )}
+      
+      {isMobile && menuOpen && (
+        <nav className="nav-buttons mobile">
+          <a href="/download" className="nav-button btndown" onClick={() => setMenuOpen(false)}>
+            <RiMobileDownloadLine className="icon" />
+            <span>Télécharger l'application mobile</span>
+          </a>
+          <Link to="/login" className="nav-button btncon" onClick={() => setMenuOpen(false)}>Se connecter</Link>
+          <Link to="/signup" className="nav-button btninsc" onClick={() => setMenuOpen(false)}>S'inscrire</Link>
+        </nav>
+      )}
     </header>
   );
 };

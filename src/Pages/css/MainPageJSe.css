@@ -9,42 +9,6 @@
 }
 
 /* ==================== */
-/* === NAVBAR STYLES === */
-/* ==================== */
-.main-page .navbar ul {
-    display: flex;
-    gap: 30px;
-}
-
-.main-page .navbar ul li {
-    list-style-type: none;
-    font-size: 1.3rem;
-    font-weight: 500;
-    align-content: center;
-}
-
-
-.main-page .navbar ul li button {
-    background-color: transparent;
-    border: none;
-    color: #d9d9bf;
-    font-size: 1rem;
-    font-weight: 400;
-    cursor: pointer;
-    padding: 0.8rem;
-}
-
-.main-page .navbar ul li:hover {
-    background-color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    color: #000000;
-    font-weight: 400;
-    cursor: pointer;
-}
-
-
-/* ==================== */
 /* === SEARCH & FILTERS === */
 /* ==================== */
 .search-filters-container {

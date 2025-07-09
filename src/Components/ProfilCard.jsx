@@ -21,8 +21,8 @@ export const ProfilCard = ({ infosprofil, onViewProfil }) => {
                         
                         <div className="profil-info">
                             <div className="profil-card-header">
-                                <h3>{profil.prenom} {profil.nom}</h3>
-                                <span className="poste">{profil.poste}</span>
+                                <h3>{profil.prenom} {profil.nom} {profil.poste}</h3>
+                                <span className="poste"><b>{profil.email}</b> - <b>{profil.telephone}</b></span>
                             </div>
                             <div className="profil-card-body">
                                 <p className="description">{profil.description?.substring(0, 100) || 'Aucune description disponible'}</p>
