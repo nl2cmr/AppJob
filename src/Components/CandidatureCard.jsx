@@ -36,7 +36,7 @@ export const CandidatureCard = ({ candidature, onStatusChange }) => {
                 statut: newStatus
             });
     
-            const response = await fetch(`http://localhost/backend/candidature_crud/update_candidature.php`, {
+            const response = await fetch(`http://jobconnectbackend.ct.ws/backend/candidature_crud/update_candidature.php`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ export const CandidatureCard = ({ candidature, onStatusChange }) => {
     const handleDelete = async () => {
         setIsUpdating(true);
         try {
-            const response = await fetch(`http://localhost/backend/candidature_crud/delete_candidature.php`, {
+            const response = await fetch(`http://jobconnectbackend.ct.ws/backend/candidature_crud/delete_candidature.php`, {
                 method: 'DELETE', 
                 headers: {
                     'Content-Type': 'application/json',

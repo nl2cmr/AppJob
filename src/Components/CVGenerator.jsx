@@ -67,11 +67,30 @@ export const CVGenerator = () => {
             return;
         }
     
-        if (file.size > 5 * 1024 * 1024) {
-            setError("Le fichier est trop volumineux (max 5MB)");
-            return;
+        setIsLoading(true);
+        setError(null);
+    
+        const formData = new FormData();
+        formData.append('cvfile', file);
+    
+        try {
+            const response = await fetch('http://jobconnectbackend.ct.ws/backend/analyse_cv.php', {
+                method: 'POST',
+                body: formData
+            });
+    
+            const result = await response.json();
+    
+            if (!response.ok) {
+                throw new Error(result.error || 'Erreur lors de l\'analyse');
+            }
+    
+            setSuccess(true);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
         }
-
     };
 
     return (

@@ -64,7 +64,7 @@ export const NavBarEn = () => {
                     <NavLink to="/mainen" icon={CgProfile} text="Profils" />
                     <NavLink to="/mainen/candidatures" icon={LiaUsersSolid} text="Candidatures" />
                     <NavLink to="/mainen/compte" icon={LuSettings2} text="Comptes & Offres" />
-                    <NavLink to="/mainen/notifs&messages" icon={MdCircleNotifications} text="Messages et Notifications" />
+                    <NavLink to="/mainen/notifs&messages" icon={MdCircleNotifications} text="Notifications" />
                     <NavLink icon={LuLogOut} text="Déconnexion" onClick={handleLogout} />
                 </ul>
             )}

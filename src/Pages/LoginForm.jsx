@@ -18,7 +18,7 @@ export const LoginForm = () => {
     
 
     try {
-      const response = await fetch('http://localhost/backend/login.php', {
+      const response = await fetch('http://jobconnectbackend.ct.ws/backend/login.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
