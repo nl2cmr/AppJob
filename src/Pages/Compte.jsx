@@ -318,8 +318,10 @@ export const Compte = () => {
         </div>
     );
 };
-function ExperiencesForm({ onExperienceAdded }) {
-    const closeExpForms = () => {
+
+function ExperiencesForm({ onExperienceAdded }) {  // Ajout de la prop onExperienceAdded
+
+    const closeExpForms = () =>{
         document.getElementById("expform")?.classList.add('hide');
     }
     
@@ -345,12 +347,8 @@ function ExperiencesForm({ onExperienceAdded }) {
             const result = await response.json();
             if (result.success) {
                 closeExpForms();
-                alert('Expérience ajoutée avec succès');
                 e.target.reset();
-                // Appeler la fonction de callback pour notifier le parent
-                if (onExperienceAdded) {
-                    onExperienceAdded();
-                }
+                onExperienceAdded();  // Appel de la fonction pour rafraîchir le tableau
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -359,6 +357,7 @@ function ExperiencesForm({ onExperienceAdded }) {
             alert('Erreur de connexion');
         }
     };
+
 
     return(
         <div id="expform" className='hide'>
@@ -377,6 +376,7 @@ function ExperiencesForm({ onExperienceAdded }) {
         </div>
     )
 }
+
 
 function ExperiencesTable() {
     const [experiences, setExperiences] = useState([]);
@@ -463,14 +463,9 @@ function ExperiencesTable() {
         });
     };
 
-    // Fonction pour rafraîchir les expériences
-    const refreshExperiences = () => {
-        fetchExperiences();
-    };
-
     return (
-        <div>
-            <ExperiencesForm onExperienceAdded={refreshExperiences} />
+        <>
+            <ExperiencesForm onExperienceAdded={fetchExperiences} />  {/* Passage de la fonction en prop */}
             <div id="exptable">
                 <table>
                     <thead>
@@ -554,7 +549,7 @@ function ExperiencesTable() {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </>
     );
 }
 
@@ -583,7 +578,8 @@ function CompetencesForm(){
             
             const result = await response.json();
             if (result.success) {
-                
+                e.target.reset();
+                closeCompForms();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -839,7 +835,7 @@ function FormationsForm(){
             
             const result = await response.json();
             if (result.success) {
-                
+                closeFormaForms();
                 e.target.reset();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -1154,7 +1150,8 @@ function QualitesForm(){
             
             const result = await response.json();
             if (result.success) {
-                
+                closeQuaForms();
+                e.target.reset();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -1389,7 +1386,6 @@ function ReferencesForm({ onReferenceAdded }) {
             const result = await response.json();
             if (result.success) {
                 closeRefForms();
-                
                 e.target.reset(); 
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -1640,7 +1636,7 @@ function InteretsForm(){
             
             const result = await response.json();
             if (result.success) {
-                
+                closeIntForms();
                 e.target.reset();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -1877,7 +1873,7 @@ function LanguesForm(){
             
             const result = await response.json();
             if (result.success) {
-                
+                closeLangForms();
                 e.target.reset();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -2137,7 +2133,7 @@ function ProjetsForm(){
             
             const result = await response.json();
             if (result.success) {
-                
+                closeProjForms();
                 e.target.reset();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -2441,7 +2437,7 @@ function DiplomesForm(){
             
             const result = await response.json();
             if (result.success) {
-                
+                closeDipForms();
                 e.target.reset();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -2691,7 +2687,6 @@ function CertificationsForm() {
             const result = await response.json();
             if (result.success) {
                 closeCertifForms();
-                
                 e.target.reset();
             } else {
                 alert(result.message || "Erreur lors de l'enregistrement");
