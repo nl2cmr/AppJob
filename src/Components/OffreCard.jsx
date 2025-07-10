@@ -32,7 +32,7 @@ export const OffreCard = ({ infosoffre }) => {
                 throw new Error('Vous devez être connecté pour postuler');
             }
 
-            const response = await fetch('http://localhost/backend/candidature_crud/add_candidature.php', {
+            const response = await fetch('https://185.27.134.109/backend/candidature_crud/add_candidature.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -76,7 +76,7 @@ export const OffreCard = ({ infosoffre }) => {
                         <div className="entreprise-logo-container">
                             {offre.logo_entreprise ? (
                                 <img 
-                                    src={`http://localhost/backend/uploads/${offre.logo_entreprise}`} 
+                                    src={`https://185.27.134.109/backend/uploads/${offre.logo_entreprise}`} 
                                     alt={`Logo ${offre.recruteur_nom}`}
                                     className="entreprise-logo"
                                 />
@@ -119,7 +119,7 @@ export const OffreCard = ({ infosoffre }) => {
                         <div className="entreprise-header">
                             {selectedOffre.logo_entreprise ? (
                                 <img 
-                                    src={`http://localhost/backend/uploads/${selectedOffre.logo_entreprise}`} 
+                                    src={`https://185.27.134.109/backend/uploads/${selectedOffre.logo_entreprise}`} 
                                     alt={`Logo ${selectedOffre.recruteur_nom}`}
                                     className="entreprise-logo-detail"
                                 />

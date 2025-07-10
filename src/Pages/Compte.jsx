@@ -31,7 +31,7 @@ export const Compte = () => {
                 return;
             }
     
-            const response = await fetch('http://localhost/backend/update_user.php', {
+            const response = await fetch('https://185.27.134.109/backend/update_user.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -338,7 +338,7 @@ function ExperiencesForm(){
         };
     
         try {
-            const response = await fetch('http://localhost/backend/experience_crud/add_experience.php', {
+            const response = await fetch('https://185.27.134.109/backend/experience_crud/add_experience.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -390,7 +390,7 @@ function ExperiencesTable() {
 
     const fetchExperiences = async () => {
         const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-        const response = await fetch(`http://localhost/backend/experience_crud/get_experiences.php?iduser=${user.iduser}`);
+        const response = await fetch(`https://185.27.134.109/backend/experience_crud/get_experiences.php?iduser=${user.iduser}`);
         const data = await response.json();
         setExperiences(data);
     };
@@ -403,7 +403,7 @@ function ExperiencesTable() {
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette expérience ?")) {
             try {
-                const response = await fetch('http://localhost/backend/experience_crud/delete_experience.php', {
+                const response = await fetch('https://185.27.134.109/backend/experience_crud/delete_experience.php', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ idexperience: id })
@@ -440,7 +440,7 @@ function ExperiencesTable() {
     const handleEditSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost/backend/experience_crud/update_experience.php', {
+            const response = await fetch('https://185.27.134.109/backend/experience_crud/update_experience.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -571,7 +571,7 @@ function CompetencesForm(){
         };
     
         try {
-            const response = await fetch('http://localhost/backend/competence_crud/add_competence.php', {
+            const response = await fetch('https://185.27.134.109/backend/competence_crud/add_competence.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -622,7 +622,7 @@ function CompetencesTable() {
         setIsLoading(true);
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch(`http://localhost/backend/competence_crud/get_competences.php?iduser=${user.iduser}`);
+            const response = await fetch(`https://185.27.134.109/backend/competence_crud/get_competences.php?iduser=${user.iduser}`);
             const data = await response.json();
             setCompetences(data);
         } catch (error) {
@@ -641,7 +641,7 @@ function CompetencesTable() {
         
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/competence_crud/delete_competence.php', {
+            const response = await fetch('https://185.27.134.109/backend/competence_crud/delete_competence.php', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -682,7 +682,7 @@ function CompetencesTable() {
 
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/competence_crud/update_competence.php', {
+            const response = await fetch('https://185.27.134.109/backend/competence_crud/update_competence.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -827,7 +827,7 @@ function FormationsForm(){
         };
     
         try {
-            const response = await fetch('http://localhost/backend/formation_crud/add_formation.php', {
+            const response = await fetch('https://185.27.134.109/backend/formation_crud/add_formation.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -890,7 +890,7 @@ function FormationsTable() {
         setIsLoading(true);
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch(`http://localhost/backend/formation_crud/get_formations.php?iduser=${user.iduser}`);
+            const response = await fetch(`https://185.27.134.109/backend/formation_crud/get_formations.php?iduser=${user.iduser}`);
             const data = await response.json();
             setFormations(data);
         } catch (error) {
@@ -909,7 +909,7 @@ function FormationsTable() {
         
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/formation_crud/delete_formation.php', {
+            const response = await fetch('https://185.27.134.109/backend/formation_crud/delete_formation.php', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -954,7 +954,7 @@ function FormationsTable() {
 
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/formation_crud/update_formation.php', {
+            const response = await fetch('https://185.27.134.109/backend/formation_crud/update_formation.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -1142,7 +1142,7 @@ function QualitesForm(){
         };
     
         try {
-            const response = await fetch('http://localhost/backend/qualite_crud/add_qualite.php', {
+            const response = await fetch('https://185.27.134.109/backend/qualite_crud/add_qualite.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -1189,7 +1189,7 @@ function QualitesTable() {
         setIsLoading(true);
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch(`http://localhost/backend/qualite_crud/get_qualites.php?iduser=${user.iduser}`);
+            const response = await fetch(`https://185.27.134.109/backend/qualite_crud/get_qualites.php?iduser=${user.iduser}`);
             const data = await response.json();
             setQualites(data);
         } catch (error) {
@@ -1208,7 +1208,7 @@ function QualitesTable() {
         
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/qualite_crud/delete_qualite.php', {
+            const response = await fetch('https://185.27.134.109/backend/qualite_crud/delete_qualite.php', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -1249,7 +1249,7 @@ function QualitesTable() {
 
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/qualite_crud/update_qualite.php', {
+            const response = await fetch('https://185.27.134.109/backend/qualite_crud/update_qualite.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -1376,7 +1376,7 @@ function ReferencesForm({ onReferenceAdded }) {
         };
     
         try {
-            const response = await fetch('http://localhost/backend/reference_crud/add_reference.php', {
+            const response = await fetch('https://185.27.134.109/backend/reference_crud/add_reference.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -1426,7 +1426,7 @@ function ReferencesTable() {
         setIsLoading(true);
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch(`http://localhost/backend/reference_crud/get_references.php?iduser=${user.iduser}`);
+            const response = await fetch(`https://185.27.134.109/backend/reference_crud/get_references.php?iduser=${user.iduser}`);
             const data = await response.json();
             setReferences(data);
         } catch (error) {
@@ -1445,7 +1445,7 @@ function ReferencesTable() {
         
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/reference_crud/delete_reference.php', {
+            const response = await fetch('https://185.27.134.109/backend/reference_crud/delete_reference.php', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -1487,7 +1487,7 @@ function ReferencesTable() {
 
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/reference_crud/update_reference.php', {
+            const response = await fetch('https://185.27.134.109/backend/reference_crud/update_reference.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -1628,7 +1628,7 @@ function InteretsForm(){
         };
     
         try {
-            const response = await fetch('http://localhost/backend/interet_crud/add_interet.php', {
+            const response = await fetch('https://185.27.134.109/backend/interet_crud/add_interet.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -1676,7 +1676,7 @@ function InteretsTable() {
         setIsLoading(true);
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch(`http://localhost/backend/interet_crud/get_interets.php?iduser=${user.iduser}`);
+            const response = await fetch(`https://185.27.134.109/backend/interet_crud/get_interets.php?iduser=${user.iduser}`);
             const data = await response.json();
             setInterets(data);
         } catch (error) {
@@ -1695,7 +1695,7 @@ function InteretsTable() {
         
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/interet_crud/delete_interet.php', {
+            const response = await fetch('https://185.27.134.109/backend/interet_crud/delete_interet.php', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -1736,7 +1736,7 @@ function InteretsTable() {
 
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/interet_crud/update_interet.php', {
+            const response = await fetch('https://185.27.134.109/backend/interet_crud/update_interet.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -1865,7 +1865,7 @@ function LanguesForm(){
         };
     
         try {
-            const response = await fetch('http://localhost/backend/langue_crud/add_langue.php', {
+            const response = await fetch('https://185.27.134.109/backend/langue_crud/add_langue.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -1920,7 +1920,7 @@ function LanguesTable() {
         setIsLoading(true);
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch(`http://localhost/backend/langue_crud/get_langues.php?iduser=${user.iduser}`);
+            const response = await fetch(`https://185.27.134.109/backend/langue_crud/get_langues.php?iduser=${user.iduser}`);
             const data = await response.json();
             setLangues(data);
         } catch (error) {
@@ -1939,7 +1939,7 @@ function LanguesTable() {
         
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/langue_crud/delete_langue.php', {
+            const response = await fetch('https://185.27.134.109/backend/langue_crud/delete_langue.php', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -1980,7 +1980,7 @@ function LanguesTable() {
 
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/langue_crud/update_langue.php', {
+            const response = await fetch('https://185.27.134.109/backend/langue_crud/update_langue.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -2125,7 +2125,7 @@ function ProjetsForm(){
         };
     
         try {
-            const response = await fetch('http://localhost/backend/projet_crud/add_projet.php', {
+            const response = await fetch('https://185.27.134.109/backend/projet_crud/add_projet.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -2179,7 +2179,7 @@ function ProjetsTable() {
         setIsLoading(true);
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch(`http://localhost/backend/projet_crud/get_projets.php?iduser=${user.iduser}`);
+            const response = await fetch(`https://185.27.134.109/backend/projet_crud/get_projets.php?iduser=${user.iduser}`);
             const data = await response.json();
             setProjets(data);
         } catch (error) {
@@ -2198,7 +2198,7 @@ function ProjetsTable() {
         
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/projet_crud/delete_projet.php', {
+            const response = await fetch('https://185.27.134.109/backend/projet_crud/delete_projet.php', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -2242,7 +2242,7 @@ function ProjetsTable() {
 
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/projet_crud/update_projet.php', {
+            const response = await fetch('https://185.27.134.109/backend/projet_crud/update_projet.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -2429,7 +2429,7 @@ function DiplomesForm(){
         };
     
         try {
-            const response = await fetch('http://localhost/backend/diplome_crud/add_diplome.php', {
+            const response = await fetch('https://185.27.134.109/backend/diplome_crud/add_diplome.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -2476,7 +2476,7 @@ function DiplomesTable() {
         setIsLoading(true);
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch(`http://localhost/backend/diplome_crud/get_diplomes.php?iduser=${user.iduser}`);
+            const response = await fetch(`https://185.27.134.109/backend/diplome_crud/get_diplomes.php?iduser=${user.iduser}`);
             const data = await response.json();
             setDiplomes(data);
         } catch (error) {
@@ -2495,7 +2495,7 @@ function DiplomesTable() {
         
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/diplome_crud/delete_diplome.php', {
+            const response = await fetch('https://185.27.134.109/backend/diplome_crud/delete_diplome.php', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -2536,7 +2536,7 @@ function DiplomesTable() {
 
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/diplome_crud/update_diplome.php', {
+            const response = await fetch('https://185.27.134.109/backend/diplome_crud/update_diplome.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -2678,7 +2678,7 @@ function CertificationsForm() {
         };
     
         try {
-            const response = await fetch('http://localhost/backend/certification_crud/add_certification.php', {
+            const response = await fetch('https://185.27.134.109/backend/certification_crud/add_certification.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -2760,7 +2760,7 @@ function CertificationsTable() {
         const fetchCertifications = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-                const response = await fetch(`http://localhost/backend/certification_crud/get_certifications.php?utilisateur_id=${user.iduser}`);
+                const response = await fetch(`https://185.27.134.109/backend/certification_crud/get_certifications.php?utilisateur_id=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Erreur lors du chargement des certifications');
@@ -2783,7 +2783,7 @@ function CertificationsTable() {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette certification ?")) {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-                const response = await fetch('http://localhost/backend/certification_crud/delete_certification.php', {
+                const response = await fetch('https://185.27.134.109/backend/certification_crud/delete_certification.php', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
@@ -2816,7 +2816,7 @@ function CertificationsTable() {
         setIsSubmitting(true);
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('http://localhost/backend/certification_crud/update_certification.php', {
+            const response = await fetch('https://185.27.134.109/backend/certification_crud/update_certification.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
