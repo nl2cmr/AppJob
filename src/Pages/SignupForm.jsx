@@ -170,7 +170,7 @@ export const SignupForm = () => {
         console.log("Données envoyées:", JSON.stringify(formData, null, 2));
         
         try {
-            const response = await fetch('https://localhost/backend/register.php', {
+            const response = await fetch('http://localhost/backend/register.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -179,7 +179,7 @@ export const SignupForm = () => {
             });
             
             if (!response.ok) {
-                throw new Error(`https error! status: ${response.status}`);
+                throw new Error(`http error! status: ${response.status}`);
             }
             
             const result = await response.json();
