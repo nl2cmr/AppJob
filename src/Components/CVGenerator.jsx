@@ -74,7 +74,7 @@ export const CVGenerator = () => {
         formData.append('cvfile', file);
     
         try {
-            const response = await fetch('https://185.27.134.109/backend/analyse_cv.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/analyse_cv.php', {
                 method: 'POST',
                 body: formData
             });

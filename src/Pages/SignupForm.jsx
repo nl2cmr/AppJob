@@ -170,7 +170,7 @@ export const SignupForm = () => {
         console.log("Données envoyées:", JSON.stringify(formData, null, 2));
         
         try {
-            const response = await fetch('https://if0_39438585/backend/register.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/register.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

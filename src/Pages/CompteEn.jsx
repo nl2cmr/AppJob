@@ -28,7 +28,7 @@ export const CompteEn = () => {
                 return;
             }
     
-            const response = await fetch('https://185.27.134.109/backend/update_user.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/update_user.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -304,7 +304,7 @@ function OffresForm() {
         };
 
         try {
-            const response = await fetch('https://185.27.134.109/backend/offre_crud/add_offre.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/offre_crud/add_offre.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -366,7 +366,7 @@ function OffresTable(){
     const fetchOffres = async () => {
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch(`https://185.27.134.109/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
+            const response = await fetch(`https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
             const data = await response.json();
             setOffres(data);
         } catch (error) {
@@ -386,7 +386,7 @@ function OffresTable(){
                     throw new Error('Vous devez être connecté');
                 }
     
-                const response = await fetch('https://185.27.134.109/backend/offre_crud/delete_offre.php', {
+                const response = await fetch('https://jobconnectbackend.ct.ws/backend/offre_crud/delete_offre.php', {
                     method: 'DELETE',
                     headers: { 
                         'Content-Type': 'application/json',
@@ -439,7 +439,7 @@ function OffresTable(){
     const handleSave = async (id) => {
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('https://185.27.134.109/backend/offre_crud/update_offre.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/offre_crud/update_offre.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -606,7 +606,7 @@ function CompetencesFormOff() {
                     throw new Error('Utilisateur non connecté');
                 }
 
-                const response = await fetch(`https://185.27.134.109/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
+                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Erreur serveur');
@@ -640,7 +640,7 @@ function CompetencesFormOff() {
         };
     
         try {
-            const response = await fetch('https://185.27.134.109/backend/competence_crud/add_competence.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/competence_crud/add_competence.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -740,7 +740,7 @@ function CompetencesTableOff() {
         const fetchCompetences = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-                const response = await fetch(`https://185.27.134.109/backend/competence_crud/get_competencesoff.php?iduser=${user.iduser}`);
+                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/competence_crud/get_competencesoff.php?iduser=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Erreur lors du chargement des compétences');
@@ -764,7 +764,7 @@ function CompetencesTableOff() {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette compétence ?")) {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-                const response = await fetch('https://185.27.134.109/backend/competence_crud/delete_competenceoff.php', {
+                const response = await fetch('https://jobconnectbackend.ct.ws/backend/competence_crud/delete_competenceoff.php', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
@@ -802,7 +802,7 @@ function CompetencesTableOff() {
     const handleSave = async (id) => {
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('https://185.27.134.109/backend/competence_crud/update_competenceoff.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/competence_crud/update_competenceoff.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -920,7 +920,7 @@ function DiplomesFormOff() {
                     throw new Error('Utilisateur non connecté');
                 }
 
-                const response = await fetch(`https://185.27.134.109/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
+                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Erreur lors de la récupération des offres');
@@ -954,7 +954,7 @@ function DiplomesFormOff() {
         };
     
         try {
-            const response = await fetch('https://185.27.134.109/backend/diplome_crud/add_diplome.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/diplome_crud/add_diplome.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -1051,7 +1051,7 @@ function DiplomesTableOff() {
         const fetchDiplomes = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-                const response = await fetch(`https://185.27.134.109/backend/diplome_crud/get_diplomes.php?iduser=${user.iduser}`);
+                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/diplome_crud/get_diplomes.php?iduser=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Erreur lors du chargement des diplômes');
@@ -1075,7 +1075,7 @@ function DiplomesTableOff() {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer ce diplôme ?")) {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-                const response = await fetch('https://185.27.134.109/backend/diplome_crud/delete_diplome.php', {
+                const response = await fetch('https://jobconnectbackend.ct.ws/backend/diplome_crud/delete_diplome.php', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
@@ -1109,7 +1109,7 @@ function DiplomesTableOff() {
     const handleSave = async (id) => {
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('https://185.27.134.109/backend/diplome_crud/update_diplome.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/diplome_crud/update_diplome.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -1266,7 +1266,7 @@ function LanguesFormOff() {
                     throw new Error('Utilisateur non connecté');
                 }
 
-                const response = await fetch(`https://185.27.134.109/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
+                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Échec du chargement des offres');
@@ -1300,7 +1300,7 @@ function LanguesFormOff() {
         };
     
         try {
-            const response = await fetch('https://185.27.134.109/backend/langue_crud/add_langue.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/langue_crud/add_langue.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -1412,7 +1412,7 @@ function LanguesTableOff() {
                     throw new Error('User not authenticated');
                 }
 
-                const response = await fetch(`https://185.27.134.109/backend/langue_crud/get_languesoff.php?iduser=${user.iduser}`);
+                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/langue_crud/get_languesoff.php?iduser=${user.iduser}`);
                 
                 const contentType = response.headers.get('content-type');
                 if (!contentType || !contentType.includes('application/json')) {
@@ -1443,7 +1443,7 @@ function LanguesTableOff() {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette langue ?")) {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-                const response = await fetch('https://185.27.134.109/backend/langue_crud/delete_langueoff.php', {
+                const response = await fetch('https://jobconnectbackend.ct.ws/backend/langue_crud/delete_langueoff.php', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
@@ -1481,7 +1481,7 @@ function LanguesTableOff() {
     const handleSave = async (id) => {
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('https://185.27.134.109/backend/langue_crud/update_langueoff.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/langue_crud/update_langueoff.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -1593,7 +1593,7 @@ function QualitesFormOff() {
                     throw new Error('Vous devez être connecté(e)');
                 }
 
-                const response = await fetch(`https://185.27.134.109/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
+                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Erreur lors du chargement des offres');
@@ -1627,7 +1627,7 @@ function QualitesFormOff() {
         };
     
         try {
-            const response = await fetch('https://185.27.134.109/backend/qualite_crud/add_qualite.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/qualite_crud/add_qualite.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -1736,7 +1736,7 @@ function QualitesTableOff() {
         const fetchQualites = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-                const response = await fetch(`https://185.27.134.109/backend/qualite_crud/get_qualitesoff.php?iduser=${user.iduser}`);
+                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/qualite_crud/get_qualitesoff.php?iduser=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Erreur lors du chargement des qualités');
@@ -1760,7 +1760,7 @@ function QualitesTableOff() {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette qualité professionnelle ?")) {
             try {
                 const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-                const response = await fetch('https://185.27.134.109/backend/qualite_crud/delete_qualiteoff.php', {
+                const response = await fetch('https://jobconnectbackend.ct.ws/backend/qualite_crud/delete_qualiteoff.php', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
@@ -1794,7 +1794,7 @@ function QualitesTableOff() {
     const handleSave = async (id) => {
         try {
             const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-            const response = await fetch('https://185.27.134.109/backend/qualite_crud/update_qualiteoff.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/qualite_crud/update_qualiteoff.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -2002,7 +2002,7 @@ function MissionsFormOff() {
                     throw new Error('Vous devez être connecté(e)');
                 }
 
-                const response = await fetch(`https://185.27.134.109/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
+                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Erreur lors du chargement des offres');
@@ -2054,7 +2054,7 @@ function MissionsFormOff() {
         };
     
         try {
-            const response = await fetch('https://185.27.134.109/backend/mission_crud/add_mission.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/mission_crud/add_mission.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -2192,12 +2192,12 @@ function MissionsTableOff() {
                     throw new Error('Utilisateur non connecté');
                 }
                 
-                const offresResponse = await fetch(`https://185.27.134.109/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
+                const offresResponse = await fetch(`https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 if (!offresResponse.ok) throw new Error('Erreur lors du chargement des offres');
                 setOffres(await offresResponse.json());
     
                 
-                const missionsResponse = await fetch(`https://185.27.134.109/backend/mission_crud/get_missions.php?iduser=${user.iduser}`);
+                const missionsResponse = await fetch(`https://jobconnectbackend.ct.ws/backend/mission_crud/get_missions.php?iduser=${user.iduser}`);
                 if (!missionsResponse.ok) throw new Error('Erreur lors du chargement des missions');
                 
                 const missionsData = await missionsResponse.json();
@@ -2218,7 +2218,7 @@ function MissionsTableOff() {
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette mission ?")) {
             try {
-                const response = await fetch('https://185.27.134.109/backend/mission_crud/delete_mission.php', {
+                const response = await fetch('https://jobconnectbackend.ct.ws/backend/mission_crud/delete_mission.php', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ idmission: id })
@@ -2265,7 +2265,7 @@ function MissionsTableOff() {
         }
 
         try {
-            const response = await fetch('https://185.27.134.109/backend/mission_crud/update_mission.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/mission_crud/update_mission.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -2426,7 +2426,7 @@ function AvantagesFormOff() {
                     throw new Error('Authentification requise');
                 }
 
-                const response = await fetch(`https://185.27.134.109/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
+                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Échec du chargement des offres');
@@ -2460,7 +2460,7 @@ function AvantagesFormOff() {
         };
     
         try {
-            const response = await fetch('https://185.27.134.109/backend/avantage_crud/add_avantage.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/avantage_crud/add_avantage.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -2587,12 +2587,12 @@ function AvantagesTableOff() {
                 }
                 
                 
-                const offresResponse = await fetch(`https://185.27.134.109/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
+                const offresResponse = await fetch(`https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 if (!offresResponse.ok) throw new Error('Erreur lors du chargement des offres');
                 setOffres(await offresResponse.json());
     
                 
-                const avantagesResponse = await fetch(`https://185.27.134.109/backend/avantage_crud/get_avantages.php?iduser=${user.iduser}`);
+                const avantagesResponse = await fetch(`https://jobconnectbackend.ct.ws/backend/avantage_crud/get_avantages.php?iduser=${user.iduser}`);
                 if (!avantagesResponse.ok) throw new Error('Erreur lors du chargement des avantages');
                 
                 const avantagesData = await avantagesResponse.json();
@@ -2613,7 +2613,7 @@ function AvantagesTableOff() {
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cet avantage ?")) {
             try {
-                const response = await fetch('https://185.27.134.109/backend/avantage_crud/delete_avantage.php', {
+                const response = await fetch('https://jobconnectbackend.ct.ws/backend/avantage_crud/delete_avantage.php', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ idavantage: id })
@@ -2644,7 +2644,7 @@ function AvantagesTableOff() {
     const handleSave = async (id) => {
         setIsSubmitting(true);
         try {
-            const response = await fetch('https://185.27.134.109/backend/avantage_crud/update_avantage.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/avantage_crud/update_avantage.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
@@ -2833,7 +2833,7 @@ function DocRequisFormOff() {
                     throw new Error('Authentification requise');
                 }
 
-                const response = await fetch(`https://185.27.134.109/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
+                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Échec du chargement des offres');
@@ -2867,7 +2867,7 @@ function DocRequisFormOff() {
         };
     
         try {
-            const response = await fetch('https://185.27.134.109/backend/documentrequis_crud/add_docrequis.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/documentrequis_crud/add_docrequis.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -3013,12 +3013,12 @@ function DocRequisTableOff() {
                 }
                 
                 
-                const offresResponse = await fetch(`https://185.27.134.109/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
+                const offresResponse = await fetch(`https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres.php?iduser=${user.iduser}`);
                 if (!offresResponse.ok) throw new Error('Erreur lors du chargement des offres');
                 setOffres(await offresResponse.json());
     
                 
-                const docsResponse = await fetch(`https://185.27.134.109/backend/documentrequis_crud/get_documents.php?iduser=${user.iduser}`);
+                const docsResponse = await fetch(`https://jobconnectbackend.ct.ws/backend/documentrequis_crud/get_documents.php?iduser=${user.iduser}`);
                 if (!docsResponse.ok) throw new Error('Erreur lors du chargement des documents requis');
                 
                 const docsData = await docsResponse.json();
@@ -3039,7 +3039,7 @@ function DocRequisTableOff() {
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer ce document requis ?")) {
             try {
-                const response = await fetch('https://185.27.134.109/backend/documentrequis_crud/delete_document.php', {
+                const response = await fetch('https://jobconnectbackend.ct.ws/backend/documentrequis_crud/delete_document.php', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ iddocumentreq: id })
@@ -3070,7 +3070,7 @@ function DocRequisTableOff() {
     const handleSave = async (id) => {
         setIsSubmitting(true);
         try {
-            const response = await fetch('https://185.27.134.109/backend/documentrequis_crud/update_document.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/documentrequis_crud/update_document.php', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 

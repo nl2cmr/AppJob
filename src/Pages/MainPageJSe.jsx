@@ -27,7 +27,7 @@ export const MainPage = () => {
                 if (filters.salaireMin) queryParams.append('salaire_min', filters.salaireMin);
                 if (filters.lieu) queryParams.append('lieu', filters.lieu);
 
-                const url = `https://185.27.134.109/backend/offre_crud/get_offres_card.php?${queryParams.toString()}`;
+                const url = `https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres_card.php?${queryParams.toString()}`;
                 const response = await fetch(url);
                 
                 if (!response.ok) {

@@ -20,7 +20,7 @@ export const MainPageEn = () => {
     useEffect(() => {
         const fetchProfils = async () => {
             try {
-                const response = await fetch('https://185.27.134.109/backend/get_profils.php');
+                const response = await fetch('https://jobconnectbackend.ct.ws/backend/get_profils.php');
                 const data = await response.json();
                 
                 if (data.success) {
@@ -108,7 +108,7 @@ const ProfilDetail = ({ profil, onClose }) => {
                 throw new Error("Vous devez être connecté pour contacter un candidat");
             }
 
-            const response = await fetch('https://185.27.134.109/backend/notification_crud/create_notification.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/notification_crud/create_notification.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

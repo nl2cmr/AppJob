@@ -21,7 +21,7 @@ export const CandidaturesEn = () => {
                     throw new Error('Utilisateur non connecté');
                 }
         
-                const response = await fetch(`https://185.27.134.109/backend/candidature_crud/get_candidatures.php?recruteur_id=${user.iduser}`);
+                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/candidature_crud/get_candidatures.php?recruteur_id=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Erreur lors du chargement des candidatures');
