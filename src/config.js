@@ -1,1 +1,1 @@
-export const API_BASE_URL = 'https://jobconnectbackend.ct.ws/backend';
+export const API_BASE_URL = 'https://localhost/backend';
