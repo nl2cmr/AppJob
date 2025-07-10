@@ -2,6 +2,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Input } from '../Components/Input';
 import './css/Signup.css'
 import { useState } from 'react';
+import { API_BASE_URL } from '../config';
 
 
 const CandidateForm = ({ email, setEmail, password, setPassword, confirmPassword, setConfirmPassword }) => {
