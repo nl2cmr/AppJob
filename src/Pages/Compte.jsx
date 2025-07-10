@@ -318,20 +318,11 @@ export const Compte = () => {
         </div>
     );
 };
-
-function ExperiencesForm(){
-
-    const closeExpForms = () =>{
+function ExperiencesForm({ onExperienceAdded }) {
+    const closeExpForms = () => {
         document.getElementById("expform")?.classList.add('hide');
     }
-
-    const fetchExperiences = async () => {
-        const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
-        const response = await fetch(`${API_BASE_URL}/experience_crud/get_experiences.php?iduser=${user.iduser}`);
-        const data = await response.json();
-        setExperiences(data);
-    };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -353,8 +344,13 @@ function ExperiencesForm(){
             
             const result = await response.json();
             if (result.success) {
-                fetchExperiences;
+                closeExpForms();
+                alert('Expérience ajoutée avec succès');
                 e.target.reset();
+                // Appeler la fonction de callback pour notifier le parent
+                if (onExperienceAdded) {
+                    onExperienceAdded();
+                }
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -363,7 +359,6 @@ function ExperiencesForm(){
             alert('Erreur de connexion');
         }
     };
-
 
     return(
         <div id="expform" className='hide'>
@@ -382,7 +377,6 @@ function ExperiencesForm(){
         </div>
     )
 }
-
 
 function ExperiencesTable() {
     const [experiences, setExperiences] = useState([]);
@@ -406,7 +400,6 @@ function ExperiencesTable() {
         fetchExperiences();
     }, []);
 
-    
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette expérience ?")) {
             try {
@@ -426,7 +419,6 @@ function ExperiencesTable() {
         }
     };
 
-    
     const startEdit = (exp) => {
         setEditingId(exp.idexperience);
         setEditForm({
@@ -438,12 +430,10 @@ function ExperiencesTable() {
         });
     };
 
-    
     const cancelEdit = () => {
         setEditingId(null);
     };
 
-    
     const handleEditSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -471,92 +461,99 @@ function ExperiencesTable() {
             ...editForm,
             [e.target.name]: e.target.value
         });
+    };
+
+    // Fonction pour rafraîchir les expériences
+    const refreshExperiences = () => {
         fetchExperiences();
     };
 
     return (
-        <div id="exptable">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Poste</th>
-                        <th>Entreprise</th>
-                        <th>Date de Début</th>
-                        <th>Date de Fin</th>
-                        <th>Description</th>
-                        <th>Actions</th>  
-                    </tr>
-                </thead>
-                <tbody>
-                    {experiences.length === 0 ? (
+        <div>
+            <ExperiencesForm onExperienceAdded={refreshExperiences} />
+            <div id="exptable">
+                <table>
+                    <thead>
                         <tr>
-                            <td colSpan="3">Aucune expérience enregistrée</td>
+                            <th>Poste</th>
+                            <th>Entreprise</th>
+                            <th>Date de Début</th>
+                            <th>Date de Fin</th>
+                            <th>Description</th>
+                            <th>Actions</th>  
                         </tr>
-                    ) : (experiences.map(exp => (
-                        <tr key={exp.idexperience}>
-                            {editingId === exp.idexperience ? (
-                                <>
-                                    <td>
-                                        <input 
-                                            type="text" 
-                                            name="poste"
-                                            value={editForm.poste}
-                                            onChange={handleEditChange}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input 
-                                            type="text" 
-                                            name="entreprise"
-                                            value={editForm.entreprise}
-                                            onChange={handleEditChange}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input 
-                                            type="date" 
-                                            name="date_debut"
-                                            value={editForm.date_debut}
-                                            onChange={handleEditChange}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input 
-                                            type="date" 
-                                            name="date_fin"
-                                            value={editForm.date_fin}
-                                            onChange={handleEditChange}
-                                        />
-                                    </td>
-                                    <td>
-                                        <textarea 
-                                            name="description"
-                                            value={editForm.description}
-                                            onChange={handleEditChange}
-                                        />
-                                    </td>
-                                    <td>
-                                        <button onClick={handleEditSubmit}>Valider</button>
-                                        <button onClick={cancelEdit}>Annuler</button>
-                                    </td>
-                                </>
-                            ) : (
-                                <>
-                                    <td>{exp.poste}</td>
-                                    <td>{exp.entreprise}</td>
-                                    <td>{new Date(exp.date_debut).toLocaleDateString()}</td>
-                                    <td>{new Date(exp.date_fin).toLocaleDateString()}</td>
-                                    <td>{exp.description}</td>
-                                    <td>
-                                        <button onClick={() => startEdit(exp)}>Modifier</button>
-                                        <button onClick={() => handleDelete(exp.idexperience)}>Supprimer</button>
-                                    </td>
-                                </>
-                            )}
-                        </tr>
-                    )))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {experiences.length === 0 ? (
+                            <tr>
+                                <td colSpan="6">Aucune expérience enregistrée</td>
+                            </tr>
+                        ) : (experiences.map(exp => (
+                            <tr key={exp.idexperience}>
+                                {editingId === exp.idexperience ? (
+                                    <>
+                                        <td>
+                                            <input 
+                                                type="text" 
+                                                name="poste"
+                                                value={editForm.poste}
+                                                onChange={handleEditChange}
+                                            />
+                                        </td>
+                                        <td>
+                                            <input 
+                                                type="text" 
+                                                name="entreprise"
+                                                value={editForm.entreprise}
+                                                onChange={handleEditChange}
+                                            />
+                                        </td>
+                                        <td>
+                                            <input 
+                                                type="date" 
+                                                name="date_debut"
+                                                value={editForm.date_debut}
+                                                onChange={handleEditChange}
+                                            />
+                                        </td>
+                                        <td>
+                                            <input 
+                                                type="date" 
+                                                name="date_fin"
+                                                value={editForm.date_fin}
+                                                onChange={handleEditChange}
+                                            />
+                                        </td>
+                                        <td>
+                                            <textarea 
+                                                name="description"
+                                                value={editForm.description}
+                                                onChange={handleEditChange}
+                                            />
+                                        </td>
+                                        <td>
+                                            <button onClick={handleEditSubmit}>Valider</button>
+                                            <button onClick={cancelEdit}>Annuler</button>
+                                        </td>
+                                    </>
+                                ) : (
+                                    <>
+                                        <td>{exp.poste}</td>
+                                        <td>{exp.entreprise}</td>
+                                        <td>{new Date(exp.date_debut).toLocaleDateString()}</td>
+                                        <td>{new Date(exp.date_fin).toLocaleDateString()}</td>
+                                        <td>{exp.description}</td>
+                                        <td>
+                                            <button onClick={() => startEdit(exp)}>Modifier</button>
+                                            <button onClick={() => handleDelete(exp.idexperience)}>Supprimer</button>
+                                        </td>
+                                    </>
+                                )}
+                            </tr>
+                        )))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }
