@@ -319,9 +319,8 @@ export const Compte = () => {
     );
 };
 
-function ExperiencesForm({ onExperienceAdded }) {  // Ajout de la prop onExperienceAdded
-
-    const closeExpForms = () =>{
+function ExperiencesForm({ onExperienceAdded }) {
+    const closeExpForms = () => {
         document.getElementById("expform")?.classList.add('hide');
     }
     
@@ -348,7 +347,7 @@ function ExperiencesForm({ onExperienceAdded }) {  // Ajout de la prop onExperie
             if (result.success) {
                 closeExpForms();
                 e.target.reset();
-                onExperienceAdded();  // Appel de la fonction pour rafraîchir le tableau
+                if (onExperienceAdded) onExperienceAdded(); // Appel du callback pour rafraîchir le tableau
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -357,7 +356,6 @@ function ExperiencesForm({ onExperienceAdded }) {  // Ajout de la prop onExperie
             alert('Erreur de connexion');
         }
     };
-
 
     return(
         <div id="expform" className='hide'>
@@ -376,7 +374,6 @@ function ExperiencesForm({ onExperienceAdded }) {  // Ajout de la prop onExperie
         </div>
     )
 }
-
 
 function ExperiencesTable() {
     const [experiences, setExperiences] = useState([]);
@@ -464,91 +461,98 @@ function ExperiencesTable() {
     };
 
     return (
-        <>
-            <ExperiencesForm onExperienceAdded={fetchExperiences} />  {/* Passage de la fonction en prop */}
-            <div id="exptable">
-                <table>
-                    <thead>
+        <div id="exptable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Poste</th>
+                        <th>Entreprise</th>
+                        <th>Date de Début</th>
+                        <th>Date de Fin</th>
+                        <th>Description</th>
+                        <th>Actions</th>  
+                    </tr>
+                </thead>
+                <tbody>
+                    {experiences.length === 0 ? (
                         <tr>
-                            <th>Poste</th>
-                            <th>Entreprise</th>
-                            <th>Date de Début</th>
-                            <th>Date de Fin</th>
-                            <th>Description</th>
-                            <th>Actions</th>  
+                            <td colSpan="6">Aucune expérience enregistrée</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {experiences.length === 0 ? (
-                            <tr>
-                                <td colSpan="6">Aucune expérience enregistrée</td>
-                            </tr>
-                        ) : (experiences.map(exp => (
-                            <tr key={exp.idexperience}>
-                                {editingId === exp.idexperience ? (
-                                    <>
-                                        <td>
-                                            <input 
-                                                type="text" 
-                                                name="poste"
-                                                value={editForm.poste}
-                                                onChange={handleEditChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input 
-                                                type="text" 
-                                                name="entreprise"
-                                                value={editForm.entreprise}
-                                                onChange={handleEditChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input 
-                                                type="date" 
-                                                name="date_debut"
-                                                value={editForm.date_debut}
-                                                onChange={handleEditChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <input 
-                                                type="date" 
-                                                name="date_fin"
-                                                value={editForm.date_fin}
-                                                onChange={handleEditChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <textarea 
-                                                name="description"
-                                                value={editForm.description}
-                                                onChange={handleEditChange}
-                                            />
-                                        </td>
-                                        <td>
-                                            <button onClick={handleEditSubmit}>Valider</button>
-                                            <button onClick={cancelEdit}>Annuler</button>
-                                        </td>
-                                    </>
-                                ) : (
-                                    <>
-                                        <td>{exp.poste}</td>
-                                        <td>{exp.entreprise}</td>
-                                        <td>{new Date(exp.date_debut).toLocaleDateString()}</td>
-                                        <td>{new Date(exp.date_fin).toLocaleDateString()}</td>
-                                        <td>{exp.description}</td>
-                                        <td>
-                                            <button onClick={() => startEdit(exp)}>Modifier</button>
-                                            <button onClick={() => handleDelete(exp.idexperience)}>Supprimer</button>
-                                        </td>
-                                    </>
-                                )}
-                            </tr>
-                        )))}
-                    </tbody>
-                </table>
-            </div>
+                    ) : (experiences.map(exp => (
+                        <tr key={exp.idexperience}>
+                            {editingId === exp.idexperience ? (
+                                <>
+                                    <td>
+                                        <input 
+                                            type="text" 
+                                            name="poste"
+                                            value={editForm.poste}
+                                            onChange={handleEditChange}
+                                        />
+                                    </td>
+                                    <td>
+                                        <input 
+                                            type="text" 
+                                            name="entreprise"
+                                            value={editForm.entreprise}
+                                            onChange={handleEditChange}
+                                        />
+                                    </td>
+                                    <td>
+                                        <input 
+                                            type="date" 
+                                            name="date_debut"
+                                            value={editForm.date_debut}
+                                            onChange={handleEditChange}
+                                        />
+                                    </td>
+                                    <td>
+                                        <input 
+                                            type="date" 
+                                            name="date_fin"
+                                            value={editForm.date_fin}
+                                            onChange={handleEditChange}
+                                        />
+                                    </td>
+                                    <td>
+                                        <textarea 
+                                            name="description"
+                                            value={editForm.description}
+                                            onChange={handleEditChange}
+                                        />
+                                    </td>
+                                    <td>
+                                        <button onClick={handleEditSubmit}>Valider</button>
+                                        <button onClick={cancelEdit}>Annuler</button>
+                                    </td>
+                                </>
+                            ) : (
+                                <>
+                                    <td>{exp.poste}</td>
+                                    <td>{exp.entreprise}</td>
+                                    <td>{new Date(exp.date_debut).toLocaleDateString()}</td>
+                                    <td>{new Date(exp.date_fin).toLocaleDateString()}</td>
+                                    <td>{exp.description}</td>
+                                    <td>
+                                        <button onClick={() => startEdit(exp)}>Modifier</button>
+                                        <button onClick={() => handleDelete(exp.idexperience)}>Supprimer</button>
+                                    </td>
+                                </>
+                            )}
+                        </tr>
+                    )))}
+                </tbody>
+            </table>
+        </div>
+    );
+}
+
+// Dans le composant parent qui utilise ces deux composants :
+function ParentComponent() {
+    return (
+        <>
+            <ExperiencesForm onExperienceAdded={() => window.location.reload()} /> {/* Solution simple */}
+            <ExperiencesTable />
         </>
     );
 }
