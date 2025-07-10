@@ -170,7 +170,7 @@ export const SignupForm = () => {
         console.log("Données envoyées:", JSON.stringify(formData, null, 2));
         
         try {
-            const response = await fetch('http://jobconnectbackend.ct.ws/backend/register.php', {
+            const response = await fetch('https://jobconnectbackend.ct.ws/backend/register.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -179,7 +179,7 @@ export const SignupForm = () => {
             });
             
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`https error! status: ${response.status}`);
             }
             
             const result = await response.json();

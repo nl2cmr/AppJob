@@ -8,7 +8,7 @@ export const ProfilCard = ({ infosprofil, onViewProfil }) => {
                         <div className="profil-photo-container">
                             {profil.photo ? (
                                 <img 
-                                    src={`http://jobconnectbackend.ct.ws/uploads/${profil.photo}`} 
+                                    src={`https://jobconnectbackend.ct.ws/uploads/${profil.photo}`} 
                                     alt={`${profil.prenom} ${profil.nom}`} 
                                     className="profil-photo"
                                 />
