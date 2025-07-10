@@ -325,6 +325,13 @@ function ExperiencesForm(){
         document.getElementById("expform")?.classList.add('hide');
     }
 
+    const fetchExperiences = async () => {
+        const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+        const response = await fetch(`${API_BASE_URL}/experience_crud/get_experiences.php?iduser=${user.iduser}`);
+        const data = await response.json();
+        setExperiences(data);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -346,7 +353,7 @@ function ExperiencesForm(){
             
             const result = await response.json();
             if (result.success) {
-                window.location.reload();
+                fetchExperiences;
                 e.target.reset();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -579,7 +586,7 @@ function CompetencesForm(){
             
             const result = await response.json();
             if (result.success) {
-                window.location.reload();
+                
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -835,7 +842,7 @@ function FormationsForm(){
             
             const result = await response.json();
             if (result.success) {
-                window.location.reload();
+                
                 e.target.reset();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -1150,7 +1157,7 @@ function QualitesForm(){
             
             const result = await response.json();
             if (result.success) {
-                window.location.reload();
+                
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -1385,7 +1392,7 @@ function ReferencesForm({ onReferenceAdded }) {
             const result = await response.json();
             if (result.success) {
                 closeRefForms();
-                window.location.reload();
+                
                 e.target.reset(); 
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -1636,7 +1643,7 @@ function InteretsForm(){
             
             const result = await response.json();
             if (result.success) {
-                window.location.reload();
+                
                 e.target.reset();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -1873,7 +1880,7 @@ function LanguesForm(){
             
             const result = await response.json();
             if (result.success) {
-                window.location.reload();
+                
                 e.target.reset();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -2133,7 +2140,7 @@ function ProjetsForm(){
             
             const result = await response.json();
             if (result.success) {
-                window.location.reload();
+                
                 e.target.reset();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -2437,7 +2444,7 @@ function DiplomesForm(){
             
             const result = await response.json();
             if (result.success) {
-                window.location.reload();
+                
                 e.target.reset();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
@@ -2687,7 +2694,7 @@ function CertificationsForm() {
             const result = await response.json();
             if (result.success) {
                 closeCertifForms();
-                window.location.reload();
+                
                 e.target.reset();
             } else {
                 alert(result.message || "Erreur lors de l'enregistrement");
