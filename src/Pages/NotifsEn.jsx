@@ -3,6 +3,7 @@ import { NavBarEn } from '../Components/NavBarEn.jsx';
 import './css/Notifs.css';
 import { FaUserTag } from 'react-icons/fa';
 import { AiFillClockCircle } from 'react-icons/ai';
+import { API_BASE_URL } from '../config';
 
 export const NotifsEn = () => {
     const [notifications, setNotifications] = useState([]);
@@ -21,7 +22,7 @@ export const NotifsEn = () => {
 
     const fetchNotifications = async (userId) => {
         try {
-            const response = await fetch(`https://jobconnectbackend.ct.ws/backend/notification_crud/get_notifications.php?user_id=${userId}`);
+            const response = await fetch(`${API_BASE_URL}/notification_crud/get_notifications.php?user_id=${userId}`);
             const data = await response.json();
             
             if (data.success) {
@@ -38,7 +39,7 @@ export const NotifsEn = () => {
 
     const markAsRead = async (notificationId) => {
         try {
-            const response = await fetch('https://jobconnectbackend.ct.ws/backend/notification_crud/mark_lu.php', {
+            const response = await fetch(`${API_BASE_URL}/notification_crud/mark_lu.php`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ notification_id: notificationId })
@@ -59,7 +60,7 @@ export const NotifsEn = () => {
 
     const deleteNotification = async (notificationId) => {
         try {
-            const response = await fetch('https://jobconnectbackend.ct.ws/backend/notification_crud/delete_notification.php', {
+            const response = await fetch(`${API_BASE_URL}/notification_crud/delete_notification.php`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ notification_id: notificationId })

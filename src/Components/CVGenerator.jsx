@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaFileDownload } from 'react-icons/fa';
+import { API_BASE_URL } from '../config';
 
 export const CVGenerator = () => {
     const [file, setFile] = useState(null);
@@ -74,7 +75,7 @@ export const CVGenerator = () => {
         formData.append('cvfile', file);
     
         try {
-            const response = await fetch('https://jobconnectbackend.ct.ws/backend/analyse_cv.php', {
+            const response = await fetch(`${API_BASE_URL}/analyse_cv.php`, {
                 method: 'POST',
                 body: formData
             });

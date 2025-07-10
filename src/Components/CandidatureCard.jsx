@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { API_BASE_URL } from '../config';
 
 export const CandidatureCard = ({ candidature, onStatusChange }) => {
     const [showDetails, setShowDetails] = useState(false);
@@ -36,7 +37,7 @@ export const CandidatureCard = ({ candidature, onStatusChange }) => {
                 statut: newStatus
             });
     
-            const response = await fetch(`https://jobconnectbackend.ct.ws/backend/candidature_crud/update_candidature.php`, {
+            const response = await fetch(`${API_BASE_URL}/candidature_crud/update_candidature.php`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,7 +75,7 @@ export const CandidatureCard = ({ candidature, onStatusChange }) => {
     const handleDelete = async () => {
         setIsUpdating(true);
         try {
-            const response = await fetch(`https://jobconnectbackend.ct.ws/backend/candidature_crud/delete_candidature.php`, {
+            const response = await fetch(`${API_BASE_URL}/candidature_crud/delete_candidature.php`, {
                 method: 'DELETE', 
                 headers: {
                     'Content-Type': 'application/json',

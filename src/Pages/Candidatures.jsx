@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { NavBarEn } from '../Components/NavBarEn.jsx';
 import { CandidatureCard } from '../Components/CandidatureCard.jsx';
 import './css/Candidatures.css';
+import { API_BASE_URL } from '../config';
 
 export const CandidaturesEn = () => {
     const [candidatures, setCandidatures] = useState([]);
@@ -21,7 +22,7 @@ export const CandidaturesEn = () => {
                     throw new Error('Utilisateur non connecté');
                 }
         
-                const response = await fetch(`https://jobconnectbackend.ct.ws/backend/candidature_crud/get_candidatures.php?recruteur_id=${user.iduser}`);
+                const response = await fetch(`${API_BASE_URL}/candidature_crud/get_candidatures.php?recruteur_id=${user.iduser}`);
                 
                 if (!response.ok) {
                     throw new Error('Erreur lors du chargement des candidatures');

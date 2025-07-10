@@ -3,6 +3,7 @@ import { GiPositionMarker } from 'react-icons/gi';
 import { PiMoneyFill } from 'react-icons/pi';
 import { LiaFileContractSolid } from 'react-icons/lia';
 import { BsBuildingsFill } from 'react-icons/bs';
+import { API_BASE_URL } from '../config';
 
 export const OffreCard = ({ infosoffre }) => {
     const [selectedOffre, setSelectedOffre] = useState(null);
@@ -32,7 +33,7 @@ export const OffreCard = ({ infosoffre }) => {
                 throw new Error('Vous devez être connecté pour postuler');
             }
 
-            const response = await fetch('https://jobconnectbackend.ct.ws/backend/candidature_crud/add_candidature.php', {
+            const response = await fetch(`${API_BASE_URL}/candidature_crud/add_candidature.php`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -76,7 +77,7 @@ export const OffreCard = ({ infosoffre }) => {
                         <div className="entreprise-logo-container">
                             {offre.logo_entreprise ? (
                                 <img 
-                                    src={`https://jobconnectbackend.ct.ws/backend/uploads/${offre.logo_entreprise}`} 
+                                    src={`${API_BASE_URL}/uploads/${offre.logo_entreprise}`} 
                                     alt={`Logo ${offre.recruteur_nom}`}
                                     className="entreprise-logo"
                                 />
@@ -119,7 +120,7 @@ export const OffreCard = ({ infosoffre }) => {
                         <div className="entreprise-header">
                             {selectedOffre.logo_entreprise ? (
                                 <img 
-                                    src={`https://jobconnectbackend.ct.ws/backend/uploads/${selectedOffre.logo_entreprise}`} 
+                                    src={`${API_BASE_URL}/uploads/${selectedOffre.logo_entreprise}`} 
                                     alt={`Logo ${selectedOffre.recruteur_nom}`}
                                     className="entreprise-logo-detail"
                                 />

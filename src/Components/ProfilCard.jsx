@@ -1,4 +1,6 @@
 import { FaUserCircle } from 'react-icons/fa';
+import { API_BASE_URL } from '../config';
+
 export const ProfilCard = ({ infosprofil, onViewProfil }) => {
     return (
         <div className="profils-container">
@@ -8,7 +10,7 @@ export const ProfilCard = ({ infosprofil, onViewProfil }) => {
                         <div className="profil-photo-container">
                             {profil.photo ? (
                                 <img 
-                                    src={`https://jobconnectbackend.ct.ws/uploads/${profil.photo}`} 
+                                    src={`${API_BASE_URL}/uploads${profil.photo}`} 
                                     alt={`${profil.prenom} ${profil.nom}`} 
                                     className="profil-photo"
                                 />

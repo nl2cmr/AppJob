@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Input } from '../Components/Input';
 import './css/Login.css';
 import img1 from '../assets/img1.jpg';
+import { API_BASE_URL } from '../config';
 
 export const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ export const LoginForm = () => {
     
 
     try {
-      const response = await fetch('https://jobconnectbackend.ct.ws/backend/login.php', {
+      const response = await fetch(`${API_BASE_URL}/login.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

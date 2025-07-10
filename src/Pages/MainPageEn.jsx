@@ -7,7 +7,7 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import { FaSearch } from 'react-icons/fa';
-
+import { API_BASE_URL } from '../config';
 
 
 export const MainPageEn = () => {
@@ -20,7 +20,7 @@ export const MainPageEn = () => {
     useEffect(() => {
         const fetchProfils = async () => {
             try {
-                const response = await fetch('https://jobconnectbackend.ct.ws/backend/get_profils.php');
+                const response = await fetch(`${API_BASE_URL}/get_profils.php`);
                 const data = await response.json();
                 
                 if (data.success) {
@@ -108,7 +108,7 @@ const ProfilDetail = ({ profil, onClose }) => {
                 throw new Error("Vous devez être connecté pour contacter un candidat");
             }
 
-            const response = await fetch('https://jobconnectbackend.ct.ws/backend/notification_crud/create_notification.php', {
+            const response = await fetch(`${API_BASE_URL}/notification_crud/create_notification.php`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

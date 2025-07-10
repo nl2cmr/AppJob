@@ -5,7 +5,7 @@ import { NavBar } from '../Components/NavBarMain';
 import { useNavigate } from 'react-router-dom';
 import { CVGenerator } from '../Components/CVGenerator.jsx';
 import { FaSearch } from 'react-icons/fa';
-
+import { API_BASE_URL } from '../config';
 
 export const MainPage = () => {
     const [offres, setOffres] = useState([]);
@@ -27,7 +27,7 @@ export const MainPage = () => {
                 if (filters.salaireMin) queryParams.append('salaire_min', filters.salaireMin);
                 if (filters.lieu) queryParams.append('lieu', filters.lieu);
 
-                const url = `https://jobconnectbackend.ct.ws/backend/offre_crud/get_offres_card.php?${queryParams.toString()}`;
+                const url = `${API_BASE_URL}/offre_crud/get_offres_card.php?${queryParams.toString()}`;
                 const response = await fetch(url);
                 
                 if (!response.ok) {
