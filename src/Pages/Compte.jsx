@@ -17,6 +17,19 @@ export const Compte = () => {
     const [isUpdating, setIsUpdating] = useState(false);
     const [updateSuccess, setUpdateSuccess] = useState(false);
 
+
+    const [refreshExperiences, setRefreshExperiences] = useState(false);
+    const [refreshCompetences, setRefreshCompetences] = useState(false);
+    const [refreshFormations, setRefreshFormations] = useState(false);
+    const [refreshDiplomes, setRefreshDiplomes] = useState(false);
+    const [refreshQualites, setRefreshQualites] = useState(false);
+    const [refreshLangues, setRefreshLangues] = useState(false);
+    const [refreshReferences, setRefreshReferences] = useState(false);
+    const [refreshInterets, setRefreshInterets] = useState(false);
+    const [refreshProjets, setRefreshProjets] = useState(false);
+    const [refreshCertifications, setRefreshCertifications] = useState(false);
+    
+
     const handleUpdateUser = async (e) => {
         e.preventDefault();
         setIsUpdating(true);
@@ -242,78 +255,74 @@ export const Compte = () => {
 
                     <div id="experiences" className='switch-part'>
                         <h1>Vos Expériences Professionnelles</h1>
-
-                        <ExperiencesForm />
-                        <ExperiencesTable />
+                        <ExperiencesForm onExperienceAdded={() => setRefreshExperiences(prev => !prev)} />
+                        <ExperiencesTable key={refreshExperiences} />
                         <button id='addexp' onClick={showExpForm}>Ajouter expériences pro</button>                        
                     </div>
 
                     <div id="references" className="switch-part">
-                        <h1>Vos reférences</h1>
-
-                        <ReferencesForm />
-                        <ReferencesTable />
-                        <button id='addref' onClick={showRefForm}>Ajouter une reference</button>
+                        <h1>Vos Références</h1>
+                        <ReferencesForm onReferenceAdded={() => setRefreshReferences(prev => !prev)} />
+                        <ReferencesTable key={refreshReferences} />
+                        <button id='addref' onClick={showRefForm}>Ajouter une référence</button>
                     </div>
 
                     <div id="competences" className='switch-part'>
                         <h1>Vos Compétences</h1>
-                        <CompetencesForm />
-                        <CompetencesTable />
+                        <CompetencesForm onCompetenceAdded={() => setRefreshCompetences(prev => !prev)} />
+                        <CompetencesTable key={refreshCompetences} />
                         <button id='addcomp' onClick={showCompForm}>Ajouter compétences</button>
                     </div>
 
                     <div id="certifications" className="switch-part">
                         <h1>Vos Certifications</h1>
-                        <CertificationsForm />
-                        <CertificationsTable />
+                        <CertificationsForm onCertificationAdded={() => setRefreshCertifications(prev => !prev)}/>
+                        <CertificationsTable key={refreshCertifications}/>
                         <button id='addcert' onClick={showCertForm}>Ajouter certifications</button>
                     </div>
 
                     <div id="formations" className='switch-part'>
                         <h1>Vos Formations</h1>
-                        <FormationsForm />
-                        <FormationsTable />
+                        <FormationsForm onFormationAdded={() => setRefreshFormations(prev => !prev)} />
+                        <FormationsTable key={refreshFormations} />
                         <button id='addforma' onClick={showFormaForm}>Ajouter formations</button>
                     </div>
 
                     <div id="diplomes" className='switch-part'>
-                        <h1>Vos diplomes</h1>
-                        <DiplomesTable />
-                        <DiplomesForm />
-                        <button id='adddip' onClick={showDipForm}>Ajouter diplomes</button>
+                        <h1>Vos Diplômes</h1>
+                        <DiplomesForm onDiplomeAdded={() => setRefreshDiplomes(prev => !prev)} />
+                        <DiplomesTable key={refreshDiplomes} />
+                        <button id='adddip' onClick={showDipForm}>Ajouter diplômes</button>
                     </div>
 
                     <div id="qualites" className='switch-part'>
                         <h1>Vos Qualités</h1>
-                        <QualitesForm />
-                        <QualitesTable />
-                        <button id='addqua' onClick={showQuaForm}>Ajouter qualites</button>
+                        <QualitesForm onQualiteAdded={() => setRefreshQualites(prev => !prev)} />
+                        <QualitesTable key={refreshQualites} />
+                        <button id='addqua' onClick={showQuaForm}>Ajouter qualités</button>
                     </div>
 
                     <div id="langues" className="switch-part">
-                        <h1>Langues</h1>
-                        <LanguesForm />
-                        <LanguesTable />
+                        <h1>Vos Langues</h1>
+                        <LanguesForm onLangueAdded={() => setRefreshLangues(prev => !prev)} />
+                        <LanguesTable key={refreshLangues} />
                         <button id="addlang" onClick={showLangForm}>Ajouter vos langues</button>
                     </div>
 
                     <div id="interets" className="switch-part">
-                        <h1>Interets</h1>
-                        <InteretsForm />
-                        <InteretsTable />
-                        <button id="addint" onClick={showIntForm}>Ajouter vos interets</button>
+                        <h1>Vos Intérêts</h1>
+                        <InteretsForm onInteretAdded={() => setRefreshInterets(prev => !prev)} />
+                        <InteretsTable key={refreshInterets} />
+                        <button id="addint" onClick={showIntForm}>Ajouter vos intérêts</button>
                     </div>
 
                     <div id="projets" className="switch-part">   
-                        <h1>Projets</h1>
-                        <ProjetsForm />
-                        <ProjetsTable />
+                        <h1>Vos Projets</h1>
+                        <ProjetsForm onProjetAdded={() => setRefreshProjets(prev => !prev)} />
+                        <ProjetsTable key={refreshProjets} />
                         <button id="addproj" onClick={showProjForm}>Ajouter vos projets</button>
                     </div>
                 </div>
-
-                
             </div>
         </div>
     );
@@ -322,7 +331,7 @@ export const Compte = () => {
 function ExperiencesForm({ onExperienceAdded }) {
     const closeExpForms = () => {
         document.getElementById("expform")?.classList.add('hide');
-    }
+    };
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -347,7 +356,9 @@ function ExperiencesForm({ onExperienceAdded }) {
             if (result.success) {
                 closeExpForms();
                 e.target.reset();
-                if (onExperienceAdded) onExperienceAdded(); // Appel du callback pour rafraîchir le tableau
+                if (onExperienceAdded) {
+                    onExperienceAdded();
+                }
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -368,12 +379,13 @@ function ExperiencesForm({ onExperienceAdded }) {
                     <Input type="date" name="datedebexp" label="La date à laquelle vous avez commencer"/>
                     <Input type="date" name="datefinexp" label="La date à laquelle vous avez terminée"/>
                     <Textarea name="descexp" label="Decrivez votre experience"/>
-                    <button >Valider</button>
+                    <button>Valider</button>
                 </fieldset>
             </form>
         </div>
     )
 }
+
 
 function ExperiencesTable() {
     const [experiences, setExperiences] = useState([]);
@@ -397,6 +409,7 @@ function ExperiencesTable() {
         fetchExperiences();
     }, []);
 
+    
     const handleDelete = async (id) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer cette expérience ?")) {
             try {
@@ -408,6 +421,7 @@ function ExperiencesTable() {
                 
                 const result = await response.json();
                 if (result.success) {
+
                     fetchExperiences(); 
                 }
             } catch (error) {
@@ -416,6 +430,7 @@ function ExperiencesTable() {
         }
     };
 
+    
     const startEdit = (exp) => {
         setEditingId(exp.idexperience);
         setEditForm({
@@ -427,10 +442,12 @@ function ExperiencesTable() {
         });
     };
 
+    
     const cancelEdit = () => {
         setEditingId(null);
     };
 
+    
     const handleEditSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -458,6 +475,7 @@ function ExperiencesTable() {
             ...editForm,
             [e.target.name]: e.target.value
         });
+        fetchExperiences();
     };
 
     return (
@@ -476,7 +494,7 @@ function ExperiencesTable() {
                 <tbody>
                     {experiences.length === 0 ? (
                         <tr>
-                            <td colSpan="6">Aucune expérience enregistrée</td>
+                            <td colSpan="3">Aucune expérience enregistrée</td>
                         </tr>
                     ) : (experiences.map(exp => (
                         <tr key={exp.idexperience}>
@@ -547,22 +565,11 @@ function ExperiencesTable() {
     );
 }
 
-// Dans le composant parent qui utilise ces deux composants :
-function ParentComponent() {
-    return (
-        <>
-            <ExperiencesForm onExperienceAdded={() => window.location.reload()} /> {/* Solution simple */}
-            <ExperiencesTable />
-        </>
-    );
-}
 
-
-function CompetencesForm(){
-
-    const closeCompForms = () =>{
+function CompetencesForm({ onCompetenceAdded }) {
+    const closeCompForms = () => {
         document.getElementById("compform")?.classList.add('hide');
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -584,14 +591,17 @@ function CompetencesForm(){
             if (result.success) {
                 e.target.reset();
                 closeCompForms();
-            } else {
-                alert(result.message || 'Erreur lors de l\'ajout');
+                if (onCompetenceAdded) {  
+                    onCompetenceAdded();
+                }
+                } else {
+                    alert(result.message || 'Erreur lors de l\'ajout');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur de connexion');
             }
-        } catch (error) {
-            console.error('Erreur:', error);
-            alert('Erreur de connexion');
-        }
-    };
+        };
 
     return(
         <div id="compform" className='hide'>
@@ -811,7 +821,7 @@ function CompetencesTable() {
 }
 
 
-function FormationsForm(){
+function FormationsForm({ onFormationAdded }){
 
     const closeFormaForms = () =>{
         document.getElementById("formaform")?.classList.add('hide');
@@ -841,6 +851,7 @@ function FormationsForm(){
             if (result.success) {
                 closeFormaForms();
                 e.target.reset();
+                onFormationAdded();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -1130,7 +1141,7 @@ function FormationsTable() {
 }
 
 
-function QualitesForm(){
+function QualitesForm({ onQualiteAdded }){
 
     const closeQuaForms = () =>{
         document.getElementById("quaform")?.classList.add('hide');
@@ -1156,6 +1167,7 @@ function QualitesForm(){
             if (result.success) {
                 closeQuaForms();
                 e.target.reset();
+                onQualiteAdded();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -1391,6 +1403,7 @@ function ReferencesForm({ onReferenceAdded }) {
             if (result.success) {
                 closeRefForms();
                 e.target.reset(); 
+                onReferenceAdded();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -1616,7 +1629,7 @@ function ReferencesTable() {
 }
 
 
-function InteretsForm(){
+function InteretsForm({onInteretAdded}){
 
     const closeIntForms = () =>{
         document.getElementById("intform")?.classList.add('hide');
@@ -1642,6 +1655,7 @@ function InteretsForm(){
             if (result.success) {
                 closeIntForms();
                 e.target.reset();
+                onInteretAdded();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -1853,7 +1867,7 @@ function InteretsTable() {
 }
 
 
-function LanguesForm(){
+function LanguesForm({ onLangueAdded }){
 
     const closeLangForms = () =>{
         document.getElementById("langform")?.classList.add('hide');
@@ -1879,6 +1893,7 @@ function LanguesForm(){
             if (result.success) {
                 closeLangForms();
                 e.target.reset();
+                onLangueAdded();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -1900,7 +1915,7 @@ function LanguesForm(){
                         <select name="listniveaulang" id="niveaulang">
                             <option value="debutant">Débutant</option>
                             <option value="intermediaire">Intermédiaire</option>
-                            <option value="expert">Expert</option>
+                            <option value="avance">Avancé</option>
                         </select>
                     </div>
                     <button>Valider</button>
@@ -2110,7 +2125,7 @@ function LanguesTable() {
 
 
 
-function ProjetsForm(){
+function ProjetsForm({ onProjetAdded }){
 
     const closeProjForms = () =>{
         document.getElementById("projform")?.classList.add('hide');
@@ -2139,6 +2154,7 @@ function ProjetsForm(){
             if (result.success) {
                 closeProjForms();
                 e.target.reset();
+                onProjetAdded();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -2417,7 +2433,7 @@ function ProjetsTable() {
 }
 
 
-function DiplomesForm(){
+function DiplomesForm({ onDiplomeAdded }){
 
     const closeDipForms = () =>{
         document.getElementById("dipform")?.classList.add('hide');
@@ -2443,6 +2459,7 @@ function DiplomesForm(){
             if (result.success) {
                 closeDipForms();
                 e.target.reset();
+                onDiplomeAdded();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -2664,7 +2681,7 @@ function DiplomesTable() {
 }
 
 
-function CertificationsForm() {
+function CertificationsForm({onCertificationAdded}) {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const closeCertifForms = () => {
@@ -2692,6 +2709,7 @@ function CertificationsForm() {
             if (result.success) {
                 closeCertifForms();
                 e.target.reset();
+                onCertificationAdded();
             } else {
                 alert(result.message || "Erreur lors de l'enregistrement");
             }

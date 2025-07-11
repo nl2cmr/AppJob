@@ -46,15 +46,6 @@
     padding: 0.8rem;
   }
   
-  .navbar ul li:hover {
-    background-color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    color: #000000;
-    font-weight: 400;
-    cursor: pointer;
-  }
-  
   .mobile-nav {
     display: none;
   }

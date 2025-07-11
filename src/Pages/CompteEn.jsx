@@ -15,6 +15,16 @@ export const CompteEn = () => {
     const [isUpdating, setIsUpdating] = useState(false);
     const [updateSuccess, setUpdateSuccess] = useState(false);
 
+    const [refreshOffres, setRefreshOffres] = useState(false);
+    const [refreshComps, setRefreshComps] = useState(false);
+    const [refreshDips, setRefreshDips] = useState(false);
+    const [refreshLangs, setRefreshLangs] = useState(false);
+    const [refreshQuas, setRefreshQuas] = useState(false);
+    const [refreshMis, setRefreshMis] = useState(false);
+    const [refreshAvans, setRefreshAvans] = useState(false);
+    const [refreshDocs, setRefreshDocs] = useState(false);
+
+
     const handleUpdateUser = async (e) => {
         e.preventDefault();
         setIsUpdating(true);
@@ -216,65 +226,58 @@ export const CompteEn = () => {
 
                     <div id="ajoutoffres" className='switch-part'>
                         <h2>Gestion des offres</h2>
-                        <OffresTable />
-                        <OffresForm />
+                        <OffresTable key={refreshOffres}/>
+                        <OffresForm onOffreAdded={() =>setRefreshOffres(prev => !prev)}/>
                         <button id='addoff' onClick={showOffForm}>Ajouter une offre</button>
                     </div>
 
                     <div id="comps" className='switch-part'>
                         <h2>Gestion des compétences</h2>
-                        <CompetencesTableOff />
-                        <CompetencesFormOff />
-                        <button id='addcomp' onClick={showCompForm}>Ajouter une competence</button>
-                        <br />
+                        <CompetencesFormOff onCompetenceAdded={() => setRefreshComps(prev => !prev)} />
+                        <CompetencesTableOff key={refreshComps} />
+                        <button id='addcomp' onClick={showCompForm}>Ajouter une compétence</button>
                     </div>
 
                     <div id="dips" className='switch-part'>
                         <h2>Gestion des diplômes</h2>
-                        <DiplomesTableOff />
-                        <DiplomesFormOff />
-                        <button id='adddip' onClick={showDipForm}>Ajouter un diplome</button>
-                        <br />
+                        <DiplomesTableOff key={refreshDips} />
+                        <DiplomesFormOff  onDiplomeAdded={() => setRefreshDips(prev => !prev)}/>
+                        <button id='adddip' onClick={showDipForm}>Ajouter un diplôme</button>
                     </div>
 
                     <div id="langs" className='switch-part'>
                         <h2>Gestion des langues</h2>
-                        <LanguesTableOff />
-                        <LanguesFormOff />
+                        <LanguesTableOff key={refreshLangs} />
+                        <LanguesFormOff  onLangueAdded={() => setRefreshLangs(prev => !prev)}/>
                         <button id='addlang' onClick={showLangForm}>Ajouter une langue</button>
-                        <br />
                     </div>
 
                     <div id="quas" className='switch-part'>
-                        <h2>Gestion des qualites</h2>
-                        <QualitesTableOff />
-                        <QualitesFormOff />
-                        <button id='addqua' onClick={showQuaForm}>Ajouter une qualite</button>
-                        <br />
+                        <h2>Gestion des qualités</h2>
+                        <QualitesTableOff key={refreshQuas} />
+                        <QualitesFormOff onQualiteAdded={() => setRefreshQuas(prev => !prev)} />
+                        <button id='addqua' onClick={showQuaForm}>Ajouter une qualité</button>
                     </div>
 
                     <div id="miss" className='switch-part'>
                         <h2>Gestion des missions</h2>
-                        <MissionsTableOff />
-                        <MissionsFormOff />
+                        <MissionsTableOff key={refreshMis} />
+                        <MissionsFormOff onMissionAdded={() => setRefreshMis(prev => !prev)} />
                         <button id='addmis' onClick={showMisForm}>Ajouter une mission</button>
-                        <br />
                     </div>
 
                     <div id="avans" className='switch-part'>
                         <h2>Gestion des avantages</h2>
-                        <AvantagesTableOff />
-                        <AvantagesFormOff />
+                        <AvantagesTableOff key={refreshAvans} />
+                        <AvantagesFormOff onAvantageAdded={() => setRefreshAvans(prev => !prev)} />
                         <button id='addavan' onClick={showAvanForm}>Ajouter un avantage</button>
-                        <br />
                     </div>
 
                     <div id="docs" className='switch-part'>
                         <h2>Gestion des documents requis</h2>
-                        <DocRequisFormOff />
-                        <DocRequisTableOff />
+                        <DocRequisTableOff key={refreshDocs}onDocumentAdded={() => setRefreshDocs(prev => !prev)} />
+                        <DocRequisFormOff onDocumentAdded={() => setRefreshDocs(prev => !prev)} />
                         <button id='adddoc' onClick={showDocForm}>Ajouter un document</button>
-                        <br />
                     </div>
 
                 </div>
@@ -283,7 +286,7 @@ export const CompteEn = () => {
     );
 }
 
-function OffresForm() {
+function OffresForm({onOffreAdded}) {
 
 
     const closeOffForms = () =>{
@@ -314,6 +317,8 @@ function OffresForm() {
             const result = await response.json();
             if (result.success) {
                 alert('Offre ajoutée avec succès');
+                closeOffForms();
+                onOffreAdded();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -594,7 +599,7 @@ function OffresTable(){
 }
 
 
-function CompetencesFormOff() {
+function CompetencesFormOff({ onCompetenceAdded }) {
     const [offres, setOffres] = useState([]);
     const [loading, setLoading] = useState(true); 
     const [error, setError] = useState(null);
@@ -651,6 +656,7 @@ function CompetencesFormOff() {
             if (result.success) {
                 closeCompForms();
                 alert('Compétence ajoutée avec succès !');
+                onCompetenceAdded();
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout');
             }
@@ -908,7 +914,7 @@ function CompetencesTableOff() {
 
 
 
-function DiplomesFormOff() {
+function DiplomesFormOff({onDiplomeAdded}) {
     const [offres, setOffres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -965,6 +971,7 @@ function DiplomesFormOff() {
             if (result.success) {
                 closeDipForms();
                 alert('Diplôme ajouté avec succès !');
+                onDiplomeAdded();
                 
             } else {
                 alert(result.message || 'Erreur lors de l\'ajout du diplôme');
@@ -1253,7 +1260,7 @@ function DiplomesTableOff() {
 }
 
 
-function LanguesFormOff() {
+function LanguesFormOff({ onLangueAdded }) {
     const [offres, setOffres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -1311,7 +1318,7 @@ function LanguesFormOff() {
             if (result.success) {
                 closeLangForms();
                 alert('Langue ajoutée avec succès !');
-                
+                onLangueAdded();
             } else {
                 alert(result.message || "Échec de l'ajout de la langue");
             }
@@ -1581,7 +1588,7 @@ function LanguesTableOff() {
 }
 
 
-function QualitesFormOff() {
+function QualitesFormOff({ onQualiteAdded }) {
     const [offres, setOffres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -1638,7 +1645,7 @@ function QualitesFormOff() {
             if (result.success) {
                 closeQuaForms();
                 alert('Qualité professionnelle enregistrée avec succès !');
-                
+                onQualiteAdded();
             } else {
                 alert(result.message || "Erreur lors de l'enregistrement");
             }
@@ -1989,7 +1996,7 @@ function QualitesTableOff() {
 
 
 
-function MissionsFormOff() {
+function MissionsFormOff({ onMissionAdded }) {
     const [offres, setOffres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -2065,6 +2072,7 @@ function MissionsFormOff() {
             if (result.success) {
                 closeMisForms();
                 alert('Mission enregistrée avec succès !');
+                onMissionAdded();
             } else {
                 alert(result.message || "Erreur lors de l'enregistrement");
             }
@@ -2412,7 +2420,7 @@ function MissionsTableOff() {
 }
 
 
-function AvantagesFormOff() {
+function AvantagesFormOff({ onAvantageAdded }) {
     const [offres, setOffres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -2471,6 +2479,7 @@ function AvantagesFormOff() {
             if (result.success) {
                 closeAvanForms();
                 alert('Avantage enregistré avec succès !');
+                onAvantageAdded();
                 
             } else {
                 alert(result.message || "Erreur lors de l'enregistrement");
@@ -2810,7 +2819,7 @@ function AvantagesTableOff() {
 }
 
 
-function DocRequisFormOff() {
+function DocRequisFormOff({ onDocumentAdded }) {
     const [offres, setOffres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -2878,7 +2887,7 @@ function DocRequisFormOff() {
             if (result.success) {
                 closeDocForms();
                 alert('Document requis enregistré avec succès !');
-                
+                onDocumentAdded();
             } else {
                 alert(result.message || "Erreur lors de l'enregistrement");
             }

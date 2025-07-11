@@ -582,7 +582,7 @@
 .tri-part {
     width: 35%;
     padding: 20px;
-    background-color: #fff;
+    background-color: #373857;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     margin-right: 20px;
@@ -608,7 +608,7 @@
 
 .filter-title {
     font-size: 1.1rem;
-    color: #2c3e50;
+    color: #ffffff;
     margin-bottom: 15px;
     font-weight: 600;
 }
@@ -628,19 +628,19 @@
 .filter-option input[type="checkbox"] {
     width: 18px;
     height: 18px;
-    accent-color: #3498db;
+    accent-color: #ffffff;
     cursor: pointer;
 }
 
 .filter-option label {
-    color: #34495e;
+    color: #ffffff;
     font-size: 0.95rem;
     cursor: pointer;
     transition: color 0.2s ease;
 }
 
 .filter-option label:hover {
-    color: #3498db;
+    color: #647f91;
 }
 
 /* Responsive */
