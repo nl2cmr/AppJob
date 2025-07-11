@@ -1,10 +1,10 @@
 #candidature-body {
     max-width: 1200px;
-    margin: 0 auto;
     padding: 20px;
     display: flex;
     flex-direction: row;
     gap: 20px;
+    height: calc(100vh - 90px);
 }
 
 .filter-sort-container {
@@ -20,7 +20,7 @@
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    width: 60%;
+    width: 70%;
 }
 
 .filter-sort-section h1 {
