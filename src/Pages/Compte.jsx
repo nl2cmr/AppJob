@@ -5,6 +5,8 @@ import { Textarea } from '../Components/Textarea.jsx';
 import './css/Compte.css';
 import { MdClose } from 'react-icons/md';
 import { API_BASE_URL } from '../config';
+import { FaEdit } from 'react-icons/fa';
+import { AiFillDelete } from 'react-icons/ai';
 
 export const Compte = () => {
     const [nom, setNom] = useState("");
@@ -552,8 +554,8 @@ function ExperiencesTable() {
                                     <td>{new Date(exp.date_fin).toLocaleDateString()}</td>
                                     <td>{exp.description}</td>
                                     <td>
-                                        <button onClick={() => startEdit(exp)}>Modifier</button>
-                                        <button onClick={() => handleDelete(exp.idexperience)}>Supprimer</button>
+                                        <button onClick={() => startEdit(exp)} className='btn-edit'><FaEdit /></button>
+                                        <button onClick={() => handleDelete(exp.idexperience)} className='btn-delete'><AiFillDelete/></button>
                                     </td>
                                 </>
                             )}
@@ -799,13 +801,13 @@ function CompetencesTable() {
                                                     onClick={() => startEdit(comp)} 
                                                     className="btn-edit"
                                                 >
-                                                    Modifier
+                                                    <FaEdit />
                                                 </button>
                                                 <button 
                                                     onClick={() => handleDelete(comp.idcompetence)} 
                                                     className="btn-delete"
                                                 >
-                                                    Supprimer
+                                                    <AiFillDelete/>
                                                 </button>
                                             </td>
                                         </>
@@ -1119,13 +1121,13 @@ function FormationsTable() {
                                                     onClick={() => startEdit(formation)} 
                                                     className="btn-edit"
                                                 >
-                                                    Modifier
+                                                    <FaEdit />
                                                 </button>
                                                 <button 
                                                     onClick={() => handleDelete(formation.idformation)} 
                                                     className="btn-delete"
                                                 >
-                                                    Supprimer
+                                                    <AiFillDelete/>
                                                 </button>
                                             </td>
                                         </>
@@ -1355,13 +1357,13 @@ function QualitesTable() {
                                                     onClick={() => startEdit(qualite)} 
                                                     className="btn-edit"
                                                 >
-                                                    Modifier
+                                                    <FaEdit />
                                                 </button>
                                                 <button 
                                                     onClick={() => handleDelete(qualite.idqualite)} 
                                                     className="btn-delete"
                                                 >
-                                                    Supprimer
+                                                    <AiFillDelete/>
                                                 </button>
                                             </td>
                                         </>
@@ -1607,13 +1609,13 @@ function ReferencesTable() {
                                                     onClick={() => startEdit(reference)} 
                                                     className="btn-edit"
                                                 >
-                                                    <i className="fas fa-edit"></i> Modifier
+                                                    <i className="fas fa-edit"></i> <FaEdit />
                                                 </button>
                                                 <button 
                                                     onClick={() => handleDelete(reference.idreference)} 
                                                     className="btn-delete"
                                                 >
-                                                    <i className="fas fa-trash"></i> Supprimer
+                                                    <i className="fas fa-trash"></i> <AiFillDelete/>
                                                 </button>
                                             </td>
                                         </>
@@ -1845,13 +1847,13 @@ function InteretsTable() {
                                                     onClick={() => startEdit(interet)} 
                                                     className="btn-edit"
                                                 >
-                                                    <i className="fas fa-edit">modifier</i>
+                                                    <i className="fas fa-edit"><FaEdit /></i>
                                                 </button>
                                                 <button 
                                                     onClick={() => handleDelete(interet.idinteret)} 
                                                     className="btn-delete"
                                                 >
-                                                    <i className="fas fa-trash">supprimer</i>
+                                                    <i className="fas fa-trash"><AiFillDelete/></i>
                                                 </button>
                                             </td>
                                         </>
@@ -2102,13 +2104,13 @@ function LanguesTable() {
                                                     onClick={() => startEdit(langue)} 
                                                     className="btn-edit"
                                                 >
-                                                    <i className="fas fa-edit"></i> Modifier
+                                                    <i className="fas fa-edit"></i> <FaEdit />
                                                 </button>
                                                 <button 
                                                     onClick={() => handleDelete(langue.idlangue)} 
                                                     className="btn-delete"
                                                 >
-                                                    <i className="fas fa-trash"></i> Supprimer
+                                                    <i className="fas fa-trash"></i> <AiFillDelete/>
                                                 </button>
                                             </td>
                                         </>
@@ -2411,13 +2413,13 @@ function ProjetsTable() {
                                                     onClick={() => startEdit(projet)} 
                                                     className="btn-edit"
                                                 >
-                                                    <i className="fas fa-edit"></i> Modifier
+                                                    <i className="fas fa-edit"></i> <FaEdit />
                                                 </button>
                                                 <button 
                                                     onClick={() => handleDelete(projet.idprojet)} 
                                                     className="btn-delete"
                                                 >
-                                                    <i className="fas fa-trash"></i> Supprimer
+                                                    <i className="fas fa-trash"></i> <AiFillDelete/>
                                                 </button>
                                             </td>
                                         </>
@@ -2659,13 +2661,13 @@ function DiplomesTable() {
                                                     onClick={() => startEdit(diplome)} 
                                                     className="btn-edit"
                                                 >
-                                                    <i className="fas fa-edit"></i> Modifier
+                                                    <i className="fas fa-edit"></i> <FaEdit />
                                                 </button>
                                                 <button 
                                                     onClick={() => handleDelete(diplome.iddiplome)} 
                                                     className="btn-delete"
                                                 >
-                                                    <i className="fas fa-trash"></i> Supprimer
+                                                    <i className="fas fa-trash"></i> <AiFillDelete/>
                                                 </button>
                                             </td>
                                         </>
@@ -2969,13 +2971,13 @@ function CertificationsTable() {
                                                 onClick={() => handleEdit(certification)}
                                                 className="edit-button"
                                             >
-                                                Modifier
+                                                <FaEdit />
                                             </button>
                                             <button 
                                                 onClick={() => handleDelete(certification.idcertification)}
                                                 className="delete-button"
                                             >
-                                                Supprimer
+                                                <AiFillDelete/>
                                             </button>
                                         </td>
                                     </>

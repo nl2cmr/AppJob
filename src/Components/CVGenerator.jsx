@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaFileDownload } from 'react-icons/fa';
 import { API_BASE_URL } from '../config';
 
@@ -8,6 +8,15 @@ export const CVGenerator = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
+    const [userId, setUserId] = useState(null);
+
+    // Récupérer l'ID de l'utilisateur connecté au montage du composant
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user") || sessionStorage.getItem("user"));
+        if (user?.iduser) {
+            setUserId(user.iduser);
+        }
+    }, []);
 
     const handleDrag = (e) => {
         e.preventDefault();
@@ -59,12 +68,16 @@ export const CVGenerator = () => {
         }
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         
         if (!file) {
             setError("Veuillez sélectionner un fichier CV");
+            return;
+        }
+
+        if (!userId) {
+            setError("Vous devez être connecté pour uploader un CV");
             return;
         }
     
@@ -73,6 +86,7 @@ export const CVGenerator = () => {
     
         const formData = new FormData();
         formData.append('cvfile', file);
+        formData.append('user_id', userId); // Ajout de l'ID utilisateur au FormData
     
         try {
             const response = await fetch(`${API_BASE_URL}/analyse_cv.php`, {
@@ -126,7 +140,7 @@ export const CVGenerator = () => {
             <button 
                 type="button" 
                 className={`cv-upload-button ${isLoading ? "loading" : ""}`}
-                disabled={!file || isLoading}
+                disabled={!file || isLoading || !userId}
                 onClick={handleSubmit}
             >
                 {isLoading ? (

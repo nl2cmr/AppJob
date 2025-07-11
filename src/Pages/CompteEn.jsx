@@ -4,6 +4,8 @@ import { Textarea } from '../Components/Textarea.jsx'
 import { useState, useEffect } from 'react';
 import './css/CompteEn.css';
 import { API_BASE_URL } from '../config';
+import { FaEdit } from 'react-icons/fa';
+import { AiFillDelete } from 'react-icons/ai';
 
 export const CompteEn = () => {
     
@@ -585,8 +587,8 @@ function OffresTable(){
                                     <td>{off.salaire}</td>
                                     <td>{off.type_contrat}</td>
                                     <td>
-                                        <button onClick={() => handleEdit(off.idoffre)}>Modifier</button>
-                                        <button onClick={() => handleDelete(off.idoffre)}>Supprimer</button>
+                                        <button onClick={() => handleEdit(off.idoffre)}><FaEdit /></button>
+                                        <button onClick={() => handleDelete(off.idoffre)}><AiFillDelete/></button>
                                     </td>
                                 </>
                             )}
@@ -898,8 +900,8 @@ function CompetencesTableOff() {
                                         <td>{niveauxOptions.find(n => n.value === competence.niveau)?.label || competence.niveau}</td>
                                         <td>{competence.reference_offre || '-'}</td>
                                         <td>
-                                            <button onClick={() => handleEdit(competence)}>Modifier</button>
-                                            <button onClick={() => handleDelete(competence.idcompetence)}>Supprimer</button>
+                                            <button onClick={() => handleEdit(competence)}><FaEdit /></button>
+                                            <button onClick={() => handleDelete(competence.idcompetence)}><AiFillDelete/></button>
                                         </td>
                                     </>
                                 )}
@@ -1239,13 +1241,13 @@ function DiplomesTableOff() {
                                                 onClick={() => handleEdit(diplome)}
                                                 className="edit-btn"
                                             >
-                                                Modifier
+                                                <FaEdit />
                                             </button>
                                             <button 
                                                 onClick={() => handleDelete(diplome.iddiplome)}
                                                 className="delete-btn"
                                             >
-                                                Supprimer
+                                                <AiFillDelete/>
                                             </button>
                                         </td>
                                     </>
@@ -1573,8 +1575,8 @@ function LanguesTableOff() {
                                         <td>{niveauxOptions.find(n => n.value === langue.niveau)?.label || langue.niveau}</td>
                                         <td>{langue.reference_offre || '-'}</td>
                                         <td>
-                                            <button onClick={() => handleEdit(langue)}>Modifier</button>
-                                            <button onClick={() => handleDelete(langue.idlangue)}>Supprimer</button>
+                                            <button onClick={() => handleEdit(langue)}><FaEdit /></button>
+                                            <button onClick={() => handleDelete(langue.idlangue)}><AiFillDelete/></button>
                                         </td>
                                     </>
                                 )}
@@ -1939,16 +1941,16 @@ function QualitesTableOff() {
                                                     <button 
                                                         onClick={() => handleEdit(qualite)}
                                                         className="edit-button"
-                                                        title="Modifier"
+                                                        title="<FaEdit />"
                                                     >
-                                                        modifier
+                                                        <FaEdit />
                                                     </button>
                                                     <button 
                                                         onClick={() => handleDelete(qualite.idqualite)}
                                                         className="delete-button"
                                                         title="Supprimer"
                                                     >
-                                                        Supprimer
+                                                        <AiFillDelete/>
                                                     </button>
                                                 </td>
                                             </>
@@ -2405,8 +2407,8 @@ function MissionsTableOff() {
                                         </td>
                                         <td>{mission.reference_offre || '-'}</td>
                                         <td>
-                                            <button onClick={() => handleEdit(mission)}>Modifier</button>
-                                            <button onClick={() => handleDelete(mission.idmission)}>Supprimer</button>
+                                            <button onClick={() => handleEdit(mission)}><FaEdit /></button>
+                                            <button onClick={() => handleDelete(mission.idmission)}><AiFillDelete/></button>
                                         </td>
                                     </>
                                 )}
@@ -2798,13 +2800,13 @@ function AvantagesTableOff() {
                                                 onClick={() => handleEdit(avantage)}
                                                 className="edit-button"
                                             >
-                                                Modifier
+                                                <FaEdit />
                                             </button>
                                             <button 
                                                 onClick={() => handleDelete(avantage.idavantage)}
                                                 className="delete-button"
                                             >
-                                                Supprimer
+                                                <AiFillDelete/>
                                             </button>
                                         </td>
                                     </>
@@ -3222,13 +3224,13 @@ function DocRequisTableOff() {
                                                 onClick={() => handleEdit(document)}
                                                 className="edit-button"
                                             >
-                                                Modifier
+                                                <FaEdit />
                                             </button>
                                             <button 
                                                 onClick={() => handleDelete(document.iddocumentreq)}
                                                 className="delete-button"
                                             >
-                                                Supprimer
+                                                <AiFillDelete/>
                                             </button>
                                         </td>
                                     </>
