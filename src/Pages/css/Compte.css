@@ -10,30 +10,43 @@
     padding: 20px;
     max-width: 1400px;
     margin: 0 auto;
+    margin-left: 290px;
 }
 
-/* Menu Styles */
-.menu {
+.body-compte .menu {
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    height: max-content;
+    overflow-y: auto; 
     width: 250px;
-    height: 100%;
     background: #2c3e50;
     border-radius: 10px;
     padding: 20px;
     margin-right: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    align-self: flex-start; 
 }
 
-.menu ul {
+.body-compte .menu::-webkit-scrollbar {
+    width: 6px;
+}
+.body-compte .menu::-webkit-scrollbar-thumb {
+    background: #34495e;
+    border-radius: 3px;
+}
+
+.body-compte .menu ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.menu li {
+.body-compte .menu li {
     margin-bottom: 10px;
 }
 
-.menu button {
+.body-compte .menu button {
     width: 100%;
     padding: 12px;
     background: #34495e;
@@ -46,7 +59,7 @@
     transition: all 0.3s ease;
 }
 
-.menu button:hover {
+.body-compte .menu button:hover {
     background: #3d566e;
     transform: translateX(5px);
 }
@@ -303,11 +316,13 @@ textarea {
 @media (max-width: 768px) {
     .body-compte {
         flex-direction: column;
+        margin-left: 0;
     }
     
-    .menu {
+    .body-compte .menu {
+        position: static;
+        height: auto;
         width: 100%;
-        margin-right: 0;
         margin-bottom: 20px;
     }
     

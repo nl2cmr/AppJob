@@ -53,21 +53,87 @@ export const MainPageEn = () => {
                     setSearchTerm={setSearchTerm} 
                 />
             </div>
-            <div className="body-part">
-                {loading ? (
-                    <div className="loading">Chargement en cours...</div>
-                ) : error ? (
-                    <div className="error">{error}</div>
-                ) : filteredProfils.length === 0 ? (
-                    <div className="no-results">Aucun profil trouvé</div>
-                ) : (
-                    <div className="list-card">
-                        <ProfilCard 
-                            infosprofil={filteredProfils} 
-                            onViewProfil={setSelectedProfil}
-                        />
+            <div className='global'>
+                <div className="body-part">
+                    {loading ? (
+                        <div className="loading">Chargement en cours...</div>
+                    ) : error ? (
+                        <div className="error">{error}</div>
+                    ) : filteredProfils.length === 0 ? (
+                        <div className="no-results">Aucun profil trouvé</div>
+                    ) : (
+                        <div className="list-card">
+                            <ProfilCard 
+                                infosprofil={filteredProfils} 
+                                onViewProfil={setSelectedProfil}
+                            />
+                        </div>
+                    )}
+                </div>
+                <div className="infonew">
+                    <div className="enterprise-sections">
+                        <h3 className="enterprise-title">Espace Entreprises</h3>
+                        
+                        <div className="enterprise-section">
+                            <h4><i className="fas fa-chart-line"></i> Tendances du marché</h4>
+                            <div className="enterprise-content">
+                                <div className="enterprise-item">
+                                    <h5>Salaires moyens 2024</h5>
+                                    <p>Découvrez les fourchettes salariales par poste dans le secteur IT</p>
+                                    <span className="enterprise-tag">Actualité</span>
+                                </div>
+                                <div className="enterprise-item">
+                                    <h5>Compétences recherchées</h5>
+                                    <p>Top 5 des technologies les plus demandées ce trimestre</p>
+                                    <span className="enterprise-tag">Étude</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="enterprise-section">
+                            <h4><i className="fas fa-user-tie"></i> Conseils RH</h4>
+                            <div className="enterprise-content">
+                                <div className="enterprise-item">
+                                    <h5>Attirer les talents</h5>
+                                    <p>10 stratégies pour améliorer votre marque employeur</p>
+                                    <span className="enterprise-tag">Guide</span>
+                                </div>
+                                <div className="enterprise-item">
+                                    <h5>Entretiens efficaces</h5>
+                                    <p>Techniques pour évaluer les compétences techniques</p>
+                                    <span className="enterprise-tag">Méthodologie</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="enterprise-section">
+                            <h4><i className="fas fa-handshake"></i> Services Pro</h4>
+                            <div className="enterprise-content">
+                                <div className="enterprise-item highlight">
+                                    <h5>Recrutement Premium</h5>
+                                    <p>Accédez à notre base de profils vérifiés et contactez directement les candidats</p>
+                                    <button className="enterprise-button">Découvrir</button>
+                                </div>
+                                <div className="enterprise-item">
+                                    <h5>Annonces Boostées</h5>
+                                    <p>Augmentez la visibilité de vos offres d'emploi</p>
+                                    <span className="enterprise-tag">Promo</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="enterprise-section">
+                            <h4><i className="fas fa-calendar-alt"></i> Événements</h4>
+                            <div className="enterprise-content">
+                                <div className="enterprise-item">
+                                    <h5>Forum RH Digital</h5>
+                                    <p>Conférences sur les nouvelles pratiques de recrutement</p>
+                                    <span className="enterprise-date">15/10/2024 - Douala</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                )}
+                </div>
             </div>
 
             {selectedProfil && (

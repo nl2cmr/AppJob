@@ -47,16 +47,23 @@ Link {
     padding: 20px;
     max-width: 1400px;
     margin: 0 auto;
+    margin-left: 290px;
 }
 
 /* Menu Styles */
 .menu {
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    height: max-content;
+    overflow-y: auto; 
     width: 250px;
     background: #2c3e50;
     border-radius: 10px;
     padding: 20px;
     margin-right: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    align-self: flex-start; 
 }
 
 .menu ul {
